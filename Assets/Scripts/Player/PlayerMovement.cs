@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Collider col;
     public Rigidbody rig;
+    public CinemachineVirtualCamera cam;
+    public Vector3 offset;
     public float moveSpeed = 5f;
     public bool lookingLeft=true;
     public float rotationSpeed = 10.0f;
     Vector3 movement;
     public float movementControl=1f;
     float distToGround;
-
+    CinemachineComposer cinemachineTransposer;
     void Start(){
         if (col==null) col  = GetComponent<Collider>();
         if (rig==null && gameObject.GetComponent<Rigidbody>()){
@@ -20,14 +23,26 @@ public class PlayerMovement : MonoBehaviour
         }
         distToGround = col.bounds.extents.y;
         lookingLeft=true;
+        cinemachineTransposer = cam.GetCinemachineComponent<CinemachineComposer>();
     }
 
     void Update(){
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
         movement.Normalize();
-        if (movement.x>0) lookingLeft = true;
-        else if (movement.x<0) lookingLeft = false;
+        Vector3 camT;
+        if (movement.x>0) {
+            lookingLeft = true;
+            camT = new Vector3(offset.x,offset.y,offset.z);
+        }
+        else if (movement.x<0) {
+            lookingLeft = false;
+            camT = new Vector3(-offset.x,offset.y,offset.z);
+        }
+        else{
+            camT = new Vector3(0,0,0);
+        }
+        cinemachineTransposer.m_TrackedObjectOffset = camT;
         Debug.DrawLine(rig.position, rig.position +  movement, Color.red, 1f);
     }
 
