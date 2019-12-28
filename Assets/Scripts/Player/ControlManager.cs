@@ -38,6 +38,8 @@ public class ControlManager : MonoBehaviour
             {
                 b.enabled = onDog;
             }
+            SetPlayerCharOnStandby(human, !onHuman);
+            SetPlayerCharOnStandby(dog, !onDog);
 
             if (PlayerPivot){
                 if (PlayerPivot.GetComponent<PositionMatchPosition>()){
@@ -47,6 +49,12 @@ public class ControlManager : MonoBehaviour
                     PlayerPivot.GetComponent<PositionMatchPosition>().changeTarget(t);
                 }
             }
+
+            
         }
+    }
+
+    void SetPlayerCharOnStandby(Transform character, bool onStandby=true){
+        character.position += Vector3.forward * 0.5f * (onStandby? 1 : -1);
     }
 }

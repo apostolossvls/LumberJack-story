@@ -19,7 +19,7 @@ public class PositionMatchPosition : MonoBehaviour
         timer=0;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (target && !changing){
             transform.position = new Vector3(

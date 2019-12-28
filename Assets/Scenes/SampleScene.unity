@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 42067946}
   - component: {fileID: 42067945}
   - component: {fileID: 42067944}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerHuman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 234961959}
   - component: {fileID: 234961958}
   - component: {fileID: 234961957}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerDog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -481,7 +481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234961956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.34, y: 0.5, z: 0}
+  m_LocalPosition: {x: -7.34, y: 0.5, z: 0.5}
   m_LocalScale: {x: 1.2, y: 0.5, z: 1}
   m_Children:
   - {fileID: 478462960}
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 275702111}
   - component: {fileID: 275702110}
   - component: {fileID: 275702109}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 478462963}
   - component: {fileID: 478462962}
   - component: {fileID: 478462961}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CapsuleCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 554042029}
   - component: {fileID: 554042028}
   - component: {fileID: 554042027}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CapsuleCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1264,7 +1264,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
+  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
     w: 0.99927384}
   m_LocalPosition: {x: -3.67, y: 2.75, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -2009,7 +2009,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584261115}
-  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
+  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
     w: 0.99927384}
   m_LocalPosition: {x: -3.67, y: 2.75, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -2030,7 +2030,7 @@ GameObject:
   - component: {fileID: 1786839785}
   - component: {fileID: 1786839784}
   - component: {fileID: 1786839783}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2122,7 +2122,7 @@ GameObject:
   - component: {fileID: 1835910040}
   - component: {fileID: 1835910039}
   - component: {fileID: 1835910038}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2214,7 +2214,7 @@ GameObject:
   - component: {fileID: 1851676636}
   - component: {fileID: 1851676635}
   - component: {fileID: 1851676634}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
