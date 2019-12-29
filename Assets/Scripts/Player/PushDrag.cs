@@ -24,7 +24,7 @@ public class PushDrag : MonoBehaviour
         if (!holding && holdingGameObject) {
             ResetHolding();
         }
-        if (Input.GetButtonDown("Submit")){
+        if (Input.GetButtonDown("Grab")){
             if (holding && !playerMovement.lookChanging){
                 Destroy(holdingGameObject.GetComponent<SpringJoint>());
                 ResetHolding();
@@ -35,10 +35,10 @@ public class PushDrag : MonoBehaviour
                     //Debug.DrawRay( transform.position, transform.right, Color.black, 1f);
                     holdingGameObject=hit.collider.gameObject;
                     holding=holdingGameObject.AddComponent<SpringJoint>();
-                    holding.spring = 30;
+                    holding.spring = 50;
                     holding.damper = 10;
-                    holding.maxDistance = 0.3f;
-                    holding.tolerance = 1f;
+                    //holding.maxDistance = 0.3f;
+                    holding.tolerance = 2f;
                     holding.enableCollision = true;
                     holding.breakForce = grabForce;
                     holding.connectedBody = rig;

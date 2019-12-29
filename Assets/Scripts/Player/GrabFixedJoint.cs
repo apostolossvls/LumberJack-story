@@ -24,10 +24,10 @@ public class GrabFixedJoint : MonoBehaviour
         if (!holding && holdingGameObject) {
             ResetHolding();
         }
-        if (Input.GetButtonDown("Submit")){
+        if (Input.GetButtonDown("Grab")){
             if (holding && !playerMovement.lookChanging){
-                ResetHolding();
                 Destroy(holding);
+                ResetHolding();
             }
             else if (!holding){
                 RaycastHit hit;
@@ -48,7 +48,7 @@ public class GrabFixedJoint : MonoBehaviour
     }
 
     void ResetHolding(){
-        if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
+        //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
         if (holdingGameObject.transform.position.z!=0) 
             holdingGameObject.transform.position = new Vector3(holdingGameObject.transform.position.x, holdingGameObject.transform.position.y, 0);
         holding=null;

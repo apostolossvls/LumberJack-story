@@ -6,8 +6,10 @@ public class ControlManager : MonoBehaviour
 {
     public Transform human;
     public Transform dog;
-    public Behaviour[] HumanBehaviours;
-    public Behaviour[] DogBehaviours;
+    public Behaviour[] HumanBehavioursActive;
+    public Behaviour[] DogBehavioursActive;
+    public Behaviour[] HumanBehavioursInactive;
+    public Behaviour[] DogBehavioursInactive;
     public Transform PlayerPivot;
     bool onHuman;
     bool onDog;
@@ -29,13 +31,21 @@ public class ControlManager : MonoBehaviour
                 onDog = false;
             }
 
-            foreach (Behaviour b in HumanBehaviours)
+            foreach (Behaviour b in HumanBehavioursActive)
             {
                 b.enabled = onHuman;
             }
-            foreach (Behaviour b in DogBehaviours)
+            foreach (Behaviour b in DogBehavioursActive)
             {
                 b.enabled = onDog;
+            }
+            foreach (Behaviour b in HumanBehavioursInactive)
+            {
+                b.enabled = !onHuman;
+            }
+            foreach (Behaviour b in DogBehavioursInactive)
+            {
+                b.enabled = !onDog;
             }
             SetPlayerCharOnStandby(human, !onHuman);
             SetPlayerCharOnStandby(dog, !onDog);
