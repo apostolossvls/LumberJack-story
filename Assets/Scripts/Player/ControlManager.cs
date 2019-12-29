@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ControlManager : MonoBehaviour
 {
-    public KeyCode switchKey;
     public Transform human;
     public Transform dog;
     public Behaviour[] HumanBehaviours;
@@ -20,7 +19,7 @@ public class ControlManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(switchKey)){
+        if (Input.GetButtonDown("SwitchCharacter")){
             if (onHuman){
                 onHuman = false;
                 onDog = true;
