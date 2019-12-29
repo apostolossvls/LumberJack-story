@@ -23,7 +23,7 @@ public class Jump : MonoBehaviour
     void Update()
     {
         if (CloseToGround()){
-            if (Input.GetKeyDown(KeyCode.Space)){
+            if (Input.GetButtonDown("Jump")){ //if (Input.GetKeyDown(KeyCode.Space)){
                 jumpPressed=true;
             }
         }

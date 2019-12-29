@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 offset;
     public float moveSpeed = 5f;
     public bool lookingLeft=true;
+    public bool lookChanging=false;
     public float rotationSpeed = 10.0f;
     Vector3 movement;
     public float movementControl=1f;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         }
         distToGround = col.bounds.extents.y;
         lookingLeft=true;
+        lookChanging=false;
         cinemachineTransposer = cam.GetCinemachineComponent<CinemachineComposer>();
     }
 
@@ -31,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
         movement.z = Input.GetAxisRaw("Vertical");
         movement.Normalize();
         Vector3 camT;
+        if ((movement.x<0 && lookingLeft) || (movement.x>0 && !lookingLeft)) {
+            StopCoroutine("lookChangingTime");
+            StartCoroutine("lookChangingTime");
+        }
         if (movement.x>0) {
             lookingLeft = true;
             camT = new Vector3(offset.x,offset.y,offset.z);
@@ -43,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
             camT = new Vector3(0,0,0);
         }
         cinemachineTransposer.m_TrackedObjectOffset = camT;
-        Debug.DrawLine(rig.position, rig.position +  movement, Color.red, 1f);
+        //Debug.DrawLine(rig.position, rig.position +  movement, Color.red, 1f);
     }
 
     void FixedUpdate(){
@@ -64,5 +70,12 @@ public class PlayerMovement : MonoBehaviour
     bool IsGrounded() {
         if (rig.velocity.y==0) return true;
         else return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.2f);
+    }
+
+    IEnumerator lookChangingTime(){
+        lookChanging = true;
+        yield return new WaitForSeconds(5/rotationSpeed);
+        lookChanging = false;
+        yield return null;
     }
 }
