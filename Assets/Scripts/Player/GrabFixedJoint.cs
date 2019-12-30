@@ -31,7 +31,7 @@ public class GrabFixedJoint : MonoBehaviour
             }
             else if (!holding){
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.right, out hit, maxDistance, layerMask)){
+                if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, layerMask)){
                     //Debug.DrawRay( transform.position, transform.right, Color.black, 1f);
                     holdingGameObject=hit.collider.gameObject;
                     holding=holdingGameObject.AddComponent<FixedJoint>();

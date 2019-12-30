@@ -29,9 +29,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update(){
-        Debug.DrawRay(transform.position, rig.velocity, Color.green);
+        Debug.DrawRay(transform.position, transform.forward, Color.green);
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.z = Input.GetAxisRaw("Vertical");
+        movement.z = Input.GetAxisRaw("Vertical"); //Horizontal
         movement.Normalize();
         Vector3 camT;
         if ((movement.x<0 && lookingLeft) || (movement.x>0 && !lookingLeft)) {
@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 v = new Vector3(movement.z, movement.y, movement.x);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(v), Time.deltaTime * rotationSpeed);
         }*/
-        Vector3 v = lookingLeft? new Vector3(0f, 0f, 1f) : new Vector3 (0f, 0f, -1f);
+        Vector3 v = lookingLeft? new Vector3(1.001f, 0f, 0f) : new Vector3 (-1f, 0f, 0f);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(v), Time.deltaTime * rotationSpeed);
     }
 

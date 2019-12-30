@@ -14,15 +14,28 @@ public class NavMeshMovement : MonoBehaviour
 {
 
     public Transform target;
+    public Vector3 offset;
     NavMeshAgent agent;
     public float jumpDuration=1f;
+    bool activated=true;
 
     public OffMeshLinkMoveMethod method = OffMeshLinkMoveMethod.Parabola;
     public AnimationCurve curve = new AnimationCurve ();
-    IEnumerator Start () {
+
+    void OnEnable(){
+        activated=true;
+        StartCoroutine("DoStart");
+    }
+    void OnDisable(){
+        activated=false;
+        StopCoroutine("DoStart");
+    }
+
+
+    IEnumerator DoStart () {
         agent = GetComponent<NavMeshAgent> ();
         agent.autoTraverseOffMeshLink = false;
-        while (true) {
+        while (activated) {
             if (agent.isOnOffMeshLink) {
                 if (method == OffMeshLinkMoveMethod.NormalSpeed)
                 yield return StartCoroutine (NormalSpeed (agent));
@@ -72,7 +85,7 @@ public class NavMeshMovement : MonoBehaviour
     void Update()
     {
         if (target){
-            agent.SetDestination(target.position);
+            agent.SetDestination(target.position+offset);
         }
     }
 
