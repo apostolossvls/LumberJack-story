@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update(){
+        Debug.DrawRay(transform.position, rig.velocity, Color.green);
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
         movement.Normalize();
