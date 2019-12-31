@@ -18,6 +18,7 @@ public class NavMeshMovement : MonoBehaviour
     NavMeshAgent agent;
     public float jumpDuration=1f;
     bool activated=true;
+    public bool follow=true;
 
     public OffMeshLinkMoveMethod method = OffMeshLinkMoveMethod.Parabola;
     public AnimationCurve curve = new AnimationCurve ();
@@ -35,7 +36,8 @@ public class NavMeshMovement : MonoBehaviour
     IEnumerator DoStart () {
         agent = GetComponent<NavMeshAgent> ();
         agent.autoTraverseOffMeshLink = false;
-        while (activated) {
+        follow=true;
+        while (activated && follow) {
             if (agent.isOnOffMeshLink) {
                 if (method == OffMeshLinkMoveMethod.NormalSpeed)
                 yield return StartCoroutine (NormalSpeed (agent));
