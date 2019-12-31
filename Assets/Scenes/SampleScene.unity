@@ -397,6 +397,8 @@ MonoBehaviour:
   JumpHoldDuration: 1
   Gravity: 14
   GroundCheck: 1
+  jumpPressed: 0
+  onJumpHold: 0
 --- !u!114 &42067947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,7 +767,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 234961956}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -788,6 +790,8 @@ MonoBehaviour:
   JumpHoldDuration: 1
   Gravity: 14
   GroundCheck: 1
+  jumpPressed: 0
+  onJumpHold: 0
 --- !u!114 &234961960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,7 +1099,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 478462959}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -1991,7 +1995,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
+  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
     w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -3121,7 +3125,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584261115}
-  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
+  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
     w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}

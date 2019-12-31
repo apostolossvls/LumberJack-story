@@ -18,8 +18,8 @@ public class Jump : MonoBehaviour
 
     void Start()
     {
-        if (col==null) col  = GetComponent<Collider>();
-        if (rig==null) rig = GetComponentInParent<Rigidbody>(); 
+        if (col==null) col  = GetComponentInChildren<Collider>();
+        if (rig==null) rig = GetComponentInChildren<Rigidbody>(); 
         distToGround = col.bounds.extents.y;
         jumpPressed=false;
         //onJumpHold=false;
@@ -60,7 +60,7 @@ public class Jump : MonoBehaviour
         if (rig.velocity.y==0) return true;
         else {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, -Vector3.up+rig.velocity, out hit, distToGround + GroundCheck)){
+            if (Physics.Raycast(transform.position, Vector3.down+rig.velocity, out hit, distToGround + GroundCheck)){
                 //Debug.DrawRay(transform.position, -Vector3.up+rig.velocity, Color.yellow, 1f);
                 if (hit.collider!=col) return true;
                 else return false;
@@ -72,7 +72,7 @@ public class Jump : MonoBehaviour
     bool IsGrounded() {
         //StopAllCoroutines();
         if (rig.velocity.y==0) return true;
-        else return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.2f);
+        else return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.2f);
     }
 
     /*IEnumerator OnholdReset(){

@@ -84,7 +84,7 @@ public class NavMeshMovement : MonoBehaviour
 
     void Update()
     {
-        if (target){
+        if (target && activated){
             agent.SetDestination(target.position+offset);
         }
     }
