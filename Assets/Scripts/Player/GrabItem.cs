@@ -26,7 +26,11 @@ public class GrabItem : MonoBehaviour
                 //Debug.Log("Grab");
                 item = pItem;
                 previousAnchorPivot = item.parent;
-                item.SetParent(AnchorPivot);
+                //GameObject g = new GameObject();
+                //g.name = "itemPivot";
+                //g.transform.parent = AnchorPivot.transform;
+                //item.transform.parent = g.transform;
+                item.parent = AnchorPivot;
                 item.localPosition = Vector3.zero;
                 item.localRotation = Quaternion.identity;
                 if (item.GetComponent<Rigidbody>()) item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -46,6 +50,8 @@ public class GrabItem : MonoBehaviour
                     if (!c.isTrigger) c.enabled = true;
                 }
                 if (item.GetComponent<Rigidbody>()) item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+                Destroy(AnchorPivot.Find("itemPivot").gameObject);
+                // myObjList.Where(x => x.name == yourname).SingleOrDefault();
                 //if (previousAnchorPivot) item.SetParent(previousAnchorPivot);
                 //else item.DetachChildren();
                 grabbing=false;
