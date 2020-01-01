@@ -6,21 +6,25 @@ public class GrabItem : MonoBehaviour
 {
     public Transform AnchorPivot;
     Transform previousAnchorPivot;
-    public Transform possibleItem;
+    List<Transform> possibleItem;
     Transform item;
     bool grabbing;
 
     void Start()
     {
         grabbing=false;
+        possibleItem = new List<Transform>{};
     }
 
     void Update()
     {
         if (Input.GetButtonDown("Grab")){
-            if (!grabbing && possibleItem){
+            Transform pItem=null;
+            int index = GetShortDistance();
+            if (index!=-1) pItem = possibleItem[index];
+            if (!grabbing && pItem){
                 //Debug.Log("Grab");
-                item = possibleItem;
+                item = pItem;
                 previousAnchorPivot = item.parent;
                 item.SetParent(AnchorPivot);
                 item.localPosition = Vector3.zero;
@@ -33,7 +37,7 @@ public class GrabItem : MonoBehaviour
 
                 grabbing=true;
             }
-            else{
+            else if (grabbing){
                 //Debug.Log("posItem: "+possibleItem);
                 //Debug.Log(previousAnchorPivot);
                 item.SetParent(previousAnchorPivot);
@@ -50,19 +54,45 @@ public class GrabItem : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    /*void OnTriggerStay(Collider other)
     {
         if (other.tag=="Item"){
             possibleItem = other.transform;
+        }
+    }*/
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag=="Item" && OnArray(other.transform)==-1){
+            possibleItem.Add(other.transform);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (possibleItem==other.transform){
-            possibleItem=null;
+        if (OnArray(other.transform)!=-1){
+            possibleItem.RemoveAt(OnArray(other.transform));
         }
     }
 
-    
+    int OnArray(Transform t){
+        for (int i = 0; i < possibleItem.Count; i++)
+        {
+            if (possibleItem[i]==t) return i;
+        }
+        return -1;
+    }
+
+    int GetShortDistance(){
+        int f = -1;
+        float dist = 0;
+        for (int i = 0; i < possibleItem.Count; i++)
+        {
+            if (Vector3.Distance(transform.position, possibleItem[i].position)> dist){
+                dist = Vector3.Distance(transform.position, possibleItem[i].position);
+                f = i;
+            }
+        }
+        return f;
+    }
 }
