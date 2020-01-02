@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36196520a72acf4295d020acd96a70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DuckScale: {x: 1.2, y: 0.8, z: 1}
+  DuckScale: {x: 1, y: 0.8, z: 1}
 --- !u!114 &42067950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36196520a72acf4295d020acd96a70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DuckScale: {x: 1.2, y: 0.4, z: 0.6}
+  DuckScale: {x: 0.6, y: 0.5, z: 1.3}
 --- !u!114 &234961963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2508,19 +2508,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.35, z: 0.05}
   m_Center: {x: 0.04, y: 0.18, z: 0}
---- !u!135 &1083724512
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083724510}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1083724513
 Rigidbody:
   m_ObjectHideFlags: 0

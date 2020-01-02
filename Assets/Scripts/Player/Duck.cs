@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Duck : MonoBehaviour
 {
-    public Vector3 DuckScale = new Vector3(1f,1f,1f);
+    public Vector3 DuckScale  = new Vector3(1f,1f,1f);
     Vector3 nowScale;
     bool ducking;
 
@@ -17,7 +17,7 @@ public class Duck : MonoBehaviour
             if (!ducking){
                 nowScale = transform.localScale;
                 transform.localScale = DuckScale;
-            }
+            }   
             else {
                 transform.localScale = nowScale;
             }
