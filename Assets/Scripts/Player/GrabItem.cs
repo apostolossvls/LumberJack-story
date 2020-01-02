@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GrabItem : MonoBehaviour
 {
-    //public GrabControl grabControl;
     public Transform AnchorPivot;
     Transform previousAnchorPivot;
     List<Transform> possibleItem;

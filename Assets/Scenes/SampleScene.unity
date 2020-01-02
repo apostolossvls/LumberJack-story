@@ -307,7 +307,6 @@ GameObject:
   - component: {fileID: 42067949}
   - component: {fileID: 42067950}
   - component: {fileID: 42067951}
-  - component: {fileID: 42067952}
   - component: {fileID: 42067945}
   - component: {fileID: 42067944}
   m_Layer: 8
@@ -415,7 +414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed6c757c436a7744863134ee0f98d28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabControl: {fileID: 42067952}
   rig: {fileID: 42067944}
   layerMask:
     serializedVersion: 2
@@ -435,7 +433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fdd4a3639e10a643af1f4fd11d28fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabControl: {fileID: 42067952}
   rig: {fileID: 42067944}
   layerMask:
     serializedVersion: 2
@@ -482,24 +479,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnchorPivot: {fileID: 1287247662}
---- !u!114 &42067952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42067941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a478aff9f21cc2148ab265add6511d7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabCollider: {fileID: 572885255}
-  leftHandGrabbing: 0
-  rightHandGrabbing: 0
-  leftGrab: {fileID: 0}
-  rightGrab: {fileID: 0}
-  script: {fileID: 0}
 --- !u!114 &42067953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,7 +496,7 @@ MonoBehaviour:
   rightHandGrabbing: 0
   leftGrab: {fileID: 0}
   rightGrab: {fileID: 0}
-  script: {fileID: 0}
+  grabForce: 300
 --- !u!1 &60578152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2139,7 +2118,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
+  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
     w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -3756,7 +3735,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584261115}
-  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
+  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
     w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
