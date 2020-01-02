@@ -329,6 +329,7 @@ Transform:
   m_Children:
   - {fileID: 554042026}
   - {fileID: 1287247662}
+  - {fileID: 644262458}
   - {fileID: 572885253}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -492,6 +493,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabCollider: {fileID: 572885255}
+  HandPivot:
+  - {fileID: 1287247662}
+  - {fileID: 644262458}
   leftHandGrabbing: 0
   rightHandGrabbing: 0
   leftGrab: {fileID: 0}
@@ -1336,7 +1340,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 42067942}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &572885254
 SphereCollider:
@@ -1490,6 +1494,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617085498}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &644262457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 644262458}
+  m_Layer: 8
+  m_Name: LeftHandPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &644262458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644262457}
+  m_LocalRotation: {x: 0.12613654, y: 0.09199972, z: -0.05444695, w: 0.98623586}
+  m_LocalPosition: {x: -0.2, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 42067942}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 15, y: 10, z: -5}
 --- !u!1 &701106433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,7 +3361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1287247662}
   m_Layer: 8
-  m_Name: HandPivot
+  m_Name: RightHandPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3421,7 +3455,7 @@ SphereCollider:
   m_GameObject: {fileID: 1466810480}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -3470,7 +3504,11 @@ ScaleConstraint:
   m_AffectScalingZ: 1
   m_IsContraintActive: 1
   m_IsLocked: 1
-  m_Sources: []
+  m_Sources:
+  - sourceTransform: {fileID: 1287247662}
+    weight: 0
+  - sourceTransform: {fileID: 1423942172}
+    weight: 0
 --- !u!1 &1538897745
 GameObject:
   m_ObjectHideFlags: 0
@@ -3529,7 +3567,7 @@ SphereCollider:
   m_GameObject: {fileID: 1538897745}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -3564,7 +3602,11 @@ ScaleConstraint:
   m_AffectScalingZ: 1
   m_IsContraintActive: 1
   m_IsLocked: 1
-  m_Sources: []
+  m_Sources:
+  - sourceTransform: {fileID: 1287247662}
+    weight: 0
+  - sourceTransform: {fileID: 1423942172}
+    weight: 0
 --- !u!1 &1576432317
 GameObject:
   m_ObjectHideFlags: 0

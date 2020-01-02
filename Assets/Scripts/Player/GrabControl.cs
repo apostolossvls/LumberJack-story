@@ -16,6 +16,8 @@ public struct GrabObject
 public class GrabControl : MonoBehaviour
 {
     public GrabCollider grabCollider;
+    public Transform[] HandPivot;
+    Transform[] ItemParent = new Transform[2];
     List<Transform> possibleGrabs;
     string[] grabTags;
     public bool leftHandGrabbing;
@@ -38,6 +40,16 @@ public class GrabControl : MonoBehaviour
             if (possibleGrabs[index].tag==grabTags[0]){ //item
                 //grab item
                 Debug.Log("grabbing item (grab control)");
+                if (leftHandGrabbing && rightHandGrabbing){
+                    ReleaseHand(true, false);
+                    GrabItem(possibleGrabs[index], true);
+                }
+                else if (rightHandGrabbing && !leftHandGrabbing){
+                    GrabItem(possibleGrabs[index], false);
+                }
+                else {
+                    GrabItem(possibleGrabs[index], true);
+                }
             }
             else if (possibleGrabs[index].tag==grabTags[1]){ //fixedJoint , grabbable
                 //grab grabbable
@@ -62,7 +74,7 @@ public class GrabControl : MonoBehaviour
         float dist = float.MaxValue;
         for (int i = 0; i < grabCollider.possibleGrabs.Count; i++)
         {
-            if (Vector3.Distance(transform.position, possibleGrabs[i].position)< dist){
+            if (Vector3.Distance(transform.position, possibleGrabs[i].position)< dist && !IsOnHand(possibleGrabs[i])){
                 dist = Vector3.Distance(transform.position, possibleGrabs[i].position);
                 f = i;
             }
@@ -70,34 +82,46 @@ public class GrabControl : MonoBehaviour
         return f;
     }
 
-    public void GrabBothHands(Component c, Transform t){
-        ReleaseHand();
-        leftHandGrabbing = true;
-        rightHandGrabbing = true;
-        leftGrab = t;
-        rightGrab = t;
+    bool IsOnHand(Transform t){
+        if (t==rightGrab) return true;
+        else if (t==leftGrab) return true;
+        else return false;
     }
 
-    void ReleaseHand(bool rLeft = true, bool rRight = true){
-        if (rLeft && leftHandGrabbing){
-            leftHandGrabbing = false;
-            if (leftGrab.tag=="Draggable"){
-                ReleaseDraggable(leftGrab);
-            }
-            else if (leftGrab.tag=="Grabbable"){
-                ReleaseGrabbable(leftGrab);
-            }
-            leftGrab=null;
-        }
+    public void GrabBothHands(Component c, Transform t){
+        ReleaseHand();
+        rightHandGrabbing = true;
+        leftHandGrabbing = true;
+        rightGrab = t;
+        leftGrab = t;
+    }
+
+    void ReleaseHand(bool rRight = true, bool rLeft = true){
         if (rRight && rightHandGrabbing){
             rightHandGrabbing = false;
-            if (rightGrab.tag=="Draggable"){
-                ReleaseDraggable(rightGrab);
+            if (rightGrab.tag=="Item"){
+                ReleaseItem(rightGrab, true);
             }
             else if (rightGrab.tag=="Grabbable"){
                 ReleaseGrabbable(rightGrab);
             }
+            else if (rightGrab.tag=="Draggable"){
+                ReleaseDraggable(rightGrab);
+            }
             rightGrab=null;
+        }
+        if (rLeft && leftHandGrabbing){
+            leftHandGrabbing = false;
+            if (leftGrab.tag=="Item"){
+                ReleaseItem(leftGrab, false);
+            }
+            else if (leftGrab.tag=="Grabbable"){
+                ReleaseGrabbable(leftGrab);
+            }
+            if (leftGrab.tag=="Draggable"){
+                ReleaseDraggable(leftGrab);
+            }
+            leftGrab=null;
         }
 
         /*if (script){
@@ -141,11 +165,57 @@ public class GrabControl : MonoBehaviour
     }
     */
 
-    void GrabDraggable(Transform obj){
-        leftHandGrabbing=true;
+    void GrabItem(Transform obj, bool OnRight){
+        int hand=0;
+        if (OnRight){
+            rightHandGrabbing=true;
+            rightGrab=obj;
+            hand=0;
+        }
+        else{
+            leftHandGrabbing=true;
+            leftGrab=obj;
+            hand=1;
+        }
+
+        //Debug.Log("Grab");
+        ItemParent[hand] = obj.parent;
+        //GameObject g = new GameObject();
+        //g.name = "itemPivot";
+        //g.transform.parent = AnchorPivot.transform;
+        //item.transform.parent = g.transform;
+        obj.parent = HandPivot[hand];
+        obj.localPosition = Vector3.zero;
+        obj.localRotation = Quaternion.identity;
+        if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        foreach (Collider c in obj.GetComponents<Collider>())
+        {
+            if (!c.isTrigger) c.enabled = false;
+        }
+    }
+
+    void GrabGrabbable(Transform obj){
         rightHandGrabbing=true;
-        leftGrab=obj;
+        leftHandGrabbing=true;
         rightGrab=obj;
+        leftGrab=obj;
+
+        //Debug.DrawRay( transform.position, transform.right, Color.black, 1f);
+        FixedJoint fj = obj.gameObject.AddComponent<FixedJoint>();
+        fj.breakForce = grabForce;
+        fj.connectedBody = GetComponent<Rigidbody>();
+        if (obj.GetComponent<Rigidbody>()){
+            //m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
+            rigidbodyConstraints = obj.GetComponent<Rigidbody>().constraints;
+            //holdingGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        }
+    }
+
+    void GrabDraggable(Transform obj){
+        rightHandGrabbing=true;
+        leftHandGrabbing=true;
+        rightGrab=obj;
+        leftGrab=obj;
 
         //Debug.DrawRay( transform.position, transform.right, Color.black, 1f);
         SpringJoint sj = obj.gameObject.AddComponent<SpringJoint>();
@@ -165,21 +235,26 @@ public class GrabControl : MonoBehaviour
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =false;
     }
 
-    void GrabGrabbable(Transform obj){
-        leftHandGrabbing=true;
-        rightHandGrabbing=true;
-        leftGrab=obj;
-        rightGrab=obj;
-
-        //Debug.DrawRay( transform.position, transform.right, Color.black, 1f);
-        FixedJoint fj = obj.gameObject.AddComponent<FixedJoint>();
-        fj.breakForce = grabForce;
-        fj.connectedBody = GetComponent<Rigidbody>();
-        if (obj.GetComponent<Rigidbody>()){
-            //m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
-            rigidbodyConstraints = obj.GetComponent<Rigidbody>().constraints;
-            //holdingGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+    void ReleaseItem(Transform t, bool OnRight){
+        //Debug.Log("posItem: "+possibleItem);
+        //Debug.Log(previousAnchorPivot);
+        t.SetParent(ItemParent[OnRight? 0 : 1]);
+        foreach (Collider c in t.GetComponents<Collider>())
+        {
+            if (!c.isTrigger) c.enabled = true;
         }
+        if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+        //Destroy(AnchorPivot.Find("itemPivot").gameObject);
+        // myObjList.Where(x => x.name == yourname).SingleOrDefault();
+        //if (previousAnchorPivot) item.SetParent(previousAnchorPivot);
+        //else item.DetachChildren();
+    }
+
+    void ReleaseGrabbable(Transform t){
+        Destroy(t.GetComponent<FixedJoint>());
+        //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
+        if (t.position.z!=0) 
+            t.position = new Vector3(t.position.x, t.position.y, 0);
     }
 
     void ReleaseDraggable(Transform t){
@@ -189,12 +264,5 @@ public class GrabControl : MonoBehaviour
             t.position = new Vector3(t.position.x, t.position.y, 0);
         
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =true;
-    }
-
-    void ReleaseGrabbable(Transform t){
-        Destroy(t.GetComponent<FixedJoint>());
-        //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
-        if (t.position.z!=0) 
-            t.position = new Vector3(t.position.x, t.position.y, 0);
     }
 }
