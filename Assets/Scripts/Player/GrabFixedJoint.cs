@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GrabFixedJoint : MonoBehaviour
 {
+    public GrabControl grabControl;
     public Rigidbody rig;
     public LayerMask layerMask;
     public float maxDistance;
@@ -47,7 +48,9 @@ public class GrabFixedJoint : MonoBehaviour
         }
     }
 
-    void ResetHolding(){
+    public void ResetHolding(){
+        if (grabControl) grabControl.GrabBothHands(this, holdingGameObject.transform);
+
         //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
         if (holdingGameObject.transform.position.z!=0) 
             holdingGameObject.transform.position = new Vector3(holdingGameObject.transform.position.x, holdingGameObject.transform.position.y, 0);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GrabItem : MonoBehaviour
 {
+    //public GrabControl grabControl;
     public Transform AnchorPivot;
     Transform previousAnchorPivot;
     List<Transform> possibleItem;
@@ -42,42 +43,43 @@ public class GrabItem : MonoBehaviour
                 grabbing=true;
             }
             else if (grabbing){
-                //Debug.Log("posItem: "+possibleItem);
-                //Debug.Log(previousAnchorPivot);
-                item.SetParent(previousAnchorPivot);
-                foreach (Collider c in item.GetComponents<Collider>())
-                {
-                    if (!c.isTrigger) c.enabled = true;
-                }
-                if (item.GetComponent<Rigidbody>()) item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
-                Destroy(AnchorPivot.Find("itemPivot").gameObject);
-                // myObjList.Where(x => x.name == yourname).SingleOrDefault();
-                //if (previousAnchorPivot) item.SetParent(previousAnchorPivot);
-                //else item.DetachChildren();
-                grabbing=false;
-                Debug.Log("Not grabbing");
+                ResetHodling();
             }
         }
     }
 
-    /*void OnTriggerStay(Collider other)
-    {
-        if (other.tag=="Item"){
-            possibleItem = other.transform;
+    public void ResetHodling(){
+        //Debug.Log("posItem: "+possibleItem);
+        //Debug.Log(previousAnchorPivot);
+        item.SetParent(previousAnchorPivot);
+        foreach (Collider c in item.GetComponents<Collider>())
+        {
+            if (!c.isTrigger) c.enabled = true;
         }
-    }*/
+        if (item.GetComponent<Rigidbody>()) item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+        //Destroy(AnchorPivot.Find("itemPivot").gameObject);
+        // myObjList.Where(x => x.name == yourname).SingleOrDefault();
+        //if (previousAnchorPivot) item.SetParent(previousAnchorPivot);
+        //else item.DetachChildren();
+        grabbing=false;
+        Debug.Log("Not grabbing");
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag=="Item" && OnArray(other.transform)==-1){
-            possibleItem.Add(other.transform);
+        if (this.enabled){
+            if (other.tag=="Item" && OnArray(other.transform)==-1){
+                possibleItem.Add(other.transform);
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (OnArray(other.transform)!=-1){
-            possibleItem.RemoveAt(OnArray(other.transform));
+        if (this.enabled){
+            if (OnArray(other.transform)!=-1){
+                possibleItem.RemoveAt(OnArray(other.transform));
+            }
         }
     }
 
