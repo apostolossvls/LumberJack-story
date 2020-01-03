@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Duck : MonoBehaviour
 {
+    public Transform body;
     public Vector3 DuckScale  = new Vector3(1f,1f,1f);
     Vector3 nowScale;
     bool ducking;
@@ -15,11 +16,11 @@ public class Duck : MonoBehaviour
     {
         if (Input.GetButtonDown("Duck")){
             if (!ducking){
-                nowScale = transform.localScale;
-                transform.localScale = DuckScale;
+                nowScale = body.transform.localScale;
+                body.transform.localScale = DuckScale;
             }   
             else {
-                transform.localScale = nowScale;
+                body.transform.localScale = nowScale;
             }
             ducking=!ducking;
         }
