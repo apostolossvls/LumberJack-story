@@ -15,6 +15,10 @@ public struct GrabObject
 
 public class GrabControl : MonoBehaviour
 {
+    public bool IsHuman = true;
+    public bool canGrabItem = true;
+    public bool canGrabGrabbable = true;
+    public bool canGrabDraggable = true;
     public GrabCollider grabCollider;
     public Transform[] HandPivot;
     Transform[] ItemParent = new Transform[2];
@@ -37,27 +41,33 @@ public class GrabControl : MonoBehaviour
         grabTags = grabCollider.tags;
         int index = GetShortDistance();
         if (index!=-1 && Input.GetButtonUp("Grab")){
-            if (possibleGrabs[index].tag==grabTags[0]){ //item
+            if (possibleGrabs[index].tag==grabTags[0] && canGrabItem){ //item
                 //grab item
                 Debug.Log("grabbing item (grab control)");
-                if (leftHandGrabbing && rightHandGrabbing){
+                if (IsHuman){
+                    if (leftHandGrabbing && rightHandGrabbing){
+                        ReleaseHand(true, false);
+                        GrabItem(possibleGrabs[index], true);
+                    }
+                    else if (rightHandGrabbing && !leftHandGrabbing){
+                        GrabItem(possibleGrabs[index], false);
+                    }
+                    else {
+                        GrabItem(possibleGrabs[index], true);
+                    }
+                }
+                else {
                     ReleaseHand(true, false);
                     GrabItem(possibleGrabs[index], true);
                 }
-                else if (rightHandGrabbing && !leftHandGrabbing){
-                    GrabItem(possibleGrabs[index], false);
-                }
-                else {
-                    GrabItem(possibleGrabs[index], true);
-                }
             }
-            else if (possibleGrabs[index].tag==grabTags[1]){ //fixedJoint , grabbable
+            else if (possibleGrabs[index].tag==grabTags[1] && IsHuman && canGrabGrabbable){ //fixedJoint , grabbable
                 //grab grabbable
                 Debug.Log("grabbing grabbable (grab control)");
                 ReleaseHand();
                 GrabGrabbable(possibleGrabs[index]);
             } 
-            else if (possibleGrabs[index].tag==grabTags[2]){ //pushdrag , draggable
+            else if (possibleGrabs[index].tag==grabTags[2] && IsHuman && canGrabDraggable){ //pushdrag , draggable
                 //grab draggable
                 Debug.Log("grabbing draggable (grab control)");
                 ReleaseHand();
@@ -86,14 +96,6 @@ public class GrabControl : MonoBehaviour
         if (t==rightGrab) return true;
         else if (t==leftGrab) return true;
         else return false;
-    }
-
-    public void GrabBothHands(Component c, Transform t){
-        ReleaseHand();
-        rightHandGrabbing = true;
-        leftHandGrabbing = true;
-        rightGrab = t;
-        leftGrab = t;
     }
 
     void ReleaseHand(bool rRight = true, bool rLeft = true){
