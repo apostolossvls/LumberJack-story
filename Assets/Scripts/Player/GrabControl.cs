@@ -187,13 +187,34 @@ public class GrabControl : MonoBehaviour
         //g.transform.parent = AnchorPivot.transform;
         //item.transform.parent = g.transform;
         obj.parent = HandPivot[hand];
+        /*
         obj.localPosition = Vector3.zero;
         obj.localRotation = Quaternion.identity;
+        */
+        StopCoroutine("GrabItemOverTime");
+        StartCoroutine(GrabItemOverTime(obj, HandPivot[hand], 10f, hand));
+
         if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         foreach (Collider c in obj.GetComponents<Collider>())
         {
             if (!c.isTrigger) c.enabled = false;
         }
+    }
+
+    private Vector3 posVel = Vector3.zero;
+
+    IEnumerator GrabItemOverTime(Transform t, Transform newT, float speed, int handIndex){
+        float timer=0;
+        while (timer<1/speed){
+            t.localRotation = Quaternion.Slerp(t.localRotation, newT.localRotation, Time.deltaTime * speed);
+            t.localPosition = Vector3.SmoothDamp(t.localPosition, newT.localPosition, ref posVel, 1/speed);
+            timer+=Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        //t.parent = HandPivot[handIndex];
+        t.localPosition = Vector3.zero;
+        t.localRotation = Quaternion.identity;
+        yield return null;
     }
 
     void GrabGrabbable(Transform obj){
@@ -240,6 +261,7 @@ public class GrabControl : MonoBehaviour
     void ReleaseItem(Transform t, bool OnRight){
         //Debug.Log("posItem: "+possibleItem);
         //Debug.Log(previousAnchorPivot);
+        StopCoroutine("GrabItemOverTime");
         t.SetParent(ItemParent[OnRight? 0 : 1]);
         foreach (Collider c in t.GetComponents<Collider>())
         {
