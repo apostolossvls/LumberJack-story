@@ -2242,7 +2242,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
+  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
     w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -3508,7 +3508,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1466810481}
-  - component: {fileID: 1466810482}
   - component: {fileID: 1466810483}
   - component: {fileID: 1466810484}
   - component: {fileID: 1466810485}
@@ -3534,19 +3533,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1466810482
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1466810480}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1466810483
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3604,7 +3590,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1538897749}
-  - component: {fileID: 1538897748}
   - component: {fileID: 1538897747}
   - component: {fileID: 1538897746}
   - component: {fileID: 1538897750}
@@ -3644,19 +3629,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
---- !u!135 &1538897748
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538897745}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1538897749
 Transform:
   m_ObjectHideFlags: 0
@@ -3861,7 +3833,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584261115}
-  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
+  m_LocalRotation: {x: 0.038102802, y: 0.0000000020589528, z: 0.0000000022857918,
     w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
