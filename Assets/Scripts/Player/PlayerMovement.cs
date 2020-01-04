@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 v = new Vector3(movement.z, movement.y, movement.x);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(v), Time.deltaTime * rotationSpeed);
         }*/
-        Vector3 v = lookingLeft? new Vector3(1.001f, 0f, 0f) : new Vector3 (-1f, 0f, 0f);
+        Vector3 v = lookingLeft? new Vector3(1f, 0f, -0.001f) : new Vector3 (-1f, 0f, -0.001f);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(v), Time.deltaTime * rotationSpeed);
     }
 
