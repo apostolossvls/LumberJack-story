@@ -19,6 +19,7 @@ public class InteractControl : MonoBehaviour
     public Transform rightGrab;
     public float grabForce=300f;
     RigidbodyConstraints rigidbodyConstraints;
+    public GameObject indicator;
 
     void Start()
     {
@@ -70,6 +71,19 @@ public class InteractControl : MonoBehaviour
         if (Input.GetButtonUp("Release")){
             ReleaseHand();
         }
+
+        if (possibleinteracts.Count>0 && index>=0){
+            if (!indicator.activeSelf) indicator.SetActive(true);
+            Vector3 tempT = possibleinteracts[index].transform.position;
+            indicator.transform.position = tempT;
+        }
+        else {
+            indicator.SetActive(false);
+        }
+    }
+
+    void OnDisable(){
+        if (indicator.activeSelf) indicator.SetActive(false);
     }
 
     int GetShortDistance(){
