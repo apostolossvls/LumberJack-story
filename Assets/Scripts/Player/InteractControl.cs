@@ -29,10 +29,10 @@ public class InteractControl : MonoBehaviour
         possibleinteracts = interactCollider.possibleinteracts;
         interactTags = interactCollider.tags;
         int index = GetShortDistance();
-        if (index!=-1 && Input.GetButtonUp("Grab")){
+        if (index!=-1 && Input.GetButtonUp("Interact")){
             if (possibleinteracts[index].tag==interactTags[0] && canGrabItem){ //item
                 //grab item
-                Debug.Log("grabbing item (grab control)");
+                Debug.Log("grabbing item (InteractControl)");
                 if (IsHuman){
                     if (leftHandGrabbing && rightHandGrabbing){
                         ReleaseHand(true, false);
@@ -51,17 +51,21 @@ public class InteractControl : MonoBehaviour
                 }
             }
             else if (possibleinteracts[index].tag==interactTags[1] && IsHuman && canGrabGrabbable){ //fixedJoint , grabbable
-                //grab grabbable
-                Debug.Log("grabbing grabbable (grab control)");
+                Debug.Log("grabbing grabbable (InteractControl)");
                 ReleaseHand();
                 GrabGrabbable(possibleinteracts[index]);
             } 
             else if (possibleinteracts[index].tag==interactTags[2] && IsHuman && canGrabDraggable){ //pushdrag , draggable
-                //grab draggable
-                Debug.Log("grabbing draggable (grab control)");
+                Debug.Log("grabbing draggable (InteractControl)");
                 ReleaseHand();
                 GrabDraggable(possibleinteracts[index]);
-            } 
+            }
+            else if (possibleinteracts[index].tag==interactTags[3] && IsHuman){ //interact
+                Debug.Log("interacting (InteractControl)");
+                //ReleaseHand();
+                //GrabDraggable(possibleinteracts[index]);
+                Interact();
+            }
         }
         if (Input.GetButtonUp("Release")){
             ReleaseHand();
@@ -99,6 +103,9 @@ public class InteractControl : MonoBehaviour
             else if (rightGrab.tag=="Draggable"){
                 ReleaseDraggable(rightGrab);
             }
+            else if (rightGrab.tag=="HumanInteractable"){
+                //do something
+            }
             rightGrab=null;
         }
         if (rLeft && leftHandGrabbing){
@@ -111,6 +118,9 @@ public class InteractControl : MonoBehaviour
             }
             if (leftGrab.tag=="Draggable"){
                 ReleaseDraggable(leftGrab);
+            }
+            if (leftGrab.tag=="HumanInteractable"){
+                //do something
             }
             leftGrab=null;
         }
@@ -245,6 +255,11 @@ public class InteractControl : MonoBehaviour
         }*/
 
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =false;
+    }
+
+    void Interact(){
+        Debug.Log("interacting function");
+        //do something
     }
 
     void ReleaseItem(Transform t, bool OnRight){

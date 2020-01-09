@@ -47,6 +47,9 @@ public class InteractCollider : MonoBehaviour
         else if (t=="Draggable"){
             return true;
         }
+        else if (t=="HumanInteractable"){
+            return true;
+        }
         else return false;
     }
 
