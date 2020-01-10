@@ -11,6 +11,7 @@ public class InteractControl : MonoBehaviour
     public InteractCollider interactCollider;
     public Transform[] HandPivot;
     public Transform[] GrabPivots; //0.front , 1.back , 2.front up, 3.down
+    public bool[] GrabPivotsUsing;
     Transform[] ItemParent = new Transform[2];
     List<Transform> possibleinteracts;
     string[] interactTags;
@@ -80,6 +81,14 @@ public class InteractControl : MonoBehaviour
             Vector2 inp;
             inp.x = Input.GetAxisRaw("SecondHorizontal");
             inp.y = Input.GetAxisRaw("SecondVertical");
+            if (leftGrab && rightGrab && leftGrab == rightGrab && IsHuman){
+                if (rightGrab.tag=="Grabbable"){
+                    //GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f);
+                    //StopCoroutine("GrabItemOverTime");
+                    //StartCoroutine(GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f));
+                    ChangeGrabbablePosition(GrabbablePosition(inp));
+                }
+            }
         }
         /*movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical"); //Horizontal */
@@ -109,6 +118,19 @@ public class InteractControl : MonoBehaviour
             }
         }
         return f;
+    }
+
+    int GrabbablePosition(Vector2 inp){
+        int pos = -1;
+        if (Mathf.Abs(inp.x)>Mathf.Abs(inp.y)){
+            if (inp.x>0) pos = 0;
+            else pos = 1;
+        }
+        else if (inp.y!=0){
+            if (inp.y>0) pos = 2;
+            else pos = 3;
+        }
+        return pos;
     }
 
     bool IsOnHand(Transform t){
@@ -217,7 +239,7 @@ public class InteractControl : MonoBehaviour
         obj.localRotation = Quaternion.identity;
         */
         StopCoroutine("GrabItemOverTime");
-        StartCoroutine(GrabItemOverTime(obj, HandPivot[hand], 10f, hand));
+        StartCoroutine(GrabOverTime(obj, HandPivot[hand], 10f, hand));
 
         if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         foreach (Collider c in obj.GetComponents<Collider>())
@@ -228,7 +250,7 @@ public class InteractControl : MonoBehaviour
 
     private Vector3 posVel = Vector3.zero;
 
-    IEnumerator GrabItemOverTime(Transform t, Transform newT, float speed, int handIndex){
+    IEnumerator GrabOverTime(Transform t, Transform newT, float speed, int handIndex=0){
         float timer=0;
         while (timer<1/speed){
             t.localRotation = Quaternion.Slerp(t.localRotation, newT.localRotation, Time.deltaTime * speed);
@@ -248,15 +270,35 @@ public class InteractControl : MonoBehaviour
         rightGrab=obj;
         leftGrab=obj;
 
+        obj.parent = GrabPivots[0];
+        StopCoroutine("GrabItemOverTime");
+        StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0 ], 0.5f));
+
+        if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        foreach (Collider c in obj.GetComponents<Collider>())
+        {
+            if (!c.isTrigger) c.enabled = false;
+        }
+
+        /*
         //Debug.DrawRay( transform.position, transform.right, Color.black, 1f);
         FixedJoint fj = obj.gameObject.AddComponent<FixedJoint>();
         fj.breakForce = grabForce;
         fj.connectedBody = GetComponent<Rigidbody>();
+        
+
         if (obj.GetComponent<Rigidbody>()){
             //m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
             rigidbodyConstraints = obj.GetComponent<Rigidbody>().constraints;
             //holdingGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
+        */
+    }
+
+    void ChangeGrabbablePosition(int pos){
+        rightGrab.parent = GrabPivots[pos];
+        StopCoroutine("GrabItemOverTime");
+        StartCoroutine(GrabOverTime(rightGrab, GrabPivots[pos], 5f));
     }
 
     void GrabDraggable(Transform obj){
@@ -305,7 +347,13 @@ public class InteractControl : MonoBehaviour
     }
 
     void ReleaseGrabbable(Transform t){
-        Destroy(t.GetComponent<FixedJoint>());
+        //Destroy(t.GetComponent<FixedJoint>());
+
+        foreach (Collider c in t.GetComponents<Collider>())
+        {
+            if (!c.isTrigger) c.enabled = true;
+        }
+
         //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
         if (t.position.z!=0) 
             t.position = new Vector3(t.position.x, t.position.y, 0);
