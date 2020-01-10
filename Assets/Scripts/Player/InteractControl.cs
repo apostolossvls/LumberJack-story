@@ -272,7 +272,7 @@ public class InteractControl : MonoBehaviour
 
         obj.parent = GrabPivots[0];
         StopCoroutine("GrabItemOverTime");
-        StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0 ], 0.5f));
+        StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0], 10f));
 
         if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         foreach (Collider c in obj.GetComponents<Collider>())
@@ -298,7 +298,7 @@ public class InteractControl : MonoBehaviour
     void ChangeGrabbablePosition(int pos){
         rightGrab.parent = GrabPivots[pos];
         StopCoroutine("GrabItemOverTime");
-        StartCoroutine(GrabOverTime(rightGrab, GrabPivots[pos], 5f));
+        StartCoroutine(GrabOverTime(rightGrab, GrabPivots[pos], 10f));
     }
 
     void GrabDraggable(Transform obj){
