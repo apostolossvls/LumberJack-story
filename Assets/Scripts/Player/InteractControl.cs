@@ -10,6 +10,7 @@ public class InteractControl : MonoBehaviour
     public bool canGrabDraggable = true;
     public InteractCollider interactCollider;
     public Transform[] HandPivot;
+    public Transform[] GrabPivots; //0.front , 1.back , 2.front up, 3.down
     Transform[] ItemParent = new Transform[2];
     List<Transform> possibleinteracts;
     string[] interactTags;
@@ -68,9 +69,20 @@ public class InteractControl : MonoBehaviour
                 Interact();
             }
         }
+
         if (Input.GetButtonUp("Release")){
             ReleaseHand();
         }
+
+        //second Cross
+        if (Input.GetAxisRaw("SecondHorizontal")!=0 || Input.GetAxisRaw("SecondVertical")!=0){
+            //Debug.Log("second cross movement");
+            Vector2 inp;
+            inp.x = Input.GetAxisRaw("SecondHorizontal");
+            inp.y = Input.GetAxisRaw("SecondVertical");
+        }
+        /*movement.x = Input.GetAxisRaw("Horizontal");
+        movement.z = Input.GetAxisRaw("Vertical"); //Horizontal */
 
         if (possibleinteracts.Count>0 && index>=0){
             if (!indicator.activeSelf) indicator.SetActive(true);
