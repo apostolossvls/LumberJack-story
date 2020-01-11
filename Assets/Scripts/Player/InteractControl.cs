@@ -76,13 +76,13 @@ public class InteractControl : MonoBehaviour
         }
 
         //second Cross
-        if (Input.GetAxisRaw("SecondHorizontal")!=0 || Input.GetAxisRaw("SecondVertical")!=0){
+        if (Mathf.Abs(Input.GetAxisRaw("SecondHorizontal")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("SecondVertical")) > 0.3f){
             //Debug.Log("second cross movement");
             Vector2 inp;
             inp.x = Input.GetAxisRaw("SecondHorizontal");
             inp.y = Input.GetAxisRaw("SecondVertical");
             if (leftGrab && rightGrab && leftGrab == rightGrab && IsHuman){
-                if (rightGrab.tag=="Grabbable"){
+                if (rightGrab.tag=="Grabbable" && !GrabbablePositionMatch(GrabbablePosition(inp))){
                     //GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f);
                     //StopCoroutine("GrabItemOverTime");
                     //StartCoroutine(GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f));
@@ -131,6 +131,17 @@ public class InteractControl : MonoBehaviour
             else pos = 3;
         }
         return pos;
+    }
+
+    bool GrabbablePositionMatch(int j) {
+        for (int i = 0; i < GrabPivotsUsing.Length; i++)
+        {
+            if (GrabPivotsUsing[i]){
+                if (i==j) return true;
+                else return false;
+            } 
+        }
+        return false;
     }
 
     bool IsOnHand(Transform t){
@@ -270,6 +281,9 @@ public class InteractControl : MonoBehaviour
         rightGrab=obj;
         leftGrab=obj;
 
+        ItemParent[0] = obj.parent;
+        ItemParent[1] = obj.parent;
+
         obj.parent = GrabPivots[0];
         StopCoroutine("GrabItemOverTime");
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0], 10f));
@@ -297,6 +311,13 @@ public class InteractControl : MonoBehaviour
 
     void ChangeGrabbablePosition(int pos){
         rightGrab.parent = GrabPivots[pos];
+
+        for (int i = 0; i < GrabPivotsUsing.Length; i++)
+        {
+            if (i==pos) GrabPivotsUsing[i] = true;
+            else GrabPivotsUsing[i] = false;
+        }
+
         StopCoroutine("GrabItemOverTime");
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[pos], 10f));
     }
@@ -349,10 +370,15 @@ public class InteractControl : MonoBehaviour
     void ReleaseGrabbable(Transform t){
         //Destroy(t.GetComponent<FixedJoint>());
 
+        t.parent = ItemParent[0];
+        ItemParent[0] = null;
+        ItemParent[1] = null;
+
         foreach (Collider c in t.GetComponents<Collider>())
         {
             if (!c.isTrigger) c.enabled = true;
         }
+        if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
 
         //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
         if (t.position.z!=0) 
