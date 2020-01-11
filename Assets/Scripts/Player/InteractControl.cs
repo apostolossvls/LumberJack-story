@@ -412,9 +412,11 @@ public class InteractControl : MonoBehaviour
     }
 
     void Throw(){
-        Debug.Log("Throw");
+        //Debug.Log("Throw");
         if (rightGrab.tag=="Item"){
-            rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*10, ForceMode.Impulse);
+            float f = 10f;
+            if (!IsHuman) f = 5;
+            rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
             ReleaseHand(true, false);
         }
         else if (rightGrab.tag=="Grabbable"){
