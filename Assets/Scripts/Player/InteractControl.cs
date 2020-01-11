@@ -23,6 +23,12 @@ public class InteractControl : MonoBehaviour
     RigidbodyConstraints rigidbodyConstraints;
     public GameObject indicator;
 
+    //TimersTarget
+    public float HoldReleaseTimerTarget=1f;
+
+    //timers
+    float HoldReleaseTimer;
+
     void Start()
     {
         ReleaseHand();
@@ -72,7 +78,18 @@ public class InteractControl : MonoBehaviour
         }
 
         if (Input.GetButtonUp("Release")){
-            ReleaseHand();
+            if (HoldReleaseTimer < HoldReleaseTimerTarget){
+                ReleaseHand();
+            }
+            else {
+                //HoldRelease
+                Throw();
+            }
+            HoldReleaseTimer=0;
+        }
+
+        if (Input.GetButton("Release")){
+            HoldReleaseTimer+=Time.deltaTime;
         }
 
         //second Cross
@@ -392,5 +409,21 @@ public class InteractControl : MonoBehaviour
             t.position = new Vector3(t.position.x, t.position.y, 0);
         
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =true;
+    }
+
+    void Throw(){
+        Debug.Log("Throw");
+        if (rightGrab.tag=="Item"){
+            rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*10, ForceMode.Impulse);
+            ReleaseHand(true, false);
+        }
+        else if (rightGrab.tag=="Grabbable"){
+            rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
+            ReleaseHand();
+        }
+        else if (rightGrab.tag=="Draggable"){
+            rightGrab.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(rightGrab.position.x-transform.position.x), 0, 0) * 4f, ForceMode.Impulse);
+            ReleaseHand();
+        }
     }
 }
