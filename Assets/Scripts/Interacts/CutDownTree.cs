@@ -32,9 +32,10 @@ public class CutDownTree : MonoBehaviour
 
     void CutDown(){
         log.parent = null;
+        log.tag = "Grabbable";
         if (log.GetComponent<Rigidbody>()) {
             log.GetComponent<Rigidbody>().isKinematic = false;
-            if (cutter) log.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(transform.position.x-cutter.transform.position.x), 0, 0) * 3f, ForceMode.Impulse);
+            if (cutter) log.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(transform.position.x-cutter.transform.position.x), 0, 0) * 0.5f, ForceMode.Impulse);
         }
         Destroy(this);
     }
