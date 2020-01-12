@@ -73,7 +73,7 @@ public class InteractControl : MonoBehaviour
                 Debug.Log("interacting (InteractControl)");
                 //ReleaseHand();
                 //GrabDraggable(possibleinteracts[index]);
-                Interact();
+                Interact(possibleinteracts[index]);
             }
         }
 
@@ -129,9 +129,11 @@ public class InteractControl : MonoBehaviour
         float dist = float.MaxValue;
         for (int i = 0; i < interactCollider.possibleinteracts.Count; i++)
         {
-            if (Vector3.Distance(transform.position, possibleinteracts[i].position)< dist && !IsOnHand(possibleinteracts[i])){
-                dist = Vector3.Distance(transform.position, possibleinteracts[i].position);
-                f = i;
+            if (possibleinteracts[i]){
+                if (Vector3.Distance(transform.position, possibleinteracts[i].position)< dist && !IsOnHand(possibleinteracts[i])){
+                    dist = Vector3.Distance(transform.position, possibleinteracts[i].position);
+                    f = i;
+                }
             }
         }
         return f;
@@ -363,9 +365,10 @@ public class InteractControl : MonoBehaviour
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =false;
     }
 
-    void Interact(){
+    void Interact(Transform t){
         Debug.Log("interacting function");
         //do something
+        t.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
     }
 
     void ReleaseItem(Transform t, bool OnRight){
