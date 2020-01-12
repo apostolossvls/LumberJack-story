@@ -368,7 +368,7 @@ public class InteractControl : MonoBehaviour
     void Interact(Transform t){
         Debug.Log("interacting function");
         //do something
-        t.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
+        t.SendMessage("Interact", transform, SendMessageOptions.DontRequireReceiver);
     }
 
     void ReleaseItem(Transform t, bool OnRight){
