@@ -8,10 +8,12 @@ public class CutDownTree : MonoBehaviour
     Transform cutter;
     Vector3 cutterPos;
     public bool activated;
+    string objTag;
 
     void Start()
     {
         activated=false;
+        objTag = this.tag;
     }
 
     void Update()
@@ -43,9 +45,11 @@ public class CutDownTree : MonoBehaviour
         activated=true;
         cutter = t;
         cutterPos = cutter.position;
+        this.tag = "Untagged";
     }
 
     void Abort(){
         activated = false;
+        this.tag = objTag;
     }
 }

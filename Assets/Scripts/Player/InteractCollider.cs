@@ -11,7 +11,19 @@ public class InteractCollider : MonoBehaviour
         possibleinteracts = new List<Transform>{};
     }
 
-    void OnTriggerEnter(Collider other)
+    void Update(){
+        List<int> indexes = new List<int>{};
+        foreach (Transform t in possibleinteracts)
+        {
+            if (!TagMatch(t.tag)) indexes.Add(OnArray(t));
+        }
+        foreach (int i in indexes)
+        {
+            possibleinteracts.RemoveAt(i);
+        }
+    }
+
+    void OnTriggerStay(Collider other)
     {
         if (this.enabled){
             if (TagMatch(other.tag) && OnArray(other.transform)==-1 && ComponentMatchWithTag(other.tag)){
