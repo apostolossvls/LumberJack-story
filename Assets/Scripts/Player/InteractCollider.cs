@@ -27,7 +27,14 @@ public class InteractCollider : MonoBehaviour
     {
         if (this.enabled){
             if (TagMatch(other.tag) && OnArray(other.transform)==-1 && ComponentMatchWithTag(other.tag)){
-                possibleinteracts.Add(other.transform);
+                //small test (if on other playable cahracter then get only if is on the right hand)
+                if (!other.GetComponentInParent<InteractControl>())
+                    possibleinteracts.Add(other.transform);
+                else {
+                    InteractControl i = other.GetComponentInParent<InteractControl>();
+                    if (i.rightGrab == other.transform || (i.leftGrab == other.transform && !i.rightGrab))
+                    possibleinteracts.Add(other.transform);
+                }
             }
         }
     }

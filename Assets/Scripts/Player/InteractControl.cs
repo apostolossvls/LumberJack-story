@@ -163,7 +163,7 @@ public class InteractControl : MonoBehaviour
         return false;
     }
 
-    bool IsOnHand(Transform t){
+    public bool IsOnHand(Transform t){
         if (t==rightGrab) return true;
         else if (t==leftGrab) return true;
         else return false;
@@ -245,6 +245,15 @@ public class InteractControl : MonoBehaviour
     */
 
     void GrabItem(Transform obj, bool OnRight){
+
+        //test if obj is hand of other playable cahracter
+        if (obj.GetComponentInParent<InteractControl>()){
+            InteractControl i = obj.GetComponentInParent<InteractControl>();
+            if (i.rightGrab == obj) i.SendMessageReleaseHand(true, false);
+            else if (i.leftGrab == obj) i.SendMessageReleaseHand(false, true);
+        }
+
+
         int hand=0;
         if (OnRight){
             rightHandGrabbing=true;
@@ -274,7 +283,8 @@ public class InteractControl : MonoBehaviour
         if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         foreach (Collider c in obj.GetComponents<Collider>())
         {
-            if (!c.isTrigger) c.enabled = false;
+            //if (!c.isTrigger) c.enabled = false; //test
+            if (!c.isTrigger) c.isTrigger = true;
         }
     }
 
@@ -310,7 +320,9 @@ public class InteractControl : MonoBehaviour
         if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         foreach (Collider c in obj.GetComponents<Collider>())
         {
-            if (!c.isTrigger) c.enabled = false;
+            //if (!c.isTrigger) c.enabled = false; //test
+            if (!c.isTrigger) c.isTrigger = true;
+
         }
 
         /*
@@ -378,7 +390,8 @@ public class InteractControl : MonoBehaviour
         t.SetParent(ItemParent[OnRight? 0 : 1]);
         foreach (Collider c in t.GetComponents<Collider>())
         {
-            if (!c.isTrigger) c.enabled = true;
+            //if (!c.isTrigger) c.enabled = true; //test
+            if (c.isTrigger) c.isTrigger = false;
         }
         if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
         //Destroy(AnchorPivot.Find("itemPivot").gameObject);
@@ -396,7 +409,8 @@ public class InteractControl : MonoBehaviour
 
         foreach (Collider c in t.GetComponents<Collider>())
         {
-            if (!c.isTrigger) c.enabled = true;
+            //if (!c.isTrigger) c.enabled = true; //test
+            if (c.isTrigger) c.isTrigger = false;
         }
         if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
 
@@ -430,5 +444,10 @@ public class InteractControl : MonoBehaviour
             rightGrab.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(rightGrab.position.x-transform.position.x), 0, 0) * 4f, ForceMode.Impulse);
             ReleaseHand();
         }
+    }
+
+    //called from other playable character when they take item from hand
+    public void SendMessageReleaseHand(bool rRight = true, bool rLeft = true){
+        ReleaseHand(rRight, rLeft);
     }
 }
