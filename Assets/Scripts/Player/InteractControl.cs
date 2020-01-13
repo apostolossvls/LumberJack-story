@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractControl : MonoBehaviour
 {
@@ -21,11 +22,15 @@ public class InteractControl : MonoBehaviour
     public Transform rightGrab;
     public float grabForce=300f;
     RigidbodyConstraints rigidbodyConstraints;
+
+    //UI
     public GameObject indicator;
+    public GameObject ThrowSlider;
 
     //throw
     bool IsThrowing;
-    public float throwingAngle=0;
+    public float throwingAngleX=0;
+    Vector3 throwingAngle;
     public float throwForce=0;
 
     //TimersTarget
@@ -99,7 +104,7 @@ public class InteractControl : MonoBehaviour
             HoldReleaseTimer+=Time.deltaTime;
             if (HoldReleaseTimer >= HoldReleaseTimerTarget && !IsThrowing){
                 IsThrowing = true;
-                throwingAngle = Mathf.PI/4;
+                throwingAngleX = transform.forward.x>=0? 1 : -1 * Mathf.PI/4;
                 throwForce = 1;
             }
         }
@@ -131,6 +136,15 @@ public class InteractControl : MonoBehaviour
         }
         /*movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical"); //Horizontal */
+
+        if (IsThrowing && (rightGrab.tag=="Item" || rightGrab.tag=="Grabbable")){
+            if (!ThrowSlider.activeSelf) ThrowSlider.SetActive(true);
+            throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;
+            Debug.DrawRay(transform.position, throwingAngle, Color.magenta);
+            ThrowSlider.transform.rotation = Quaternion.LookRotation(throwingAngle);
+            ThrowSlider.GetComponentInChildren<Slider>().value = throwForce;
+        }
+        else if (ThrowSlider.activeSelf) ThrowSlider.SetActive(false);
 
         if (possibleinteracts.Count>0 && index>=0){
             if (!indicator.activeSelf) indicator.SetActive(true);
@@ -456,18 +470,18 @@ public class InteractControl : MonoBehaviour
         rightGrab.SendMessage("OnThrow", SendMessageOptions.DontRequireReceiver);
         //Debug.Log("Throw");
         //Vector3 angle = (new Vector3(throwingAngle, Mathf.Pow((1-Mathf.Pow(throwingAngle, 2)), 1/2), 0));
-        Vector3 angle = new Vector3(throwingAngle, Mathf.Cos(throwingAngle), 0);
-        Debug.DrawRay(transform.position, angle, Color.magenta, 3f);
+        //throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;
+        //Debug.DrawRay(transform.position, throwingAngle, Color.magenta, 3f);
         if (rightGrab.tag=="Item"){
-            float f = 1f;
+            float f = 10f;
             if (!IsHuman) f = 0.3f;
             //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
-            rightGrab.GetComponent<Rigidbody>().AddForce(angle * f * throwForce, ForceMode.Impulse);
+            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * f * throwForce, ForceMode.Impulse);
             ReleaseHand(true, false);
         }
         else if (rightGrab.tag=="Grabbable"){
             //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
-            rightGrab.GetComponent<Rigidbody>().AddForce(angle * throwForce, ForceMode.Impulse);
+            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwForce, ForceMode.Impulse);
             ReleaseHand();
         }
         else if (rightGrab.tag=="Draggable"){
@@ -478,7 +492,7 @@ public class InteractControl : MonoBehaviour
 
     void SetThrowAngle(float inpY, bool fixAdding=true){
         Debug.Log("Cross Y");
-        throwingAngle = Mathf.Clamp(throwingAngle + Time.deltaTime * Mathf.Sign(inpY), -Mathf.PI/2, Mathf.PI/2);
+        throwingAngleX = Mathf.Clamp(throwingAngleX + Time.deltaTime * Mathf.Sign(inpY), -Mathf.PI/2, Mathf.PI/2);
     }
 
     void SetThrowForce(float inpX, bool fixAdding=true){
