@@ -429,10 +429,11 @@ public class InteractControl : MonoBehaviour
     }
 
     void Throw(){
+        rightGrab.SendMessage("OnThrow", SendMessageOptions.DontRequireReceiver);
         //Debug.Log("Throw");
         if (rightGrab.tag=="Item"){
-            float f = 10f;
-            if (!IsHuman) f = 5;
+            float f = 1f;
+            if (!IsHuman) f = 0.3f;
             rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
             ReleaseHand(true, false);
         }
