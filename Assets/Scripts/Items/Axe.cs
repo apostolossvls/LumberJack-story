@@ -5,14 +5,14 @@ using UnityEngine;
 public class Axe : MonoBehaviour
 {
     public float speedForce=1f;
-    Rigidbody rigidbody;
+    Rigidbody rig;
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rig = GetComponent<Rigidbody>();
     }
 
     void OnThrow(){
-        rigidbody.AddTorque(speedForce * transform.right, ForceMode.Acceleration);
+        rig.AddTorque(speedForce * transform.right, ForceMode.Acceleration);
     }
 }

@@ -23,6 +23,11 @@ public class InteractControl : MonoBehaviour
     RigidbodyConstraints rigidbodyConstraints;
     public GameObject indicator;
 
+    //throw
+    bool IsThrowing;
+    public float throwingAngle=0;
+    public float throwForce=0;
+
     //TimersTarget
     public float HoldReleaseTimerTarget=1f;
 
@@ -32,6 +37,7 @@ public class InteractControl : MonoBehaviour
     void Start()
     {
         ReleaseHand();
+        IsThrowing=false;
     }
 
     void Update(){
@@ -84,26 +90,42 @@ public class InteractControl : MonoBehaviour
             else {
                 //HoldRelease
                 Throw();
+                IsThrowing = false;
             }
             HoldReleaseTimer=0;
         }
 
         if (Input.GetButton("Release")){
             HoldReleaseTimer+=Time.deltaTime;
+            if (HoldReleaseTimer >= HoldReleaseTimerTarget && !IsThrowing){
+                IsThrowing = true;
+                throwingAngle = Mathf.PI/4;
+                throwForce = 1;
+            }
         }
 
         //second Cross
-        if (Mathf.Abs(Input.GetAxisRaw("SecondHorizontal")) > 0.3f || Mathf.Abs(Input.GetAxisRaw("SecondVertical")) > 0.3f){
-            //Debug.Log("second cross movement");
+        if (Input.GetAxisRaw("SecondHorizontal")!=0 || Input.GetAxisRaw("SecondVertical")!=0){
             Vector2 inp;
             inp.x = Input.GetAxisRaw("SecondHorizontal");
             inp.y = Input.GetAxisRaw("SecondVertical");
-            if (leftGrab && rightGrab && leftGrab == rightGrab && IsHuman){
-                if (rightGrab.tag=="Grabbable" && !GrabbablePositionMatch(GrabbablePosition(inp))){
-                    //GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f);
-                    //StopCoroutine("GrabItemOverTime");
-                    //StartCoroutine(GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f));
-                    ChangeGrabbablePosition(GrabbablePosition(inp));
+            if (IsThrowing){
+                if (Mathf.Abs(inp.x) > 0) {
+                    SetThrowForce(inp.x);
+                }
+                if (Mathf.Abs(inp.y) > 0) {
+                    SetThrowAngle(inp.y);
+                }
+            }
+            else if (Mathf.Abs(inp.x) > 0.3f || Mathf.Abs(inp.y) > 0.3f){
+                //if (leftGrab && rightGrab && leftGrab == rightGrab && IsHuman){
+                if (rightGrab){
+                    if (rightGrab.tag=="Grabbable" && !GrabbablePositionMatch(GrabbablePosition(inp))){
+                        //GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f);
+                        //StopCoroutine("GrabItemOverTime");
+                        //StartCoroutine(GrabOverTime(rightGrab, GrabPivots[GrabbablePosition(inp)], 0.5f));
+                        ChangeGrabbablePosition(GrabbablePosition(inp));
+                    }
                 }
             }
         }
@@ -314,6 +336,8 @@ public class InteractControl : MonoBehaviour
         ItemParent[1] = obj.parent;
 
         obj.parent = GrabPivots[0];
+        GrabPivotsUsing[0] = true;
+
         StopCoroutine("GrabItemOverTime");
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0], 10f));
 
@@ -431,20 +455,35 @@ public class InteractControl : MonoBehaviour
     void Throw(){
         rightGrab.SendMessage("OnThrow", SendMessageOptions.DontRequireReceiver);
         //Debug.Log("Throw");
+        //Vector3 angle = (new Vector3(throwingAngle, Mathf.Pow((1-Mathf.Pow(throwingAngle, 2)), 1/2), 0));
+        Vector3 angle = new Vector3(throwingAngle, Mathf.Cos(throwingAngle), 0);
+        Debug.DrawRay(transform.position, angle, Color.magenta, 3f);
         if (rightGrab.tag=="Item"){
             float f = 1f;
             if (!IsHuman) f = 0.3f;
-            rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
+            //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
+            rightGrab.GetComponent<Rigidbody>().AddForce(angle * f * throwForce, ForceMode.Impulse);
             ReleaseHand(true, false);
         }
         else if (rightGrab.tag=="Grabbable"){
-            rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
+            //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
+            rightGrab.GetComponent<Rigidbody>().AddForce(angle * throwForce, ForceMode.Impulse);
             ReleaseHand();
         }
         else if (rightGrab.tag=="Draggable"){
             rightGrab.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(rightGrab.position.x-transform.position.x), 0, 0) * 4f, ForceMode.Impulse);
             ReleaseHand();
         }
+    }
+
+    void SetThrowAngle(float inpY, bool fixAdding=true){
+        Debug.Log("Cross Y");
+        throwingAngle = Mathf.Clamp(throwingAngle + Time.deltaTime * Mathf.Sign(inpY), -Mathf.PI/2, Mathf.PI/2);
+    }
+
+    void SetThrowForce(float inpX, bool fixAdding=true){
+        Debug.Log("Cross X");
+        throwForce =  Mathf.Clamp(throwForce + Time.deltaTime * Mathf.Sign(inpX), 0, 1);
     }
 
     //called from other playable character when they take item from hand

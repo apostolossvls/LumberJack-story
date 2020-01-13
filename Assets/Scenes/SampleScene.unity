@@ -434,6 +434,8 @@ MonoBehaviour:
   rightGrab: {fileID: 0}
   grabForce: 300
   indicator: {fileID: 2079483326}
+  throwingAngle: 0
+  throwForce: 0
   HoldReleaseTimerTarget: 1
 --- !u!114 &42067949
 MonoBehaviour:
@@ -1127,6 +1129,8 @@ MonoBehaviour:
   rightGrab: {fileID: 0}
   grabForce: 300
   indicator: {fileID: 454796484}
+  throwingAngle: 0
+  throwForce: 0
   HoldReleaseTimerTarget: 1
 --- !u!1 &275702107
 GameObject:
@@ -2807,8 +2811,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
-    w: 0.99927384}
+  m_LocalRotation: {x: 0.038102806, y: 0.0000000020777533, z: 0.000000001792726, w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4101,14 +4104,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259911805}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 37, y: 0.6, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 37, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1083724515}
   m_Father: {fileID: 0}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1262807804
 GameObject:
   m_ObjectHideFlags: 0
@@ -4625,8 +4628,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584261115}
-  m_LocalRotation: {x: 0.038102802, y: -0.000000002239519, z: 0.0000000024496947,
-    w: 0.99927384}
+  m_LocalRotation: {x: 0.038102806, y: 0.0000000020777533, z: 0.000000001792726, w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
