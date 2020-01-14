@@ -88,7 +88,7 @@ public class InteractControl : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonUp("Release")){
+        if (Input.GetButtonUp("Release")  && (rightGrab || leftGrab)){
             if (HoldReleaseTimer < HoldReleaseTimerTarget){
                 ReleaseHand();
             }
@@ -100,7 +100,7 @@ public class InteractControl : MonoBehaviour
             HoldReleaseTimer=0;
         }
 
-        if (Input.GetButton("Release")){
+        if (Input.GetButton("Release") && (rightGrab || leftGrab)){
             HoldReleaseTimer+=Time.deltaTime;
             if (HoldReleaseTimer >= HoldReleaseTimerTarget && !IsThrowing){
                 IsThrowing = true;
@@ -473,7 +473,7 @@ public class InteractControl : MonoBehaviour
         //throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;
         //Debug.DrawRay(transform.position, throwingAngle, Color.magenta, 3f);
         if (rightGrab.tag=="Item"){
-            float f = 10f;
+            float f = 1f;
             if (!IsHuman) f = 0.3f;
             //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
             rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * f * throwForce, ForceMode.Impulse);
