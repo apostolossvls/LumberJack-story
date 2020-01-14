@@ -10,11 +10,15 @@ public class Axe : MonoBehaviour
     public bool flyingWithSpin;
     public float rayDistance=3f;
     public float slerpMult=100f;
+    public float stickForce;
+    float angleV;
+    public int bladeTouchingCount;
     // Start is called before the first frame update
     void Start()
     {
         flyingWithSpin=false;
         rig = GetComponent<Rigidbody>();
+        bladeTouchingCount = 0;
     }
 
     void FixedUpdate(){
@@ -23,7 +27,7 @@ public class Axe : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, rig.velocity, out hit, rayDistance)){
                 Debug.DrawRay(transform.position, rig.velocity, Color.red);
-                float angleV = Mathf.Atan2(rig.velocity.y, rig.velocity.x) * Mathf.Rad2Deg;
+                angleV = Mathf.Atan2(rig.velocity.y, rig.velocity.x) * Mathf.Rad2Deg;
                 Debug.Log(angleV);
                 Transform t = hit.transform;
                 if ( ! (angleV > -135 && angleV < -45)){
@@ -43,11 +47,26 @@ public class Axe : MonoBehaviour
         //rig.AddTorque(spinForce * transform.right, ForceMode.Acceleration);
     }
 
+    void OnGrab(){
+        if (rig.isKinematic) rig.isKinematic = false;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (flyingWithSpin && !collision.gameObject.GetComponent<InteractControl>()) flyingWithSpin = false; 
-        foreach (ContactPoint contact in collision.contacts)
-        {
+        if (flyingWithSpin && !collision.gameObject.GetComponent<InteractControl>()){
+            flyingWithSpin = false;
+            if ( ! (angleV > -135 && angleV < -45) && bladeTouchingCount>0){
+                rig.isKinematic = true;
+            }
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        bladeTouchingCount++;
+    }
+    void OnTriggerExit(Collider other)
+    {
+        bladeTouchingCount--;
+    } 
 }

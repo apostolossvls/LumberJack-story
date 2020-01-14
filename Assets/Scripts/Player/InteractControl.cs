@@ -424,6 +424,7 @@ public class InteractControl : MonoBehaviour
     void ReleaseItem(Transform t, bool OnRight){
         //Debug.Log("posItem: "+possibleItem);
         //Debug.Log(previousAnchorPivot);
+        rightGrab.SendMessage("OnGrab", SendMessageOptions.DontRequireReceiver);
         StopCoroutine("GrabItemOverTime");
         t.SetParent(ItemParent[OnRight? 0 : 1]);
         foreach (Collider c in t.GetComponents<Collider>())

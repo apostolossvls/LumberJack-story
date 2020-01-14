@@ -4465,6 +4465,8 @@ MonoBehaviour:
   flyingWithSpin: 0
   rayDistance: 1.5
   slerpMult: 15
+  stickForce: 0
+  bladeTouching: 0
 --- !u!1818360610 &1259911807
 ScaleConstraint:
   m_ObjectHideFlags: 0
@@ -4495,8 +4497,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.875, z: 0.3}
-  m_Center: {x: 0.025, y: 0.19, z: 0.05}
+  m_Size: {x: 0.1, y: 0.875, z: 0.2}
+  m_Center: {x: 0.025, y: 0.19, z: 0}
 --- !u!54 &1259911809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4525,6 +4527,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1083724515}
+  - {fileID: 1912513478}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -6083,6 +6086,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908939850}
   m_CullTransparentMesh: 0
+--- !u!1 &1912513477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912513478}
+  - component: {fileID: 1912513479}
+  m_Layer: 0
+  m_Name: bladeTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912513478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912513477}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1259911810}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1912513479
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912513477}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.2, z: 0.14}
+  m_Center: {x: 0.025, y: 0.525, z: 0.17}
 --- !u!1 &1933174153
 GameObject:
   m_ObjectHideFlags: 0
