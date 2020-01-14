@@ -10,7 +10,6 @@ public class Axe : MonoBehaviour
     public bool flyingWithSpin;
     public float rayDistance=3f;
     public float slerpMult=100f;
-    public float stickForce;
     float angleV;
     public int bladeTouchingCount;
     Jump jump;
@@ -42,24 +41,27 @@ public class Axe : MonoBehaviour
         }
     }
 
-    void OnThrow(){
-        rig.maxAngularVelocity = maxAngVel;
-        flyingWithSpin=true;
+    void OnThrow(Transform t){
+        if (t.GetComponent<InteractControl>().IsHuman){
+            rig.maxAngularVelocity = maxAngVel;
+            flyingWithSpin=true;
+        }
         //rig.AddTorque(spinForce * transform.right, ForceMode.Acceleration);
     }
 
     void OnGrab(Transform t){
-        jump = t.GetComponent<Jump>();
-        if (jump){
-            if (jump.isActiveAndEnabled){
-                //Debug.Log("has jump");
-                if (rig.isKinematic && !jump.IsGrounded()){
-                    AxeJump();    
+        if (t.GetComponent<InteractControl>()){
+            jump = t.GetComponent<Jump>();
+            if (jump){
+                if (jump.isActiveAndEnabled){
+                    //Debug.Log("has jump");
+                    if (rig.isKinematic && !jump.IsGrounded()){
+                        AxeJump();    
+                    }
                 }
             }
-            
+            if (rig.isKinematic) rig.isKinematic = false;
         }
-        if (rig.isKinematic) rig.isKinematic = false;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -92,13 +94,6 @@ public class Axe : MonoBehaviour
     } 
 
     IEnumerator SetJumpPressedForSeconds(float seconds){
-        /*float t = 0;
-        while (t<seconds)
-        {
-            t += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        */
         yield return new WaitForSeconds(seconds);
         if (jump) jump.onJumpHold = false;
     }

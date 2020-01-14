@@ -470,14 +470,14 @@ public class InteractControl : MonoBehaviour
     }
 
     void Throw(){
-        rightGrab.SendMessage("OnThrow", SendMessageOptions.DontRequireReceiver);
+        rightGrab.SendMessage("OnThrow", transform, SendMessageOptions.DontRequireReceiver);
         //Debug.Log("Throw");
         //Vector3 angle = (new Vector3(throwingAngle, Mathf.Pow((1-Mathf.Pow(throwingAngle, 2)), 1/2), 0));
         //throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;
         //Debug.DrawRay(transform.position, throwingAngle, Color.magenta, 3f);
         if (rightGrab.tag=="Item"){
             float f = 1f;
-            if (!IsHuman) f = 0.3f;
+            if (!IsHuman) f = 0.6f;
             //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
             rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * f * throwForce, ForceMode.Impulse);
             ReleaseHand(true, false);
