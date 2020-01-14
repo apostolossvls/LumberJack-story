@@ -313,6 +313,9 @@ public class InteractControl : MonoBehaviour
         obj.localPosition = Vector3.zero;
         obj.localRotation = Quaternion.identity;
         */
+
+        rightGrab.SendMessage("OnGrab", transform, SendMessageOptions.DontRequireReceiver);
+
         StopCoroutine("GrabItemOverTime");
         StartCoroutine(GrabOverTime(obj, HandPivot[hand], 10f, hand));
 
@@ -424,7 +427,6 @@ public class InteractControl : MonoBehaviour
     void ReleaseItem(Transform t, bool OnRight){
         //Debug.Log("posItem: "+possibleItem);
         //Debug.Log(previousAnchorPivot);
-        rightGrab.SendMessage("OnGrab", SendMessageOptions.DontRequireReceiver);
         StopCoroutine("GrabItemOverTime");
         t.SetParent(ItemParent[OnRight? 0 : 1]);
         foreach (Collider c in t.GetComponents<Collider>())

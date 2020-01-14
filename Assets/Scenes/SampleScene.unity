@@ -398,11 +398,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   col: {fileID: 554042027}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 3089
   JumpUpwardsTime: 1
   JumpForce: 9.5
   JumpHoldDuration: 1
   Gravity: 14
   GroundCheck: 1
+  jumpPressed: 0
+  onJumpHold: 0
+  JumpOnDemand: 0
 --- !u!114 &42067947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1133,11 +1139,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   col: {fileID: 478462961}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   JumpUpwardsTime: 1
   JumpForce: 2.3
   JumpHoldDuration: 1
   Gravity: 14
   GroundCheck: 1
+  jumpPressed: 0
+  onJumpHold: 0
+  JumpOnDemand: 0
 --- !u!114 &234961960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3223,7 +3235,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.038102806, y: 0.0000000020777533, z: 0.000000001792726, w: 0.99927384}
+  m_LocalRotation: {x: 0.038102806, y: -0.000000002220718, z: 0.0000000019566289,
+    w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4466,7 +4479,7 @@ MonoBehaviour:
   rayDistance: 1.5
   slerpMult: 15
   stickForce: 0
-  bladeTouching: 0
+  bladeTouchingCount: 0
 --- !u!1818360610 &1259911807
 ScaleConstraint:
   m_ObjectHideFlags: 0
@@ -5257,7 +5270,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584261115}
-  m_LocalRotation: {x: 0.038102806, y: 0.0000000020777533, z: 0.000000001792726, w: 0.99927384}
+  m_LocalRotation: {x: 0.038102806, y: -0.000000002220718, z: 0.0000000019566289,
+    w: 0.99927384}
   m_LocalPosition: {x: 0, y: 4, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

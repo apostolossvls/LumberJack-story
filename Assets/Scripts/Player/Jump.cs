@@ -5,6 +5,7 @@ using UnityEngine;
 public class Jump : MonoBehaviour
 {
     public Collider col;
+    public LayerMask layerMask;
     Rigidbody rig;
     public float JumpUpwardsTime=1f;
     public float JumpForce = 250f;
@@ -12,8 +13,9 @@ public class Jump : MonoBehaviour
     public float Gravity = 14f;
     public float GroundCheck=1f;
     float distToGround;
-    bool jumpPressed;
-    bool onJumpHold;
+    public bool jumpPressed;
+    public bool onJumpHold;
+    public bool JumpOnDemand;
     //float jumpHold=1;
 
     void Start()
@@ -22,6 +24,7 @@ public class Jump : MonoBehaviour
         if (rig==null) rig = GetComponentInChildren<Rigidbody>(); 
         distToGround = col.bounds.extents.y;
         jumpPressed=false;
+        JumpOnDemand=false;
         //onJumpHold=false;
         //jumpHold=1;
     }
@@ -40,14 +43,18 @@ public class Jump : MonoBehaviour
             rig.velocity = new Vector3(rig.velocity.x, Mathf.Clamp(rig.velocity.y, 0, 1), rig.velocity.z);
         }
         //if (!onJumpHold)
-        if (IsGrounded() && jumpPressed){
-            //jumpHold=1;
-            //rig.velocity=new Vector3(rig.velocity.x, 0, rig.velocity.z);
+        if ((IsGrounded() && jumpPressed) || JumpOnDemand){
+            if (JumpOnDemand) JumpOnDemand = false;
             jumpPressed=false;
             onJumpHold=true;
+            JumpAddForce();
+            //jumpHold=1;
+            //rig.velocity=new Vector3(rig.velocity.x, 0, rig.velocity.z);
+            //jumpPressed=false;
+            //onJumpHold=true;
             //StopCoroutine("OnholdReset");
             //StartCoroutine("OnholdReset");
-            rig.AddForce(new Vector3(0,JumpForce,0), ForceMode.Impulse);
+            //rig.AddForce(new Vector3(0,JumpForce,0), ForceMode.Impulse);
             //StartCoroutine("JumpForceOnTimer");
         }
         /*if (Input.GetButton("Jump") && onJumpHold){
@@ -56,11 +63,17 @@ public class Jump : MonoBehaviour
         } */
     }
 
+    public void JumpAddForce(){
+        //jumpPressed=false;
+        //onJumpHold=true;
+        rig.AddForce(new Vector3(0,JumpForce,0), ForceMode.Impulse);
+    }
+
     bool CloseToGround() {
         if (rig.velocity.y==0) return true;
         else {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down+rig.velocity, out hit, distToGround + GroundCheck)){
+            if (Physics.Raycast(transform.position, Vector3.down+rig.velocity, out hit, distToGround + GroundCheck, layerMask)){
                 //Debug.DrawRay(transform.position, -Vector3.up+rig.velocity, Color.yellow, 1f);
                 if (hit.collider!=col) return true;
                 else return false;
@@ -69,7 +82,7 @@ public class Jump : MonoBehaviour
         }
     }
 
-    bool IsGrounded() {
+    public bool IsGrounded() {
         //StopAllCoroutines();
         if (rig.velocity.y==0) return true;
         else return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.2f);
