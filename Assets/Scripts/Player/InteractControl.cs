@@ -29,6 +29,7 @@ public class InteractControl : MonoBehaviour
 
     //throw
     bool IsThrowing;
+    public float throwPower=1f;
     public float throwingAngleX=0;
     Vector3 throwingAngle;
     public float throwForce=0;
@@ -482,15 +483,13 @@ public class InteractControl : MonoBehaviour
         //throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;
         //Debug.DrawRay(transform.position, throwingAngle, Color.magenta, 3f);
         if (rightGrab.tag=="Item"){
-            float f = 1f;
-            if (!IsHuman) f = 0.6f;
             //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
-            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * f * throwForce, ForceMode.Impulse);
+            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
             ReleaseHand(true, false);
         }
         else if (rightGrab.tag=="Grabbable"){
             //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
-            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwForce, ForceMode.Impulse);
+            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
             ReleaseHand();
         }
         else if (rightGrab.tag=="Draggable"){
