@@ -55,7 +55,7 @@ public class Axe : MonoBehaviour
             if (jump){
                 if (jump.isActiveAndEnabled){
                     //Debug.Log("has jump");
-                    if (rig.isKinematic && !jump.IsGrounded()){
+                    if (rig.isKinematic && !jump.IsGrounded() && Input.GetButton("Jump")){
                         AxeJump();    
                     }
                 }

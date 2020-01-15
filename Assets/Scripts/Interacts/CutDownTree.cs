@@ -8,6 +8,7 @@ public class CutDownTree : MonoBehaviour
     Transform cutter;
     Vector3 cutterPos;
     public bool activated;
+    public float hitPoints=1f;
     string objTag;
 
     void Start()
@@ -21,12 +22,30 @@ public class CutDownTree : MonoBehaviour
         if (activated){
             if (Vector3.Distance(cutter.position, cutterPos)<0.2f){
                 if (Input.GetButtonUp("Action")){
-                    CutDown();
+                    Transform item = cutter.GetComponent<InteractControl>().rightGrab;
+                    if (item){
+                        if (item.GetComponent<Axe>()){
+                            TakeHit(1);
+                        }
+                        else {
+                            Abort();
+                        }
+                    }
+                    else {
+                        Abort();
+                    }
                 }
             }
             else {
                 Abort();
             }
+        }
+    }
+
+    void TakeHit(float damage){
+        hitPoints -= damage;
+        if (hitPoints <= 0){
+            CutDown();
         }
     }
 

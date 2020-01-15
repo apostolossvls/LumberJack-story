@@ -81,7 +81,7 @@ public class InteractControl : MonoBehaviour
                 GrabDraggable(possibleinteracts[index]);
             }
             else if (possibleinteracts[index].tag==interactTags[3] && IsHuman){ //interact
-                Debug.Log("interacting (InteractControl)");
+                //Debug.Log("interacting (InteractControl)");
                 //ReleaseHand();
                 //GrabDraggable(possibleinteracts[index]);
                 Interact(possibleinteracts[index]);
@@ -320,11 +320,14 @@ public class InteractControl : MonoBehaviour
         StartCoroutine(GrabOverTime(obj, HandPivot[hand], 10f, hand));
 
         if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        foreach (Collider c in obj.GetComponents<Collider>())
+        
+        /*foreach (Collider c in obj.GetComponents<Collider>())
         {
             //if (!c.isTrigger) c.enabled = false; //test
             if (!c.isTrigger) c.isTrigger = true;
-        }
+        }*/
+        SetLayer (obj, "IgnorePlayer");
+        //SetIgnoreCollision(obj.GetComponentInChildren<Collider>(), true);
     }
 
     private Vector3 posVel = Vector3.zero;
@@ -359,12 +362,15 @@ public class InteractControl : MonoBehaviour
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0], 10f));
 
         if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        foreach (Collider c in obj.GetComponents<Collider>())
+        
+        /*foreach (Collider c in obj.GetComponents<Collider>())
         {
             //if (!c.isTrigger) c.enabled = false; //test
             if (!c.isTrigger) c.isTrigger = true;
 
-        }
+        }*/
+        SetLayer (obj, "IgnorePlayer");
+        //SetIgnoreCollision(obj.GetComponentInChildren<Collider>(), true);
 
         /*
         //Debug.DrawRay( transform.position, transform.right, Color.black, 1f);
@@ -429,11 +435,11 @@ public class InteractControl : MonoBehaviour
         //Debug.Log(previousAnchorPivot);
         StopCoroutine("GrabItemOverTime");
         t.SetParent(ItemParent[OnRight? 0 : 1]);
-        foreach (Collider c in t.GetComponents<Collider>())
+        /*foreach (Collider c in t.GetComponents<Collider>())
         {
             //if (!c.isTrigger) c.enabled = true; //test
             if (c.isTrigger) c.isTrigger = false;
-        }
+        }*/
         if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
         //Destroy(AnchorPivot.Find("itemPivot").gameObject);
         // myObjList.Where(x => x.name == yourname).SingleOrDefault();
@@ -448,11 +454,11 @@ public class InteractControl : MonoBehaviour
         ItemParent[0] = null;
         ItemParent[1] = null;
 
-        foreach (Collider c in t.GetComponents<Collider>())
+        /*foreach (Collider c in t.GetComponents<Collider>())
         {
             //if (!c.isTrigger) c.enabled = true; //test
             if (c.isTrigger) c.isTrigger = false;
-        }
+        }*/
         if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
 
         //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
@@ -494,17 +500,31 @@ public class InteractControl : MonoBehaviour
     }
 
     void SetThrowAngle(float inpY, bool fixAdding=true){
-        Debug.Log("Cross Y");
+        //Debug.Log("Cross Y");
         throwingAngleX = Mathf.Clamp(throwingAngleX + Time.deltaTime * Mathf.Sign(inpY), -Mathf.PI/2, Mathf.PI/2);
     }
 
     void SetThrowForce(float inpX, bool fixAdding=true){
-        Debug.Log("Cross X");
+        //Debug.Log("Cross X");
         throwForce =  Mathf.Clamp(throwForce + Time.deltaTime * Mathf.Sign(inpX), 0, 1);
     }
 
     //called from other playable character when they take item from hand
     public void SendMessageReleaseHand(bool rRight = true, bool rLeft = true){
         ReleaseHand(rRight, rLeft);
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        if (this.isActiveAndEnabled && collider.gameObject.layer == LayerMask.NameToLayer("ObjectSafeArea") && !IsOnHand(collider.transform)){
+            InteractControl i = collider.GetComponentInParent<InteractControl>();
+            if (!i){
+                SetLayer(collider.transform.parent.transform, "Default");
+            }
+        }
+    }
+
+    void SetLayer (Transform obj, string value){
+        obj.gameObject.layer = LayerMask.NameToLayer(value);
     }
 }

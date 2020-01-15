@@ -19,8 +19,8 @@ TagManager:
   - 
   - PlayerHuman
   - PlayerDog
-  - Draggable
-  - Grabbable
+  - IgnorePlayer
+  - ObjectSafeArea
   - 
   - 
   - 
