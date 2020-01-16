@@ -33,6 +33,14 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical"); //Horizontal
         movement.Normalize();
+
+        //if hit wall on x, dont move on x
+        if (Mathf.Abs(movement.x)>0){
+            if (Physics.Raycast(transform.position, new Vector3(movement.x, 0, 0), col.bounds.extents.x)){
+                movement.x = 0;
+            }
+        }
+
         Vector3 camT;
         if ((movement.x<0 && lookingLeft) || (movement.x>0 && !lookingLeft)) {
             StopCoroutine("lookChangingTime");
