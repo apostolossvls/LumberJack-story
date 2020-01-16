@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2508657126428970169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8775758531769773127}
   m_Father: {fileID: 0}
@@ -72,8 +72,8 @@ ScaleConstraint:
   m_GameObject: {fileID: 2508657126428970169}
   m_Enabled: 1
   m_Weight: 0
-  m_ScaleAtRest: {x: 1, y: 1, z: 1}
-  m_ScaleOffset: {x: 1, y: 1, z: 1}
+  m_ScaleAtRest: {x: 2, y: 2, z: 2}
+  m_ScaleOffset: {x: 1, y: 1, z: 2}
   m_AffectScalingX: 1
   m_AffectScalingY: 1
   m_AffectScalingZ: 1

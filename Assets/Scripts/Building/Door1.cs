@@ -22,7 +22,7 @@ public class Door1 : MonoBehaviour
     }
 
     void TryKey(Transform obj){
-        if (StringMatch(obj.name)){
+        if (StringMatch(obj.name) && obj.GetComponentInParent<InteractControl>()){
             Unlock();
         }
     }
