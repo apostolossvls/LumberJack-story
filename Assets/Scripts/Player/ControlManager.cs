@@ -64,6 +64,6 @@ public class ControlManager : MonoBehaviour
     }
 
     void SetPlayerCharOnStandby(Transform character, bool onStandby=true){
-        character.position += Vector3.forward * 0.5f * (onStandby? 1 : -1);
+        character.position = new Vector3(character.position.x, character.position.y, (onStandby? LevelSettings.secondZLine : LevelSettings.mainZLine));
     }
 }
