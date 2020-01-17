@@ -159,6 +159,7 @@ public class Checkpoint : MonoBehaviour
             for (int i = 0; i < dogResetParents.Length; i++)
             {
                 int c = dogResetParents[i].transform.childCount;
+                List<GameObject> toDestroy = new List<GameObject>{};
                 for (int j = 0; j < c; j++)
                 {
                     GameObject g = dogResetParents[i].transform.GetChild(j).gameObject;
@@ -167,9 +168,13 @@ public class Checkpoint : MonoBehaviour
                         g.SetActive(true);
                     }
                     else {
-                        Destroy(g);
+                        toDestroy.Add(g);
                     }
                 }
+                for (int j = 0; j < toDestroy.Count; j++)
+                {
+                    toDestroy[j].name = "GettingDestroyed";
+                    Destroy(toDestroy[j]);
             }
             //dogInstances.Clear();
         }

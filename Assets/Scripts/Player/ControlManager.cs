@@ -6,10 +6,14 @@ public class ControlManager : MonoBehaviour
 {
     public Transform human;
     public Transform dog;
-    public Behaviour[] HumanBehavioursActive;
-    public Behaviour[] DogBehavioursActive;
-    public Behaviour[] HumanBehavioursInactive;
-    public Behaviour[] DogBehavioursInactive;
+    public string[] HumanActive;
+    public string[] DogActive;
+    public string[] HumanInactive;
+    public string[] DogInactive;
+    public List<Behaviour> HumanBehavioursActive;
+    public List<Behaviour> DogBehavioursActive;
+    public List<Behaviour> HumanBehavioursInactive;
+    public List<Behaviour> DogBehavioursInactive;
     public Transform PlayerPivot;
     bool onHuman;
     bool onDog;
@@ -17,10 +21,10 @@ public class ControlManager : MonoBehaviour
     bool[] DogBehavioursActiveWasActive;
     void Start()
     {
+        
         onHuman = true;
         onDog = false;
-        HumanBehavioursActiveWasActive = new bool[HumanBehavioursActive.Length];
-        DogBehavioursActiveWasActive = new bool[DogBehavioursActive.Length];
+        SetPlayers();
         SetBehavioursActive(0);
         for (int i = 0; i < DogBehavioursActiveWasActive.Length; i++)
         {
@@ -42,11 +46,11 @@ public class ControlManager : MonoBehaviour
                 SetBehavioursActive(1);
             }
             
-            for (int i = 0; i < HumanBehavioursActive.Length; i++)
+            for (int i = 0; i < HumanBehavioursActive.Count; i++)
             {
                 HumanBehavioursActive[i].enabled = onHuman && HumanBehavioursActiveWasActive[i];
             }
-            for (int i = 0; i < DogBehavioursActive.Length; i++)
+            for (int i = 0; i < DogBehavioursActive.Count; i++)
             {
                 DogBehavioursActive[i].enabled = onDog && DogBehavioursActiveWasActive[i];
             }
@@ -79,8 +83,6 @@ public class ControlManager : MonoBehaviour
                     PlayerPivot.GetComponent<PositionMatchPosition>().changeTarget(t);
                 }
             }
-
-            
         }
     }
 
@@ -101,5 +103,42 @@ public class ControlManager : MonoBehaviour
 
     void SetPlayerCharOnStandby(Transform character, bool onStandby=true){
         character.position = new Vector3(character.position.x, character.position.y, (onStandby? LevelSettings.secondZLine : LevelSettings.mainZLine));
+    }
+
+    void SetPlayers(){
+        human = GameObject.FindWithTag("PlayerHuman").transform;
+        dog = GameObject.FindWithTag("PlayerDog").transform;
+
+        HumanBehavioursActive = SetupBehaviours(human, HumanActive);
+        HumanBehavioursInactive = SetupBehaviours(human, HumanInactive);
+        DogBehavioursActive = SetupBehaviours(dog, DogActive);
+        DogBehavioursInactive = SetupBehaviours(dog, DogInactive);
+
+        HumanBehavioursActiveWasActive = new bool[HumanBehavioursActive.Count];
+        DogBehavioursActiveWasActive = new bool[DogBehavioursActive.Count];
+    }
+
+    List<Behaviour> SetupBehaviours(Transform obj, string[] s){
+        List<Behaviour> l = new List<Behaviour>{};
+        Debug.Log("-----"+s.ToString()+"-----");
+        foreach (Component c in obj.GetComponents<Component>())
+        {
+            //Debug.Log(c.GetType());
+            if (StringMatch(c.GetType().ToString(), s)){
+                //Debug.Log("Found " + c.GetType());
+                Behaviour be = (Behaviour)c;
+                //Debug.Log("Behaviour_"+be.GetType());
+                l.Add(be);
+            }
+        }
+        return l;
+    }
+
+    bool StringMatch (string s, string[] list){
+        foreach (string l in list)
+        {
+            if (s==l) return true;
+        }
+        return false;
     }
 }

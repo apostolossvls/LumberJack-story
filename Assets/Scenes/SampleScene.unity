@@ -8186,22 +8186,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   human: {fileID: 42067942}
   dog: {fileID: 234961961}
-  HumanBehavioursActive:
-  - {fileID: 42067943}
-  - {fileID: 42067946}
-  - {fileID: 42067949}
-  - {fileID: 42067950}
-  - {fileID: 42067948}
-  - {fileID: 42067947}
-  DogBehavioursActive:
-  - {fileID: 234961960}
-  - {fileID: 234961959}
-  - {fileID: 234961962}
-  - {fileID: 234961966}
+  HumanActive:
+  - PlayerMovement
+  - Jump
+  - LedgeGrab
+  - InteractControl
+  - Duck
+  - Call
+  DogActive:
+  - PlayerMovement
+  - Jump
+  - Duck
+  - InteractControl
+  HumanInactive: []
+  DogInactive:
+  - UnityEngine.AI.NavMeshAgent
+  - NavMeshMovement
+  HumanBehavioursActive: []
+  DogBehavioursActive: []
   HumanBehavioursInactive: []
-  DogBehavioursInactive:
-  - {fileID: 234961964}
-  - {fileID: 234961963}
+  DogBehavioursInactive: []
   PlayerPivot: {fileID: 905971244}
 --- !u!4 &1169566105 stripped
 Transform:
