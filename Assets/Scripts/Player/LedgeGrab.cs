@@ -14,6 +14,7 @@ public class LedgeGrab : MonoBehaviour
     public Transform[] raycastPivots; //head to toe, on 0: if no object hit then grab
     public string[] canGrabFrom;
     public float PowerToSeconds = 0.2f;
+    public LayerMask layerMask;
 
     void Start()
     {
@@ -40,15 +41,29 @@ public class LedgeGrab : MonoBehaviour
                 //Vector3 dir = other.contacts[0].normal;
                 //Debug.DrawRay(contactsPosAverage, contactsPosAverage.normalized, Color.blue, 3f);
                 
-                RaycastHit hit0;
-                if (!Physics.Raycast(raycastPivots[0].position, transform.forward, out hit0, 1))
+                RaycastHit[] hit0;
+                hit0 = Physics.RaycastAll(raycastPivots[0].position, transform.forward, 1, layerMask);
+                bool flag = false;
+                foreach (RaycastHit h in hit0)
+                {
+                    if (h.transform.gameObject.isStatic) flag = true;
+                }
+                if (!flag)
                 {
                     bool[] hitMade = new bool[raycastPivots.Length-1];
                     for (int i = 1; i < raycastPivots.Length; i++)
                     {
                         hitMade[i-1] = false;
-                        RaycastHit hit;
-                        if (Physics.Raycast(raycastPivots[i].position, transform.forward, out hit, 1))
+                        RaycastHit[] hit;
+                        hit = Physics.RaycastAll(raycastPivots[i].position, transform.forward, 1, layerMask);
+                        foreach (RaycastHit h in hit)
+                        {
+                            if (h.transform.gameObject.isStatic) {
+                                hitMade[i-1] = true;
+                                break;
+                            }
+                        }
+                        /*if (Physics.Raycast(raycastPivots[i].position, transform.forward, out hit, 1))
                         {
                             hitMade[i-1] = true;
                             /*if (!willGrab){
@@ -58,8 +73,18 @@ public class LedgeGrab : MonoBehaviour
                                 Debug.Log("Power: "+p);
                                 StartGrab(p);
                                 break;
-                            }*/
+                            }
                         }
+                        RaycastHit[] hit0;
+                        hit0 = Physics.RaycastAll(raycastPivots[0].position, transform.forward, 1, layerMask);
+                        bool flag = false;
+                        foreach (RaycastHit h in hit0)
+                        {
+                            if (TagMatch(h.transform.tag)) flag = true;
+                        }
+                        if (flag)
+                        {
+                        }*/
                     }
                     if (hitMade[0]) StartGrab(PowerToSeconds);
                     else if (hitMade[1]) StartGrab(PowerToSeconds * 2/3);

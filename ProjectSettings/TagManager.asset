@@ -8,6 +8,8 @@ TagManager:
   - Grabbable
   - Draggable
   - HumanInteractable
+  - PlayerHuman
+  - PlayerDog
   layers:
   - Default
   - TransparentFX

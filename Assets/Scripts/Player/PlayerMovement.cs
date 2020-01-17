@@ -36,8 +36,11 @@ public class PlayerMovement : MonoBehaviour
 
         //if hit wall on x, dont move on x
         if (Mathf.Abs(movement.x)>0){
-            if (Physics.Raycast(transform.position, new Vector3(movement.x, 0, 0), col.bounds.extents.x)){
-                movement.x = 0;
+            RaycastHit[] hit = Physics.RaycastAll(transform.position, new Vector3(movement.x, 0, 0), col.bounds.extents.x);
+            foreach (RaycastHit h in hit)
+            {
+                if (h.transform.gameObject.isStatic)
+                    movement.x = 0;
             }
         }
 

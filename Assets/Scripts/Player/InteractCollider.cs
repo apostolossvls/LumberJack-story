@@ -14,9 +14,14 @@ public class InteractCollider : MonoBehaviour
 
     void Update(){
         List<int> indexes = new List<int>{};
-        foreach (Transform t in possibleinteracts)
+        for (int i = 0; i < possibleinteracts.Count; i++)
         {
-            if (!TagMatch(t.tag)) indexes.Add(OnArray(t));
+            if (possibleinteracts[i]){
+                if (!TagMatch(possibleinteracts[i].tag)) indexes.Add(OnArray(possibleinteracts[i]));
+            }
+            else{
+                possibleinteracts.RemoveAt(i);
+            }
         }
         foreach (int i in indexes)
         {
