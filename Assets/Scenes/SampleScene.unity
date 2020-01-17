@@ -2854,6 +2854,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280011323}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &281628674 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2508657126428970169, guid: d5d220249f027ad468b6cd9d8d2dfc24,
+    type: 3}
+  m_PrefabInstance: {fileID: 1988642277732425621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &284891272
 GameObject:
   m_ObjectHideFlags: 0
@@ -9182,6 +9188,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1988642277732425621}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1300481615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2011417928091912915, guid: d4b6c84b0c1f96d459ae19703c6e9f49,
+    type: 3}
+  m_PrefabInstance: {fileID: 124998050}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1301239442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11247,7 +11259,16 @@ MonoBehaviour:
   dogResetParents:
   - {fileID: 1423942171}
   resetObjects:
+  - {fileID: 1051247951}
   - {fileID: 813069939}
+  - {fileID: 1466810480}
+  - {fileID: 1538897745}
+  - {fileID: 214679102}
+  - {fileID: 1144508092}
+  - {fileID: 1576432317}
+  - {fileID: 281628674}
+  - {fileID: 1300481615}
+  - {fileID: 1607124940}
 --- !u!65 &1672392995
 BoxCollider:
   m_ObjectHideFlags: 0

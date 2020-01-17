@@ -13,6 +13,8 @@ public class Checkpoint : MonoBehaviour
     public GameObject[] humanResetParents;
     public GameObject[] dogResetParents;
     public GameObject[] resetObjects;
+    GameObject humanInstance;
+    GameObject dogInstance;
     List<GameObject> humanInstances;
     List<GameObject> dogInstances;
     GameObject[] instances;
@@ -21,6 +23,8 @@ public class Checkpoint : MonoBehaviour
     {
         reached = false;
         isLastCheckpoint = false;
+        human = GameObject.FindWithTag("PlayerHuman").transform;
+        dog = GameObject.FindWithTag("PlayerDog").transform;
     }
 
     void OnTriggerEnter(Collider other){
@@ -28,6 +32,7 @@ public class Checkpoint : MonoBehaviour
             reached = true;
             isLastCheckpoint = true;
             InstantiatePlayers();
+            //InstantiatePlayerParts();
             InstantiateObjects();
         }
     }
@@ -35,8 +40,10 @@ public class Checkpoint : MonoBehaviour
     void Update(){
         if (isLastCheckpoint){
             if (Input.GetKeyUp(KeyCode.P)){
+                //LoadPlayerParts();
                 LoadPlayers();
                 LoadObjects();
+                SetupOthersOnLoad();
             }
         }
     }
@@ -54,7 +61,22 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    void InstantiatePlayers(){
+    void InstantiatePlayers() {
+        if (humanInstance) Destroy(humanInstance);
+        if (dogInstance) Destroy(dogInstance);
+        humanInstance = GameObject.Instantiate(human.gameObject, HumanResetPos.position, HumanResetPos.rotation);
+        humanInstance.transform.parent = human.transform.parent;
+        humanInstance.name = human.name+"Checkpoint";
+        humanInstance.tag = "Untagged";
+        humanInstance.SetActive(false);
+        dogInstance = GameObject.Instantiate(dog.gameObject, DogResetPos.position, DogResetPos.rotation);        
+        dogInstance.transform.parent = dog.transform.parent;
+        dogInstance.name = dog.name+"Checkpoint";
+        dog.tag = "Untagged";
+        dogInstance.SetActive(false); 
+    }
+
+    void InstantiatePlayerParts(){
         if (human){
             //humanInstances = new List<GameObject>{};
             for (int i = 0; i < humanResetParents.Length; i++)
@@ -125,6 +147,25 @@ public class Checkpoint : MonoBehaviour
     }
 
     void LoadPlayers(){
+        human.gameObject.SetActive(false);
+        dog.gameObject.SetActive(false);
+        Destroy(human.gameObject);
+        Destroy(dog.gameObject);
+        
+        human = humanInstance.transform;
+        dog = dogInstance.transform;
+
+        human.tag = "PlayerHuman";
+        human.name = human.name.Replace("Checkpoint", "");
+
+        dog.tag = "PlayerDog";
+        dog.name = dog.name.Replace("Checkpoint", "");
+
+        human.gameObject.SetActive(true);
+        dog.gameObject.SetActive(true);
+    }
+
+    void LoadPlayerParts(){
         if (human){
             human.position = HumanResetPos.position;
             human.rotation = HumanResetPos.rotation;
@@ -175,9 +216,18 @@ public class Checkpoint : MonoBehaviour
                 {
                     toDestroy[j].name = "GettingDestroyed";
                     Destroy(toDestroy[j]);
+                }
             }
             //dogInstances.Clear();
         }
-        InstantiatePlayers();
+        InstantiatePlayerParts();
+    }
+
+    void SetupOthersOnLoad(){
+        Object.FindObjectOfType<ControlManager>().SetPlayers();
+        Object.FindObjectOfType<PositionMatchPosition>().changeTarget(human);
+        if (dog) {
+            if (dog.GetComponent<NavMeshMovement>()) dog.GetComponent<NavMeshMovement>().target = human;
+        }
     }
 }

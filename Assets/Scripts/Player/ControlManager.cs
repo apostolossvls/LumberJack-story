@@ -105,7 +105,7 @@ public class ControlManager : MonoBehaviour
         character.position = new Vector3(character.position.x, character.position.y, (onStandby? LevelSettings.secondZLine : LevelSettings.mainZLine));
     }
 
-    void SetPlayers(){
+    public void SetPlayers(){
         human = GameObject.FindWithTag("PlayerHuman").transform;
         dog = GameObject.FindWithTag("PlayerDog").transform;
 
@@ -120,7 +120,7 @@ public class ControlManager : MonoBehaviour
 
     List<Behaviour> SetupBehaviours(Transform obj, string[] s){
         List<Behaviour> l = new List<Behaviour>{};
-        Debug.Log("-----"+s.ToString()+"-----");
+        //Debug.Log("-----"+s.ToString()+"-----");
         foreach (Component c in obj.GetComponents<Component>())
         {
             //Debug.Log(c.GetType());
