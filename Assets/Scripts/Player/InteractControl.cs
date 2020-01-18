@@ -21,11 +21,14 @@ public class InteractControl : MonoBehaviour
     public Transform leftGrab;
     public Transform rightGrab;
     public float grabForce=300f;
-    RigidbodyConstraints rigidbodyConstraints;
+
+    [HideInInspector] public RigidbodyConstraints[] rigidbodyConstraints = new RigidbodyConstraints[2];
 
     //UI
     public GameObject indicator;
     public GameObject ThrowSlider;
+    public GameObject holdingInteractIndicator;
+    public GameObject HoldingReleaseIndicator;
 
     //HoldInteract
     bool holdingInteract;
@@ -50,6 +53,8 @@ public class InteractControl : MonoBehaviour
         ReleaseHand();
         IsThrowing=false;
         holdingInteract = false;
+        if (IsHuman) rigidbodyConstraints = new RigidbodyConstraints[2];
+        else rigidbodyConstraints = new RigidbodyConstraints[1];
     }
 
     void Update(){
@@ -98,13 +103,18 @@ public class InteractControl : MonoBehaviour
                 }
                 else {
                     //hold interact
-                    holdingInteract=false;
+                    holdingInteract=true;
                     HoldInteract(possibleinteracts[index]);
                 }
                 HoldInteractTimer=0;
+                holdingInteractIndicator.SetActive(false);
             }
             if (Input.GetButton("Interact")) {
                 HoldInteractTimer+=Time.deltaTime;
+                if (HoldInteractTimer>=HoldInteractTimerTarget/5){
+                    holdingInteractIndicator.SetActive(true);
+                    holdingInteractIndicator.GetComponentInChildren<Image>().fillAmount = HoldInteractTimer/HoldInteractTimerTarget;
+                }
             }
         }
         else {
@@ -177,11 +187,13 @@ public class InteractControl : MonoBehaviour
         }
         else {
             indicator.SetActive(false);
+            holdingInteractIndicator.SetActive(false);
         }
     }
 
     void OnDisable(){
         if (indicator.activeSelf) indicator.SetActive(false);
+        if (holdingInteractIndicator.activeSelf) holdingInteractIndicator.SetActive(false);
     }
 
     int GetShortDistance(){
@@ -346,8 +358,10 @@ public class InteractControl : MonoBehaviour
         StopCoroutine("GrabItemOverTime");
         StartCoroutine(GrabOverTime(obj, HandPivot[hand], 10f, hand));
 
-        if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        
+        if (obj.GetComponent<Rigidbody>()) {
+            rigidbodyConstraints[hand] = obj.GetComponent<Rigidbody>().constraints;
+            obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
         /*foreach (Collider c in obj.GetComponents<Collider>())
         {
             //if (!c.isTrigger) c.enabled = false; //test
@@ -388,7 +402,10 @@ public class InteractControl : MonoBehaviour
         StopCoroutine("GrabItemOverTime");
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0], 10f));
 
-        if (obj.GetComponent<Rigidbody>()) obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        if (obj.GetComponent<Rigidbody>()) {
+            rigidbodyConstraints[0] = obj.GetComponent<Rigidbody>().constraints;
+            obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
         
         /*foreach (Collider c in obj.GetComponents<Collider>())
         {
@@ -467,7 +484,7 @@ public class InteractControl : MonoBehaviour
             //if (!c.isTrigger) c.enabled = true; //test
             if (c.isTrigger) c.isTrigger = false;
         }*/
-        if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+        if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = rigidbodyConstraints[OnRight? 0 : 1];
         //Destroy(AnchorPivot.Find("itemPivot").gameObject);
         // myObjList.Where(x => x.name == yourname).SingleOrDefault();
         //if (previousAnchorPivot) item.SetParent(previousAnchorPivot);
@@ -486,7 +503,8 @@ public class InteractControl : MonoBehaviour
             //if (!c.isTrigger) c.enabled = true; //test
             if (c.isTrigger) c.isTrigger = false;
         }*/
-        if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+        //if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+        if (t.GetComponent<Rigidbody>()) t.GetComponent<Rigidbody>().constraints = rigidbodyConstraints[0];
 
         //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
         if (t.position.z!=0) 

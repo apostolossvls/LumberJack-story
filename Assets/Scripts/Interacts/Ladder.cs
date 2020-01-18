@@ -10,21 +10,28 @@ public class Ladder : MonoBehaviour
     public float climbSpeed=2f;
     Transform user;
     bool onLadder;
+    int thisLayer;
 
     void Start()
     {
         onLadder = false;
+        thisLayer = gameObject.layer;
     }
 
     void Update()
     {
         if (onLadder && user){
-            float vertical = Input.GetAxisRaw("Vertical");
-            ladderPoint.localPosition = new Vector3(
-                ladderPoint.localPosition.x,
-                Mathf.Clamp(ladderPoint.localPosition.y + vertical * Time.deltaTime *climbSpeed, ladderHeightMin, ladderHeightMax),
-                ladderPoint.localPosition.z);
-            user.position = ladderPoint.position;
+            if (Mathf.Abs(transform.rotation.x) < 45){
+                float vertical = Input.GetAxisRaw("Vertical");
+                ladderPoint.localPosition = new Vector3(
+                    ladderPoint.localPosition.x,
+                    Mathf.Clamp(ladderPoint.localPosition.y + vertical * Time.deltaTime *climbSpeed, ladderHeightMin, ladderHeightMax),
+                    ladderPoint.localPosition.z);
+                user.position = ladderPoint.position;
+            }
+            else {
+                user.GetComponent<InteractControl>().ReleaseHand();
+            }
         }
     }
 
@@ -40,16 +47,20 @@ public class Ladder : MonoBehaviour
                     interactControl.leftGrab = transform;
                     interactControl.rightHandGrabbing = true;
                     interactControl.leftHandGrabbing = true;
+
+                    interactControl.rigidbodyConstraints[0] = GetComponent<Rigidbody>().constraints;
                 }
                 
-                ladderPoint.position = new Vector3(hits[i].point.x + ladderPoint.localPosition.x, hits[i].point.y, ladderPoint.position.z);
+                ladderPoint.position = new Vector3(hits[i].point.x + ladderPoint.localPosition.z, hits[i].point.y, ladderPoint.position.z);
                 onLadder = true;
                 user = t;
 
                 if (t.GetComponent<PlayerMovement>()){
                     t.GetComponent<PlayerMovement>().enabled = false;
                 }
-                
+
+                gameObject.layer = LayerMask.NameToLayer("IgnorePlayer");
+
                 t.rotation = Quaternion.LookRotation(transform.forward);
                 Debug.Log("GettingOnLadder");
                 Debug.DrawRay(transform.position, transform.forward, Color.black, 3f);
@@ -63,6 +74,7 @@ public class Ladder : MonoBehaviour
         Debug.Log("ReleasingLadder");
         onLadder = false;
         user = null;
+        //gameObject.layer = thisLayer;
         if (t.GetComponent<PlayerMovement>()){
             t.GetComponent<PlayerMovement>().enabled = true;
         }
