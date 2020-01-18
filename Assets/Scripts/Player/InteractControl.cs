@@ -27,6 +27,9 @@ public class InteractControl : MonoBehaviour
     public GameObject indicator;
     public GameObject ThrowSlider;
 
+    //HoldInteract
+    bool holdingInteract;
+
     //throw
     bool IsThrowing;
     public float throwPower=1f;
@@ -35,58 +38,78 @@ public class InteractControl : MonoBehaviour
     public float throwForce=0;
 
     //TimersTarget
+    public float HoldInteractTimerTarget=1f;
     public float HoldReleaseTimerTarget=1f;
 
     //timers
+    float HoldInteractTimer;
     float HoldReleaseTimer;
 
     void Start()
     {
         ReleaseHand();
         IsThrowing=false;
+        holdingInteract = false;
     }
 
     void Update(){
         possibleinteracts = interactCollider.possibleinteracts;
         interactTags = interactCollider.tags;
         int index = GetShortDistance();
-        if (index!=-1 && Input.GetButtonUp("Interact")){
-            if (possibleinteracts[index].tag==interactTags[0] && canGrabItem){ //item
-                //grab item
-                Debug.Log("grabbing item (InteractControl)");
-                if (IsHuman){
-                    if (leftHandGrabbing && rightHandGrabbing){
-                        ReleaseHand(true, false);
-                        GrabItem(possibleinteracts[index], true);
+        if (index!=-1){
+            if (Input.GetButtonUp("Interact")){
+                if (HoldInteractTimer < HoldInteractTimerTarget){
+                    if (possibleinteracts[index].tag==interactTags[0] && canGrabItem){ //item
+                        //grab item
+                        Debug.Log("grabbing item (InteractControl)");
+                        if (IsHuman){
+                            if (leftHandGrabbing && rightHandGrabbing){
+                                ReleaseHand(true, false);
+                                GrabItem(possibleinteracts[index], true);
+                            }
+                            else if (rightHandGrabbing && !leftHandGrabbing){
+                                GrabItem(possibleinteracts[index], false);
+                            }
+                            else {
+                                GrabItem(possibleinteracts[index], true);
+                            }
+                        }
+                        else {
+                            ReleaseHand(true, false);
+                            GrabItem(possibleinteracts[index], true);
+                        }
                     }
-                    else if (rightHandGrabbing && !leftHandGrabbing){
-                        GrabItem(possibleinteracts[index], false);
+                    else if (possibleinteracts[index].tag==interactTags[1] && IsHuman && canGrabGrabbable){ //fixedJoint , grabbable
+                        Debug.Log("grabbing grabbable (InteractControl)");
+                        ReleaseHand();
+                        GrabGrabbable(possibleinteracts[index]);
+                    } 
+                    else if (possibleinteracts[index].tag==interactTags[2] && IsHuman && canGrabDraggable){ //pushdrag , draggable
+                        Debug.Log("grabbing draggable (InteractControl)");
+                        ReleaseHand();
+                        GrabDraggable(possibleinteracts[index]);
                     }
-                    else {
-                        GrabItem(possibleinteracts[index], true);
+                    else if (possibleinteracts[index].tag==interactTags[3] && IsHuman){ //interact
+                        //Debug.Log("interacting (InteractControl)");
+                        //ReleaseHand();
+                        //GrabDraggable(possibleinteracts[index]);
+                        Interact(possibleinteracts[index]);
                     }
                 }
                 else {
-                    ReleaseHand(true, false);
-                    GrabItem(possibleinteracts[index], true);
+                    //hold interact
+                    holdingInteract=false;
+                    HoldInteract(possibleinteracts[index]);
                 }
+                HoldInteractTimer=0;
             }
-            else if (possibleinteracts[index].tag==interactTags[1] && IsHuman && canGrabGrabbable){ //fixedJoint , grabbable
-                Debug.Log("grabbing grabbable (InteractControl)");
-                ReleaseHand();
-                GrabGrabbable(possibleinteracts[index]);
-            } 
-            else if (possibleinteracts[index].tag==interactTags[2] && IsHuman && canGrabDraggable){ //pushdrag , draggable
-                Debug.Log("grabbing draggable (InteractControl)");
-                ReleaseHand();
-                GrabDraggable(possibleinteracts[index]);
+            if (Input.GetButton("Interact")) {
+                HoldInteractTimer+=Time.deltaTime;
             }
-            else if (possibleinteracts[index].tag==interactTags[3] && IsHuman){ //interact
-                //Debug.Log("interacting (InteractControl)");
-                //ReleaseHand();
-                //GrabDraggable(possibleinteracts[index]);
-                Interact(possibleinteracts[index]);
-            }
+        }
+        else {
+            HoldInteractTimer=0;
+            holdingInteract=false;
         }
 
         if (Input.GetButtonUp("Release")  && (rightGrab || leftGrab)){
@@ -206,9 +229,11 @@ public class InteractControl : MonoBehaviour
         else return false;
     }
 
-    void ReleaseHand(bool rRight = true, bool rLeft = true){
+    public void ReleaseHand(bool rRight = true, bool rLeft = true){
+        Debug.Log("release");
         if (rRight && rightHandGrabbing){
             rightHandGrabbing = false;
+            rightGrab.SendMessage("OnRelease", transform, SendMessageOptions.DontRequireReceiver);
             if (rightGrab.tag=="Item"){
                 ReleaseItem(rightGrab, true);
             }
@@ -225,6 +250,7 @@ public class InteractControl : MonoBehaviour
         }
         if (rLeft && leftHandGrabbing){
             leftHandGrabbing = false;
+            leftGrab.SendMessage("OnRelease", transform, SendMessageOptions.DontRequireReceiver);
             if (leftGrab.tag=="Item"){
                 ReleaseItem(leftGrab, false);
             }
@@ -281,7 +307,7 @@ public class InteractControl : MonoBehaviour
     }
     */
 
-    void GrabItem(Transform obj, bool OnRight){
+    public void GrabItem(Transform obj, bool OnRight){
 
         //test if obj is hand of other playable cahracter
         if (obj.GetComponentInParent<InteractControl>()){
@@ -347,7 +373,7 @@ public class InteractControl : MonoBehaviour
         yield return null;
     }
 
-    void GrabGrabbable(Transform obj){
+    public void GrabGrabbable(Transform obj){
         rightHandGrabbing=true;
         leftHandGrabbing=true;
         rightGrab=obj;
@@ -474,6 +500,10 @@ public class InteractControl : MonoBehaviour
             t.position = new Vector3(t.position.x, t.position.y, 0);
         
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =true;
+    }
+
+    void HoldInteract(Transform obj){
+        obj.SendMessage("OnHoldInteract", transform, SendMessageOptions.DontRequireReceiver);
     }
 
     void Throw(){

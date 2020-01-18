@@ -29,9 +29,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update(){
-        Debug.DrawRay(transform.position, transform.forward, Color.green);
+        //Debug.DrawRay(transform.position, transform.forward, Color.green);
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.z = Input.GetAxisRaw("Vertical"); //Horizontal
+        movement.z = Input.GetAxisRaw("Vertical");
         movement.Normalize();
 
         //if hit wall on x, dont move on x
