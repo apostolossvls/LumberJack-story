@@ -63,7 +63,12 @@ public class InteractControl : MonoBehaviour
         int index = GetShortDistance();
         if (index!=-1){
             if (Input.GetButtonUp("Interact")){
-                if (HoldInteractTimer < HoldInteractTimerTarget){
+                bool returnHoldInteract = false;
+                if (HoldInteractTimer >= HoldInteractTimerTarget){
+                    holdingInteract=true;
+                    returnHoldInteract = HoldInteract(possibleinteracts[index]);
+                }
+                if (HoldInteractTimer < HoldInteractTimerTarget || !returnHoldInteract){
                     if (possibleinteracts[index].tag==interactTags[0] && canGrabItem){ //item
                         //grab item
                         Debug.Log("grabbing item (InteractControl)");
@@ -101,11 +106,6 @@ public class InteractControl : MonoBehaviour
                         Interact(possibleinteracts[index]);
                     }
                 }
-                else {
-                    //hold interact
-                    holdingInteract=true;
-                    HoldInteract(possibleinteracts[index]);
-                }
                 HoldInteractTimer=0;
                 holdingInteractIndicator.SetActive(false);
             }
@@ -123,6 +123,7 @@ public class InteractControl : MonoBehaviour
         }
 
         if (Input.GetButtonUp("Release")  && (rightGrab || leftGrab)){
+            HoldingReleaseIndicator.SetActive(false);
             if (HoldReleaseTimer < HoldReleaseTimerTarget){
                 ReleaseHand();
             }
@@ -136,6 +137,10 @@ public class InteractControl : MonoBehaviour
 
         if (Input.GetButton("Release") && (rightGrab || leftGrab)){
             HoldReleaseTimer+=Time.deltaTime;
+            if (HoldReleaseTimer>=HoldReleaseTimerTarget/5){
+                HoldingReleaseIndicator.SetActive(true);
+                HoldingReleaseIndicator.GetComponentInChildren<Image>().fillAmount = HoldReleaseTimer/HoldReleaseTimerTarget;
+            }
             if (HoldReleaseTimer >= HoldReleaseTimerTarget && !IsThrowing){
                 IsThrowing = true;
                 throwingAngleX = transform.forward.x>=0? 1 : -1 * Mathf.PI/4;
@@ -178,7 +183,10 @@ public class InteractControl : MonoBehaviour
             ThrowSlider.transform.rotation = Quaternion.LookRotation(throwingAngle);
             ThrowSlider.GetComponentInChildren<Slider>().value = throwForce;
         }
-        else if (ThrowSlider.activeSelf) ThrowSlider.SetActive(false);
+        else if (ThrowSlider.activeSelf){
+            HoldingReleaseIndicator.SetActive(false); 
+            ThrowSlider.SetActive(false);
+        } 
 
         if (possibleinteracts.Count>0 && index>=0){
             if (!indicator.activeSelf) indicator.SetActive(true);
@@ -493,6 +501,10 @@ public class InteractControl : MonoBehaviour
 
     void ReleaseGrabbable(Transform t){
         //Destroy(t.GetComponent<FixedJoint>());
+        rightGrab=null;
+        leftGrab=null;
+        rightHandGrabbing=false;
+        leftHandGrabbing=false;
 
         t.parent = ItemParent[0];
         ItemParent[0] = null;
@@ -512,6 +524,10 @@ public class InteractControl : MonoBehaviour
     }
 
     void ReleaseDraggable(Transform t){
+        rightGrab=null;
+        leftGrab=null;
+        rightHandGrabbing=false;
+        leftHandGrabbing=false;
         Destroy(t.GetComponent<SpringJoint>());
         //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
         if (t.position.z!=0) 
@@ -520,8 +536,10 @@ public class InteractControl : MonoBehaviour
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =true;
     }
 
-    void HoldInteract(Transform obj){
-        obj.SendMessage("OnHoldInteract", transform, SendMessageOptions.DontRequireReceiver);
+    bool HoldInteract(Transform obj){
+        MessageArgs msg = new MessageArgs(transform);
+        obj.SendMessage("OnHoldInteract", msg, SendMessageOptions.DontRequireReceiver);
+        return msg.received;
     }
 
     void Throw(){

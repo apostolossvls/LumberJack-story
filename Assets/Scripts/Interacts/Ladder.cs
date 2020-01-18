@@ -82,8 +82,10 @@ public class Ladder : MonoBehaviour
         if (r) r.velocity = new Vector3(0, 0, r.velocity.z);
     }
 
-    void OnHoldInteract(Transform t){
-        GetOnLadder(t);
+    void OnHoldInteract(MessageArgs msg){
+        Debug.Log("OnHoldInteract"+msg.sender.name.ToString());
+        msg.received = true;
+        GetOnLadder(msg.sender);
     }
 
     void OnRelease(Transform t){
