@@ -28,7 +28,7 @@ public class Ladder : MonoBehaviour
                     Mathf.Clamp(ladderPoint.localPosition.y + vertical * Mathf.Sign(transform.up.y) * Time.deltaTime *climbSpeed, ladderHeightMin, ladderHeightMax),
                     ladderPoint.localPosition.z);
                 user.position = ladderPoint.position;
-                Debug.Log("user.transform.up.y:" + user.transform.up.y);
+                //Debug.Log("user.transform.up.y:" + user.transform.up.y);
             }
             else {
                 user.GetComponent<InteractControl>().ReleaseHand();
