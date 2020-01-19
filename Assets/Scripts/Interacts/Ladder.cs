@@ -21,25 +21,29 @@ public class Ladder : MonoBehaviour
     void Update()
     {
         if (onLadder && user){
-            if (Mathf.Abs(transform.rotation.x) < 45){
+            if (Mathf.Abs(user.transform.localRotation.x) < 30){
                 float vertical = Input.GetAxisRaw("Vertical");
                 ladderPoint.localPosition = new Vector3(
                     ladderPoint.localPosition.x,
-                    Mathf.Clamp(ladderPoint.localPosition.y + vertical * Time.deltaTime *climbSpeed, ladderHeightMin, ladderHeightMax),
+                    Mathf.Clamp(ladderPoint.localPosition.y + vertical * Mathf.Sign(transform.up.y) * Time.deltaTime *climbSpeed, ladderHeightMin, ladderHeightMax),
                     ladderPoint.localPosition.z);
                 user.position = ladderPoint.position;
+                Debug.Log("user.transform.up.y:" + user.transform.up.y);
             }
             else {
                 user.GetComponent<InteractControl>().ReleaseHand();
             }
+            
         }
     }
 
-    void GetOnLadder(Transform t){
+    bool GetOnLadder(Transform t){
+        bool success = false;
         RaycastHit[] hits = Physics.RaycastAll(t.position, t.forward, 2);
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].transform == transform){
+                success = true;
                 InteractControl interactControl = t.GetComponent<InteractControl>();
                 if (interactControl){
                     interactControl.ReleaseHand();
@@ -67,7 +71,7 @@ public class Ladder : MonoBehaviour
 
             }
         }
-
+        return success;
     }
 
     void ReleaseLadder(Transform t){
@@ -84,12 +88,12 @@ public class Ladder : MonoBehaviour
 
     void OnHoldInteract(MessageArgs msg){
         Debug.Log("OnHoldInteract"+msg.sender.name.ToString());
-        msg.received = true;
-        GetOnLadder(msg.sender);
+        msg.received = GetOnLadder(msg.sender);
     }
 
-    void OnRelease(Transform t){
-        ReleaseLadder(t);
+    void OnRelease(MessageArgs msg){
+        msg.received  =true;
+        ReleaseLadder(msg.sender);
     }
 
 }

@@ -253,7 +253,7 @@ public class InteractControl : MonoBehaviour
         Debug.Log("release");
         if (rRight && rightHandGrabbing){
             rightHandGrabbing = false;
-            rightGrab.SendMessage("OnRelease", transform, SendMessageOptions.DontRequireReceiver);
+            rightGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
             if (rightGrab.tag=="Item"){
                 ReleaseItem(rightGrab, true);
             }
@@ -270,7 +270,7 @@ public class InteractControl : MonoBehaviour
         }
         if (rLeft && leftHandGrabbing){
             leftHandGrabbing = false;
-            leftGrab.SendMessage("OnRelease", transform, SendMessageOptions.DontRequireReceiver);
+            leftGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
             if (leftGrab.tag=="Item"){
                 ReleaseItem(leftGrab, false);
             }
@@ -361,7 +361,7 @@ public class InteractControl : MonoBehaviour
         obj.localRotation = Quaternion.identity;
         */
 
-        rightGrab.SendMessage("OnGrab", transform, SendMessageOptions.DontRequireReceiver);
+        rightGrab.SendMessage("OnGrab", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
 
         StopCoroutine("GrabItemOverTime");
         StartCoroutine(GrabOverTime(obj, HandPivot[hand], 10f, hand));
@@ -479,7 +479,7 @@ public class InteractControl : MonoBehaviour
     void Interact(Transform t){
         Debug.Log("interacting function");
         //do something
-        t.SendMessage("Interact", transform, SendMessageOptions.DontRequireReceiver);
+        t.SendMessage("Interact", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
     }
 
     void ReleaseItem(Transform t, bool OnRight){
@@ -543,7 +543,7 @@ public class InteractControl : MonoBehaviour
     }
 
     void Throw(){
-        rightGrab.SendMessage("OnThrow", transform, SendMessageOptions.DontRequireReceiver);
+        rightGrab.SendMessage("OnThrow", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
         //Debug.Log("Throw");
         //Vector3 angle = (new Vector3(throwingAngle, Mathf.Pow((1-Mathf.Pow(throwingAngle, 2)), 1/2), 0));
         //throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;

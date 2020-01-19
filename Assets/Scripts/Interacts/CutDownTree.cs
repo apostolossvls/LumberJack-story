@@ -59,11 +59,12 @@ public class CutDownTree : MonoBehaviour
         Destroy(this);
     }
 
-    void Interact(Transform t){
+    void Interact(MessageArgs msg){
+        msg.received = true;
         //Destroy(gameObject);
         Debug.Log("Interact recived");
         activated=true;
-        cutter = t;
+        cutter = msg.sender;
         cutterPos = cutter.position;
         this.tag = "Untagged";
     }

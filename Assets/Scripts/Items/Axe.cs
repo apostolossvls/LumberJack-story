@@ -41,15 +41,18 @@ public class Axe : MonoBehaviour
         }
     }
 
-    void OnThrow(Transform t){
-        if (t.GetComponent<InteractControl>().IsHuman){
+    void OnThrow(MessageArgs msg){
+        msg.received =true;
+        if (msg.sender.GetComponent<InteractControl>().IsHuman){
             rig.maxAngularVelocity = maxAngVel;
             flyingWithSpin=true;
         }
         //rig.AddTorque(spinForce * transform.right, ForceMode.Acceleration);
     }
 
-    void OnGrab(Transform t){
+    void OnGrab(MessageArgs msg){
+        msg.received = true;
+        Transform t = msg.sender;
         if (t.GetComponent<InteractControl>()){
             jump = t.GetComponent<Jump>();
             if (jump){
