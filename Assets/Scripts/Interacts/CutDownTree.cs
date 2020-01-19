@@ -59,7 +59,7 @@ public class CutDownTree : MonoBehaviour
         Destroy(this);
     }
 
-    void Interact(MessageArgs msg){
+    void OnInteract(MessageArgs msg){
         msg.received = true;
         //Destroy(gameObject);
         Debug.Log("Interact recived");

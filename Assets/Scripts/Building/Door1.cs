@@ -17,7 +17,7 @@ public class Door1 : MonoBehaviour
         rig.isKinematic = locked;
     }
 
-    void Interact(MessageArgs msg){
+    void OnInteract(MessageArgs msg){
         msg.received = true;
         GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(msg.sender.position.x - transform.position.x), 0, 0) * grabPower, ForceMode.Impulse);
     }

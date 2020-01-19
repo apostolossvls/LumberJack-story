@@ -89,21 +89,28 @@ public class InteractControl : MonoBehaviour
                             GrabItem(possibleinteracts[index], true);
                         }
                     }
-                    else if (possibleinteracts[index].tag==interactTags[1] && IsHuman && canGrabGrabbable){ //fixedJoint , grabbable
-                        Debug.Log("grabbing grabbable (InteractControl)");
-                        ReleaseHand();
-                        GrabGrabbable(possibleinteracts[index]);
-                    } 
-                    else if (possibleinteracts[index].tag==interactTags[2] && IsHuman && canGrabDraggable){ //pushdrag , draggable
-                        Debug.Log("grabbing draggable (InteractControl)");
-                        ReleaseHand();
-                        GrabDraggable(possibleinteracts[index]);
+                    else if (IsHuman){
+                        if (possibleinteracts[index].tag==interactTags[1] && canGrabGrabbable){ //fixedJoint , grabbable
+                            Debug.Log("grabbing grabbable (InteractControl)");
+                            ReleaseHand();
+                            GrabGrabbable(possibleinteracts[index]);
+                        } 
+                        else if (possibleinteracts[index].tag==interactTags[2] && canGrabDraggable){ //pushdrag , draggable
+                            Debug.Log("grabbing draggable (InteractControl)");
+                            ReleaseHand();
+                            GrabDraggable(possibleinteracts[index]);
+                        }
+                        else if (possibleinteracts[index].tag==interactTags[3]){ //interact
+                            //Debug.Log("interacting (InteractControl)");
+                            //ReleaseHand();
+                            //GrabDraggable(possibleinteracts[index]);
+                            Interact(possibleinteracts[index]);
+                        }
                     }
-                    else if (possibleinteracts[index].tag==interactTags[3] && IsHuman){ //interact
-                        //Debug.Log("interacting (InteractControl)");
-                        //ReleaseHand();
-                        //GrabDraggable(possibleinteracts[index]);
-                        Interact(possibleinteracts[index]);
+                    else { //dog
+                        if (possibleinteracts[index].tag==interactTags[1]){ //interact
+                            Interact(possibleinteracts[index]);
+                        }
                     }
                 }
                 HoldInteractTimer=0;
@@ -479,7 +486,7 @@ public class InteractControl : MonoBehaviour
     void Interact(Transform t){
         Debug.Log("interacting function");
         //do something
-        t.SendMessage("Interact", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+        t.SendMessage("OnInteract", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
     }
 
     void ReleaseItem(Transform t, bool OnRight){

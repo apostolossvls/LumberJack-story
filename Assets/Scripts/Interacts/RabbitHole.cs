@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class RabbitHole : MonoBehaviour
 {
-    public Transform hole1;
-    public Transform hole2;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public Transform endhole;
+    Transform user;
+
+    void UseRabbitHole(){
+        if (user && endhole){
+            user.transform.position = endhole.position;
+        }
     }
 
-    // Update is called once per frame
-    void OnInteract(MessageArgs msg){
-        msg.received = true;
-        
+    bool TestRabbitHole(Transform t){
+        bool flag = false;
+        user = t;
+        if (user){
+            InteractControl interactControl = user.GetComponent<InteractControl>();
+            if (interactControl){
+                if (!interactControl.IsHuman){
+                    flag = true;
+                    UseRabbitHole();
+                }
+            }
+        }
+        return flag;
+    }
+
+    void OnHoldInteract(MessageArgs msg){
+        msg.received = TestRabbitHole(msg.sender); 
     }
 }

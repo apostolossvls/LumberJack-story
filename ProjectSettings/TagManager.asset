@@ -10,6 +10,7 @@ TagManager:
   - HumanInteractable
   - PlayerHuman
   - PlayerDog
+  - DogInteractable
   layers:
   - Default
   - TransparentFX
