@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageOnCollisionStay : MonoBehaviour
+public class DamageOnTriggerStay : MonoBehaviour
 {
     public float damage=1f;
     public float TicksPerSecond=1f;
@@ -39,7 +39,7 @@ public class DamageOnCollisionStay : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision other)
+    void OnTriggerStay(Collider other)
     {
         if (this.enabled){
             if (TicksPerSecond!=0){
@@ -63,7 +63,7 @@ public class DamageOnCollisionStay : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision other)
+    void OnTriggerExit(Collider other)
     {
         if (this.enabled){
             if (OnArray(other.transform)!=-1){

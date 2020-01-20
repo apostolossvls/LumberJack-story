@@ -24,7 +24,7 @@ TagManager:
   - PlayerDog
   - IgnorePlayer
   - ObjectSafeArea
-  - 
+  - PostProcessing
   - 
   - 
   - 

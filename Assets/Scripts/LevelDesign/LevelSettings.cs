@@ -12,16 +12,23 @@ public class LevelSettings : MonoBehaviour
     public static float secondZLine=-1;
     public float mainZLineInspector=0;
     public float secondZLineInspector=-1;
-    // Start is called before the first frame update
+
+    //scene
+    static bool reloadingScene;
+
     void Awake()
     {
         if (!self) self = this;
         else Destroy(this);
+        reloadingScene = false;
         mainZLine = mainZLineInspector;
         secondZLine = secondZLineInspector;
     }
 
     public static void RestartScene(){
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        if (!reloadingScene){
+            reloadingScene=true;
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }
