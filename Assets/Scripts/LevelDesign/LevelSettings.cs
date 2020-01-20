@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSettings : MonoBehaviour
 {
@@ -20,5 +21,7 @@ public class LevelSettings : MonoBehaviour
         secondZLine = secondZLineInspector;
     }
 
-
+    public static void RestartScene(){
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
 }
