@@ -67,6 +67,12 @@ public class Axe : MonoBehaviour
         }
     }
 
+    void OnRelease(MessageArgs msg){
+        msg.received = true;
+        InteractControl i = GetComponentInParent<InteractControl>();
+        if (i) i.SendMessage("GoToIntentory", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (flyingWithSpin && !collision.gameObject.GetComponent<InteractControl>()){
