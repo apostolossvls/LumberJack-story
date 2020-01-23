@@ -17,7 +17,7 @@ public class Inventory : MonoBehaviour
         
     }
 
-    void SaveToInventory(Transform t){
+    public void SaveToInventory(Transform t){
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i]==null) {
@@ -26,10 +26,5 @@ public class Inventory : MonoBehaviour
                 t.localRotation = new Quaternion(0,0,0,0);
             }
         }
-    }
-
-    void GoToIntentory(MessageArgs msg){
-        msg.received = true;
-        SaveToInventory(msg.sender);
     }
 }

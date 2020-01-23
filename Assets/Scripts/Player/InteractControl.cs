@@ -260,9 +260,13 @@ public class InteractControl : MonoBehaviour
         Debug.Log("release");
         if (rRight && rightHandGrabbing){
             rightHandGrabbing = false;
-            rightGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+            rightGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);          
             if (rightGrab.tag=="Item"){
-                ReleaseItem(rightGrab, true);
+                MessageArgs msg = new MessageArgs(transform);
+                rightGrab.SendMessage("GoToIntentory", msg, SendMessageOptions.DontRequireReceiver);
+                if (!msg.received){
+                    ReleaseItem(rightGrab, true);
+                }
             }
             else if (rightGrab.tag=="Grabbable"){
                 ReleaseGrabbable(rightGrab);
