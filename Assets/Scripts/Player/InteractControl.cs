@@ -37,7 +37,7 @@ public class InteractControl : MonoBehaviour
     bool IsThrowing;
     public float throwPower=1f;
     public float throwingAngleX=0;
-    Vector3 throwingAngle;
+    [HideInInspector] public Vector3 throwingAngle;
     public float throwForce=0;
 
     //TimersTarget
@@ -554,15 +554,18 @@ public class InteractControl : MonoBehaviour
     }
 
     void Throw(){
-        rightGrab.SendMessage("OnThrow", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+        MessageArgs msg = new MessageArgs(transform);
+        rightGrab.SendMessage("OnThrow", msg, SendMessageOptions.DontRequireReceiver);
         //Debug.Log("Throw");
         //Vector3 angle = (new Vector3(throwingAngle, Mathf.Pow((1-Mathf.Pow(throwingAngle, 2)), 1/2), 0));
         //throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;
         //Debug.DrawRay(transform.position, throwingAngle, Color.magenta, 3f);
         if (rightGrab.tag=="Item"){
-            //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
-            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
-            ReleaseHand(true, false);
+            if (!msg.received){
+                //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
+                rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
+                ReleaseHand(true, false);
+            }
         }
         else if (rightGrab.tag=="Grabbable"){
             //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
