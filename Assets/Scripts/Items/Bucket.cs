@@ -27,15 +27,19 @@ public class Bucket : MonoBehaviour
             Vector3 throwingAngle = i.throwingAngle;
             float throwPower = i.throwPower;
             float throwForce = i.throwForce;
-            GameObject g = GameObject.Instantiate(liquidPrefab, transform.position, Quaternion.Euler(throwingAngle));
+            Vector3 v = new Vector3(throwingAngle.z, throwingAngle.y, throwingAngle.x);
+            GameObject g = GameObject.Instantiate(liquidPrefab, transform.position, Quaternion.LookRotation(v));
+            //g.transform.parent = transform;
+            //g.transform.rotation = Quaternion.LookRotation(v);
             ParticleSystem ps = g.GetComponentInChildren<ParticleSystem>();
             if (ps){
                 var sh = ps.shape;
                 sh.rotation = Quaternion.LookRotation(throwingAngle).eulerAngles;
+                Debug.DrawRay(transform.position, throwingAngle, Color.blue, 3f);
                 //sh.rotation = new Vector3(0 , sh.rotation.y, 0);
                 ps.Play();
             }
-            else g.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
+            g.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
             Destroy(g, 3.5f);
 
             liquidName = null;
