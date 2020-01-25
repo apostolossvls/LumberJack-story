@@ -423,6 +423,7 @@ public class InteractControl : MonoBehaviour
 
         if (obj.GetComponent<Rigidbody>()) {
             rigidbodyConstraints[0] = obj.GetComponent<Rigidbody>().constraints;
+            rigidbodyConstraints[1] = obj.GetComponent<Rigidbody>().constraints;
             obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
         
@@ -560,21 +561,24 @@ public class InteractControl : MonoBehaviour
         //Vector3 angle = (new Vector3(throwingAngle, Mathf.Pow((1-Mathf.Pow(throwingAngle, 2)), 1/2), 0));
         //throwingAngle = new Vector3(throwingAngleX, Mathf.Cos(throwingAngleX), 0).normalized;
         //Debug.DrawRay(transform.position, throwingAngle, Color.magenta, 3f);
-        if (rightGrab.tag=="Item"){
-            if (!msg.received){
-                //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
-                rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
-                ReleaseHand(true, false);
+        Transform obj = rightGrab;
+        if (obj){
+            if (obj.tag=="Item"){
+                if (!msg.received){
+                    //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
+                    ReleaseHand(true, false);
+                    obj.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
+                }
             }
-        }
-        else if (rightGrab.tag=="Grabbable"){
-            //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
-            rightGrab.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
-            ReleaseHand();
-        }
-        else if (rightGrab.tag=="Draggable"){
-            rightGrab.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(rightGrab.position.x-transform.position.x), 0, 0) * 4f, ForceMode.Impulse);
-            ReleaseHand();
+            else if (obj.tag=="Grabbable"){
+                //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
+                ReleaseHand();
+                obj.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
+            }
+            else if (obj.tag=="Draggable"){
+                ReleaseHand();
+                obj.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(rightGrab.position.x-transform.position.x), 0, 0) * 4f, ForceMode.Impulse);
+            }
         }
     }
 

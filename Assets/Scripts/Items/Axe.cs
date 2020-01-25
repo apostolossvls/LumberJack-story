@@ -43,9 +43,14 @@ public class Axe : MonoBehaviour
 
     void OnThrow(MessageArgs msg){
         msg.received =true;
-        if (msg.sender.GetComponent<InteractControl>().IsHuman){
-            rig.maxAngularVelocity = maxAngVel;
-            flyingWithSpin=true;
+        InteractControl i = msg.sender.GetComponent<InteractControl>();
+        if (i){
+            if (i.IsHuman){
+                i.ReleaseHand(true, false);
+                rig.AddForce(i.throwingAngle * i.throwPower * i.throwForce, ForceMode.Impulse);
+                rig.maxAngularVelocity = maxAngVel;
+                flyingWithSpin=true;
+            }
         }
         //rig.AddTorque(spinForce * transform.right, ForceMode.Acceleration);
     }
@@ -67,6 +72,7 @@ public class Axe : MonoBehaviour
         }
     }
 
+    /*
     void GoToIntentory(MessageArgs msg){
         Inventory i = GetComponentInParent<Inventory>();
         if (i) {
@@ -74,6 +80,7 @@ public class Axe : MonoBehaviour
             msg.received = true;
         }
     }
+    */
 
     void OnCollisionEnter(Collision collision)
     {
