@@ -11,6 +11,8 @@ TagManager:
   - PlayerHuman
   - PlayerDog
   - DogInteractable
+  - Fire
+  - Water
   layers:
   - Default
   - TransparentFX
