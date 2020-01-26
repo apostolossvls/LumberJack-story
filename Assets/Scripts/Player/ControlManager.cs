@@ -76,11 +76,11 @@ public class ControlManager : MonoBehaviour
             SetPlayerCharOnStandby(dog, !onDog);
 
             if (PlayerPivot){
-                if (PlayerPivot.GetComponent<PositionMatchPosition>()){
+                if (PlayerPivot.GetComponent<CameraFollowPivot>()){
                     Transform t = null;
                     if (onHuman) t = human;
                     else if (onDog) t = dog;
-                    PlayerPivot.GetComponent<PositionMatchPosition>().changeTarget(t);
+                    PlayerPivot.GetComponent<CameraFollowPivot>().ChangeTarget(t);
                 }
             }
         }
