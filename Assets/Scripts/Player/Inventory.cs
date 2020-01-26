@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class Inventory : MonoBehaviour
     public int slotSelected;
     //bool opening, closing;
 
+    //UI
+    public GameObject UIobject;
+    public Text[] slotsText;
+    public GameObject[] slotHighlight;
+
     void Start()
     {
         inventoryOpen = false;
@@ -18,6 +24,8 @@ public class Inventory : MonoBehaviour
         //closing = false;
         slotSelected = -1;
         interactControl = GetComponent<InteractControl>();
+        RefreshUI();
+        UIobject.SetActive(false);
     }
 
     void Update()
@@ -61,6 +69,9 @@ public class Inventory : MonoBehaviour
                 interactControl.ReleaseHand(true, false);
                 SetItemToSlot(handItem, slot);
             }
+            else {
+                slots[slot] = null;
+            }
 
             if (slotItem){
                 Debug.Log("slot filled");
@@ -87,6 +98,8 @@ public class Inventory : MonoBehaviour
         inventoryOpen = true;
         if (interactControl) interactControl.enabled = false;
         SelectSlot(-1);
+        RefreshUI();
+        UIobject.SetActive(true);
     }
     void CloseInventory(bool forced=false){
         if (!forced){
@@ -94,8 +107,11 @@ public class Inventory : MonoBehaviour
                 SwapItems(slotSelected);
             }
         }
+        slotSelected = -1;
         inventoryOpen = false;
         if (interactControl) interactControl.enabled = true;
+        UIobject.SetActive(false);
+        RefreshUI();
     }
 
     void SelectSlot(int index){
@@ -107,16 +123,36 @@ public class Inventory : MonoBehaviour
         int index = -1;
         if (Mathf.Abs(x) > 0.3f || Mathf.Abs(y) > 0.3f){
             if (-x>y && x<y){
-                index = 0;
+                index = 1; //left
             }
             else if (x>=-y && x<=y){
-                index = 1;
+                index = 0; //top
             }
             else if (x>y && -x<y){
-                index = 2;
+                index = 2; //right
             }
         }
         SelectSlot(index);
+        RefreshHighlightUI();
+    }
+
+    //UI
+    void RefreshUI(){
+        for (int i = 0; i < slotsText.Length; i++)
+        {
+            string s = "";
+            if (slots[i]) s = slots[i].name;
+            slotsText[i].text = s;
+        }
+        RefreshHighlightUI();
+    }
+
+    void RefreshHighlightUI(){
+        for (int i = 0; i < slotHighlight.Length; i++)
+        {
+            if (slotSelected==i) slotHighlight[i].SetActive(true);
+            else slotHighlight[i].SetActive(false);
+        }
     }
 
     void OnDisable(){
