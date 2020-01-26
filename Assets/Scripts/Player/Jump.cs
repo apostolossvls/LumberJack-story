@@ -83,7 +83,6 @@ public class Jump : MonoBehaviour
     }
 
     public bool IsGrounded() {
-        //StopAllCoroutines();
         if (rig.velocity.y==0) return true;
         else return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.2f);
     }

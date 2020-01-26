@@ -374,7 +374,7 @@ public class InteractControl : MonoBehaviour
 
         rightGrab.SendMessage("OnGrab", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
 
-        StopCoroutine("GrabItemOverTime");
+        StopCoroutine("GrabOverTime");
         StartCoroutine(GrabOverTime(obj, HandPivot[hand], 10f, hand));
 
         if (obj.GetComponent<Rigidbody>()) {
@@ -418,7 +418,7 @@ public class InteractControl : MonoBehaviour
         obj.parent = GrabPivots[0];
         GrabPivotsUsing[0] = true;
 
-        StopCoroutine("GrabItemOverTime");
+        StopCoroutine("GrabOverTime");
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0], 10f));
 
         if (obj.GetComponent<Rigidbody>()) {
@@ -460,7 +460,7 @@ public class InteractControl : MonoBehaviour
             else GrabPivotsUsing[i] = false;
         }
 
-        StopCoroutine("GrabItemOverTime");
+        StopCoroutine("GrabOverTime");
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[pos], 10f));
     }
 

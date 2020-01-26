@@ -14,21 +14,28 @@ public class LevelSettings : MonoBehaviour
     public float secondZLineInspector=-1;
 
     //scene
-    static bool reloadingScene;
+    static bool loadingScene;
 
     void Awake()
     {
         if (!self) self = this;
         else Destroy(this);
-        reloadingScene = false;
+        loadingScene = false;
         mainZLine = mainZLineInspector;
         secondZLine = secondZLineInspector;
     }
 
     public static void RestartScene(){
-        if (!reloadingScene){
-            reloadingScene=true;
+        if (!loadingScene){
+            loadingScene=true;
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public static void LoadSceneIndex(int index){
+        if (!loadingScene){
+            loadingScene=true;
+            SceneManager.LoadSceneAsync(index);
         }
     }
 }

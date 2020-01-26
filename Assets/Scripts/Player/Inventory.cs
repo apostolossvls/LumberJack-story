@@ -68,6 +68,7 @@ public class Inventory : MonoBehaviour
             if (handItem){
                 interactControl.ReleaseHand(true, false);
                 SetItemToSlot(handItem, slot);
+                StartCoroutine(ChangePosOverTime(handItem, slotsPos[slot], 10f));
             }
             else {
                 slots[slot] = null;
@@ -119,7 +120,7 @@ public class Inventory : MonoBehaviour
     }
 
     void GetCrossInput(float x, float y){
-        Debug.Log("Input second. X: "+x+" , Y: "+y);
+        //Debug.Log("Input second. X: "+x+" , Y: "+y);
         int index = -1;
         if (Mathf.Abs(x) > 0.3f || Mathf.Abs(y) > 0.3f){
             if (-x>y && x<y){
@@ -153,6 +154,20 @@ public class Inventory : MonoBehaviour
             if (slotSelected==i) slotHighlight[i].SetActive(true);
             else slotHighlight[i].SetActive(false);
         }
+    }
+    
+    private Vector3 posVel = Vector3.zero;
+    IEnumerator ChangePosOverTime(Transform t, Transform newT, float speed, int handIndex=0){
+        float timer=0;
+        while (timer<1/speed){
+            t.localRotation = Quaternion.Slerp(t.localRotation, newT.localRotation, Time.deltaTime * speed);
+            t.localPosition = Vector3.SmoothDamp(t.localPosition, newT.localPosition, ref posVel, 1/speed);
+            timer+=Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        t.localPosition = Vector3.zero;
+        t.localRotation = Quaternion.identity;
+        yield return null;
     }
 
     void OnDisable(){
