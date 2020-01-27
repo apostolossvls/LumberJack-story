@@ -21,7 +21,7 @@ public class MoveWithPlatform : MonoBehaviour
         if (points.Length > 0){
             currentTarget = points[0];
         }
-        tolerance = speed * Time.fixedDeltaTime;
+        tolerance = speed * Time.deltaTime;
     }
 
     void LateUpdate(){

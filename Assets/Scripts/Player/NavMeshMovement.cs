@@ -19,12 +19,18 @@ public class NavMeshMovement : MonoBehaviour
     public float jumpDuration=1f;
     bool activated=true;
     public bool follow=true;
+    int lastPosFar;
+    Vector3 lastPos;
+    int pathPendingCounter;
 
     public OffMeshLinkMoveMethod method = OffMeshLinkMoveMethod.Parabola;
     public AnimationCurve curve = new AnimationCurve ();
 
     void OnEnable(){
         activated=true;
+        lastPosFar = 0;
+        lastPos = transform.position;
+        pathPendingCounter=0;
         StartCoroutine("DoStart");
     }
     void OnDisable(){
@@ -89,6 +95,41 @@ public class NavMeshMovement : MonoBehaviour
         if (target && activated){
             agent.SetDestination(target.position+offset);
         }
+        float dist=agent.remainingDistance;
+        if (dist!=Mathf.Infinity && agent.pathStatus==NavMeshPathStatus.PathComplete && agent.remainingDistance>agent.stoppingDistance){
+            //running to human
+        }
+
+        if (dist!=Mathf.Infinity && agent.pathPending && follow){
+            //Debug.Log("path2");
+            pathPendingCounter++;
+        }
+        else {
+            pathPendingCounter=0;
+        }
+        if (pathPendingCounter>100) {
+            CantReachBark();
+            Debug.Log("pathProblem1");
+        }
+
+        if (follow && agent.remainingDistance > agent.stoppingDistance){
+            if (Vector3.Distance(transform.position, lastPos) < 0.2f){
+                lastPosFar++;
+            }
+            else {
+                lastPosFar = 0;
+            }
+            lastPos = transform.position;
+            if (lastPosFar > 100){
+                CantReachBark();
+                Debug.Log("pathProblem2");
+            }          
+        }
+    }
+
+    void CantReachBark(){
+        Debug.Log("DOG CANT REACH");
+        //bark
     }
 
     /*

@@ -10362,48 +10362,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
         type: 3}
-      propertyPath: tags.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
       propertyPath: points.Array.data[0].y
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
-      propertyPath: speed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
-      propertyPath: automatic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
-      propertyPath: delayTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
-      propertyPath: tags.Array.data[0]
-      value: PlayerHuman
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
-      propertyPath: tags.Array.data[1]
-      value: PlayerDog
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
-      propertyPath: tags.Array.data[2]
-      value: Item
-      objectReference: {fileID: 0}
-    - target: {fileID: 5512002875406860862, guid: ae576aac611e7e1419c073f4ea6189cb,
-        type: 3}
-      propertyPath: tags.Array.data[3]
-      value: Grabbable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae576aac611e7e1419c073f4ea6189cb, type: 3}
