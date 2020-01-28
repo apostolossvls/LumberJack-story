@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public enum OffMeshLinkMoveMethod {
     Teleport,
@@ -23,6 +24,10 @@ public class NavMeshMovement : MonoBehaviour
     float lastPosFar;
     Vector3 lastPos;
     float pathPendingCounter;
+
+    //UI
+    public Transform talkImageParent;
+    public Transform talkImage1;
 
     public OffMeshLinkMoveMethod method = OffMeshLinkMoveMethod.Parabola;
     public AnimationCurve curve = new AnimationCurve ();
@@ -113,9 +118,9 @@ public class NavMeshMovement : MonoBehaviour
                 else {
                     pathPendingCounter=0;
                 }
-                if (pathPendingCounter>3) {
+                if (pathPendingCounter>4) {
                     pathPendingCounter=0;
-                    StartCoroutine(CantReachBark(true, false));
+                    StartCoroutine(CantReachTalk(true, false));
                     Debug.Log("pathProblem1");
                 }
 
@@ -128,10 +133,10 @@ public class NavMeshMovement : MonoBehaviour
                         lastPosFar = 0;
                     }
                     lastPos = transform.position;
-                    if (lastPosFar > 3){
+                    if (lastPosFar > 8){
                         lastPosFar = 0;
                         follow = false;
-                        StartCoroutine(CantReachBark(true, false)); 
+                        StartCoroutine(CantReachTalk(true, false)); 
                         Debug.Log("pathProblem2");
                     }          
                 }
@@ -143,10 +148,10 @@ public class NavMeshMovement : MonoBehaviour
                 }
                 else{
                     lastPosFar+=Time.deltaTime;
-                    if (lastPosFar > 3){
+                    if (lastPosFar > 4){
                         lastPosFar = 0;
                         follow = false;
-                        StartCoroutine(CantReachBark(true, true)); 
+                        StartCoroutine(CantReachTalk(true, true)); 
                         Debug.Log("pathProblem2");
                     }  
                 }
@@ -158,11 +163,27 @@ public class NavMeshMovement : MonoBehaviour
 
     }
 
-    IEnumerator CantReachBark(bool confused, bool sad){
+    IEnumerator CantReachTalk(bool confused, bool sad){
         Debug.Log("DOG CANT REACH");
         activated = false;
-        yield return new WaitForSeconds(1f);
+        talkImageParent.gameObject.SetActive(true);
+        float timer = 0;
+        while (timer<2){
+            Vector3 c = Camera.main.WorldToViewportPoint(transform.position);
+            float a = Vector3.Angle(transform.position, transform.position+c);
+            Vector3 pos =  Camera.main.ScreenToWorldPoint(
+                Camera.main.ViewportToScreenPoint(new Vector3(Mathf.Clamp(c.x, 0.1f, 0.9f), Mathf.Clamp(c.y, 0.1f, 0.9f), -Camera.main.transform.position.z)))
+                + new Vector3 (0,2f,0) 
+            ;
+            talkImageParent.position = pos;
+            //Debug.Log(a + ", c: "+c);
+            talkImage1.rotation = Quaternion.Euler(talkImage1.rotation.x, talkImage1.rotation.y, Mathf.Rad2Deg * Mathf.Sign(c.x) *((transform.position - talkImage1.position).normalized.x));
+            timer+=Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        //yield return new WaitForSeconds(2f);
         activated = true;
+        talkImageParent.gameObject.SetActive(false);
         yield return null;
     }
 
