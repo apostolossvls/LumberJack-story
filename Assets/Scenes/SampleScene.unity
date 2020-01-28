@@ -2653,6 +2653,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0.5}
   jumpDuration: 0.2
   follow: 1
+  wantsToFollow: 1
   method: 2
   curve:
     serializedVersion: 2

@@ -22,8 +22,7 @@ public class Call : MonoBehaviour
     {
         if (Input.GetButtonDown("Call")){
             dogfollow = !dogfollow;
-            dogNavMesh.enabled = dogfollow;
-            dogAgent.enabled = dogfollow;
+            dogNavMesh.wantsToFollow = dogfollow;
         }
     }
 }
