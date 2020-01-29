@@ -120,10 +120,10 @@ public class ControlManager : MonoBehaviour
 
     List<Behaviour> SetupBehaviours(Transform obj, string[] s){
         List<Behaviour> l = new List<Behaviour>{};
-        //Debug.Log("-----"+s.ToString()+"-----");
-        foreach (Component c in obj.GetComponents<Component>())
+        Debug.Log("-----"+s.ToString()+"-----");
+        foreach (Component c in obj.GetComponentsInChildren<Component>())
         {
-            //Debug.Log(c.GetType());
+            Debug.Log(c.GetType());
             if (StringMatch(c.GetType().ToString(), s)){
                 //Debug.Log("Found " + c.GetType());
                 Behaviour be = (Behaviour)c;
