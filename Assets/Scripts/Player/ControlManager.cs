@@ -15,8 +15,8 @@ public class ControlManager : MonoBehaviour
     public List<Behaviour> HumanBehavioursInactive;
     public List<Behaviour> DogBehavioursInactive;
     public Transform PlayerPivot;
-    bool onHuman;
-    bool onDog;
+    public static bool onHuman;
+    public static bool onDog;
     bool[] HumanBehavioursActiveWasActive;
     bool[] DogBehavioursActiveWasActive;
     void Start()

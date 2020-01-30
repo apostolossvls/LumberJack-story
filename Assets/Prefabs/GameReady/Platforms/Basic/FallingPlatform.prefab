@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7ed3ebb2d99e4408606c598e1f2c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  falldelay: 0
+  falldelay: 1
   deathDelayAfterFall: 2
 --- !u!1 &2307781759041535637
 GameObject:
