@@ -66,11 +66,15 @@ public class CutDownTree : MonoBehaviour
         activated=true;
         cutter = msg.sender;
         cutterPos = cutter.position;
+        Attack a = cutter.GetComponent<Attack>();
+        if (a) a.enabled = false;
         this.tag = "Untagged";
     }
 
     void Abort(){
         activated = false;
+        Attack a = cutter.GetComponent<Attack>();
+        if (a) a.enabled = true;
         this.tag = objTag;
     }
 }
