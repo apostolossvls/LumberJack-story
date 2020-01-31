@@ -155,6 +155,19 @@ public class InteractControl : MonoBehaviour
             }
         }
 
+        //swapHandInput
+        if (Input.GetButtonUp("SwapHand") && IsHuman){
+            Inventory inv = GetComponent<Inventory>();
+            if (inv){
+                if (inv.inputHold < inv.inputHoldNeeded) {
+                    SwapHands();
+                }
+            }
+            else {
+                SwapHands();
+            }
+        }
+
         //second Cross
         if (Input.GetAxisRaw("SecondHorizontal")!=0 || Input.GetAxisRaw("SecondVertical")!=0){
             Vector2 inp;
@@ -256,16 +269,16 @@ public class InteractControl : MonoBehaviour
         else return false;
     }
 
-    public void ReleaseHand(bool rRight = true, bool rLeft = true){
+    public void ReleaseHand(bool rRight = true, bool rLeft = true, bool fromThrow=false){
         Debug.Log("release");
         if (rRight && rightHandGrabbing){
             rightHandGrabbing = false;
             rightGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);          
             if (rightGrab.tag=="Item"){
-                MessageArgs msg = new MessageArgs(transform);
-                rightGrab.SendMessage("GoToIntentory", msg, SendMessageOptions.DontRequireReceiver);
-                if (!msg.received){
-                    ReleaseItem(rightGrab, true);
+                Transform obj = rightGrab;
+                ReleaseItem(rightGrab, true);
+                if (!fromThrow) {
+                    obj.SendMessage("OnReleaseInventory", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
                 }
             }
             else if (rightGrab.tag=="Grabbable"){
@@ -283,7 +296,11 @@ public class InteractControl : MonoBehaviour
             leftHandGrabbing = false;
             leftGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
             if (leftGrab.tag=="Item"){
+                Transform obj = leftGrab;
                 ReleaseItem(leftGrab, false);
+                if (!fromThrow) {
+                    obj.SendMessage("OnReleaseInventory", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+                }
             }
             else if (leftGrab.tag=="Grabbable"){
                 ReleaseGrabbable(leftGrab);
@@ -566,20 +583,73 @@ public class InteractControl : MonoBehaviour
             if (obj.tag=="Item"){
                 if (!msg.received){
                     //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*f, ForceMode.Impulse);
-                    ReleaseHand(true, false);
+                    ReleaseHand(true, false, true);
                     obj.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
                 }
             }
             else if (obj.tag=="Grabbable"){
                 //rightGrab.GetComponent<Rigidbody>().AddForce((transform.forward+transform.up)*0.5f, ForceMode.Impulse);
-                ReleaseHand();
+                ReleaseHand(true, true, true);
                 obj.GetComponent<Rigidbody>().AddForce(throwingAngle * throwPower * throwForce, ForceMode.Impulse);
             }
             else if (obj.tag=="Draggable"){
-                ReleaseHand();
+                ReleaseHand(true, true, true);
                 obj.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(rightGrab.position.x-transform.position.x), 0, 0) * 4f, ForceMode.Impulse);
             }
         }
+    }
+
+    void SwapHands(){
+        Transform r = rightGrab;
+        Transform l = leftGrab;
+        
+        bool flag = false;
+        if (r){
+            if (r.tag==interactTags[0]) flag = true;
+        }
+        else if (l){
+            if (l.tag==interactTags[0]) flag = true;
+        }
+        if (flag){
+            rightGrab = l;
+            leftGrab = r;
+            rightHandGrabbing = l;
+            leftHandGrabbing = r;
+
+            Transform temp = ItemParent[0];
+            ItemParent[0] = ItemParent[1];
+            ItemParent[1] = temp;
+            
+            if (rightGrab){
+                rightGrab.parent = HandPivot[0];
+                StartCoroutine(GrabOverTime(rightGrab, HandPivot[0], 10f, 1));
+            }
+            if (leftGrab){
+                leftGrab.parent = HandPivot[1];
+                StartCoroutine(GrabOverTime(leftGrab, HandPivot[1], 10f, 0));
+            }
+
+            RigidbodyConstraints cons = rigidbodyConstraints[0];
+            rigidbodyConstraints[0] = rigidbodyConstraints[1];
+            rigidbodyConstraints[1] = cons;
+
+        }
+        /*
+        ItemParent[hand] = obj.parent;
+        obj.parent = HandPivot[hand];
+
+        rightGrab.SendMessage("OnGrab", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+
+        StopCoroutine("GrabOverTime");
+        StartCoroutine(GrabOverTime(obj, HandPivot[hand], 10f, hand));
+
+        if (obj.GetComponent<Rigidbody>()) {
+            rigidbodyConstraints[hand] = obj.GetComponent<Rigidbody>().constraints;
+            obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
+        SetLayer (obj, "IgnorePlayer");
+        //SetIgnoreCollision(obj.GetComponentInChildren<Collider>(), true);
+        */
     }
 
     void SetThrowAngle(float inpY, bool fixAdding=true){

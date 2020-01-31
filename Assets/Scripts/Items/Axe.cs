@@ -46,7 +46,7 @@ public class Axe : MonoBehaviour
         InteractControl i = msg.sender.GetComponent<InteractControl>();
         if (i){
             if (i.IsHuman){
-                i.ReleaseHand(true, false);
+                i.ReleaseHand(true, false, true);
                 rig.AddForce(i.throwingAngle * i.throwPower * i.throwForce, ForceMode.Impulse);
                 rig.maxAngularVelocity = maxAngVel;
                 flyingWithSpin=true;
@@ -72,15 +72,16 @@ public class Axe : MonoBehaviour
         }
     }
 
-    /*
-    void GoToIntentory(MessageArgs msg){
-        Inventory i = GetComponentInParent<Inventory>();
-        if (i) {
+    
+    void OnReleaseInventory(MessageArgs msg){
+        Debug.Log("sended axe");
+        Inventory i = msg.sender.GetComponent<Inventory>();
+        if (i.isActiveAndEnabled) {
             i.SaveToInventory(transform);
             msg.received = true;
         }
     }
-    */
+    
 
     void OnCollisionEnter(Collision collision)
     {

@@ -16,25 +16,35 @@ public class Inventory : MonoBehaviour
     public GameObject UIobject;
     public Text[] slotsText;
     public GameObject[] slotHighlight;
+    public float inputHoldNeeded = 1f;
+    public float inputHold;
 
     void Start()
     {
-        inventoryOpen = false;
-        //opening = false;
-        //closing = false;
-        slotSelected = -1;
         interactControl = GetComponent<InteractControl>();
+    }
+
+    void OnEnable(){
+        inputHold=0;
+        inventoryOpen = false;
+        slotSelected = -1;
         RefreshUI();
         UIobject.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Inventory") && !inventoryOpen){
-            OpenInventory();
+        if (Input.GetButton("Inventory") && !inventoryOpen){
+            if (inputHold >= inputHoldNeeded){
+                OpenInventory();
+            }
+            inputHold+=Time.deltaTime;
         }
-        if (Input.GetButtonUp("Inventory") && inventoryOpen){
-            CloseInventory();
+        if (Input.GetButtonUp("Inventory")){
+            if (inventoryOpen) {
+                CloseInventory();
+            }
+            inputHold=0;
         }
         if (inventoryOpen){
             if (Input.GetAxisRaw("SecondHorizontal")!=0 || Input.GetAxisRaw("SecondVertical")!=0){
@@ -47,13 +57,17 @@ public class Inventory : MonoBehaviour
     }
 
     public void SaveToInventory(Transform t){
+        Debug.Log("SaveToInventory");
         int index = -1;
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i]==null) index = i;
+            if (slots[i]==null) {
+                index = i;
+                break;
+            }
         }
         if (index>=0){
-            SetItemToSlot(t, index);
+            SwapItems(index);
         }
         else {
             SwapItems(0);
