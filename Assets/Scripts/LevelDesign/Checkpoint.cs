@@ -13,8 +13,8 @@ public class Checkpoint : MonoBehaviour
     public GameObject[] humanResetParents;
     public GameObject[] dogResetParents;
     public GameObject[] resetObjects;
-    GameObject humanInstance;
-    GameObject dogInstance;
+    public GameObject humanInstance;
+    public GameObject dogInstance;
     List<GameObject> humanInstances;
     List<GameObject> dogInstances;
     GameObject[] instances;
@@ -62,8 +62,8 @@ public class Checkpoint : MonoBehaviour
     }
 
     void InstantiatePlayers() {
-        if (humanInstance) Destroy(humanInstance);
-        if (dogInstance) Destroy(dogInstance);
+        //if (humanInstance) Destroy(humanInstance);
+        //if (dogInstance) Destroy(dogInstance);
         humanInstance = GameObject.Instantiate(human.gameObject, HumanResetPos.position, HumanResetPos.rotation);
         humanInstance.transform.parent = human.transform.parent;
         humanInstance.name = human.name+"Checkpoint";
@@ -72,7 +72,7 @@ public class Checkpoint : MonoBehaviour
         dogInstance = GameObject.Instantiate(dog.gameObject, DogResetPos.position, DogResetPos.rotation);        
         dogInstance.transform.parent = dog.transform.parent;
         dogInstance.name = dog.name+"Checkpoint";
-        dog.tag = "Untagged";
+        dogInstance.tag = "Untagged";
         dogInstance.SetActive(false); 
     }
 
@@ -154,6 +154,8 @@ public class Checkpoint : MonoBehaviour
         
         human = humanInstance.transform;
         dog = dogInstance.transform;
+        humanInstance = null;
+        dogInstance = null;
 
         human.tag = "PlayerHuman";
         human.name = human.name.Replace("Checkpoint", "");
@@ -163,6 +165,7 @@ public class Checkpoint : MonoBehaviour
 
         human.gameObject.SetActive(true);
         dog.gameObject.SetActive(true);
+        InstantiatePlayers();
     }
 
     void LoadPlayerParts(){
@@ -224,8 +227,8 @@ public class Checkpoint : MonoBehaviour
     }
 
     void SetupOthersOnLoad(){
-        Object.FindObjectOfType<ControlManager>().SetPlayers();
-        Object.FindObjectOfType<PositionMatchPosition>().changeTarget(human);
+        Object.FindObjectOfType<ControlManager>().SetupPlayers();
+        Object.FindObjectOfType<CameraFollowPivot>().ChangeTarget(human); //error
         if (dog) {
             if (dog.GetComponent<NavMeshMovement>()) dog.GetComponent<NavMeshMovement>().target = human;
         }

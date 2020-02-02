@@ -12,6 +12,7 @@ public class Call : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dog = GameObject.FindGameObjectWithTag("PlayerDog").transform;
         dogNavMesh = dog.GetComponent<NavMeshMovement>();
         dogAgent = dog.GetComponent<NavMeshAgent>();
         dogfollow=true;

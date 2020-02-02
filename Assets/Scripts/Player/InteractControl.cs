@@ -134,7 +134,7 @@ public class InteractControl : MonoBehaviour
             if (HoldReleaseTimer < HoldReleaseTimerTarget){
                 ReleaseHand();
             }
-            else {
+            else if (rightGrab){
                 //HoldRelease
                 Throw();
                 IsThrowing = false;
@@ -144,11 +144,11 @@ public class InteractControl : MonoBehaviour
 
         if (Input.GetButton("Release") && (rightGrab || leftGrab)){
             HoldReleaseTimer+=Time.deltaTime;
-            if (HoldReleaseTimer>=HoldReleaseTimerTarget/5){
+            if (HoldReleaseTimer>=HoldReleaseTimerTarget/5 && rightGrab){
                 HoldingReleaseIndicator.SetActive(true);
                 HoldingReleaseIndicator.GetComponentInChildren<Image>().fillAmount = HoldReleaseTimer/HoldReleaseTimerTarget;
             }
-            if (HoldReleaseTimer >= HoldReleaseTimerTarget && !IsThrowing){
+            if (HoldReleaseTimer >= HoldReleaseTimerTarget && !IsThrowing && rightGrab){
                 IsThrowing = true;
                 throwingAngleX = transform.forward.x>=0? 1 : -1 * Mathf.PI/4;
                 throwForce = 1;

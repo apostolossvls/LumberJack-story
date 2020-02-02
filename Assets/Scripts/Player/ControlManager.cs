@@ -21,7 +21,10 @@ public class ControlManager : MonoBehaviour
     bool[] DogBehavioursActiveWasActive;
     void Start()
     {
-        
+        SetupPlayers();
+    }
+
+    public void SetupPlayers(){
         onHuman = true;
         onDog = false;
         SetPlayers();
