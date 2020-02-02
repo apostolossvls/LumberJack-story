@@ -38,7 +38,7 @@ public class Checkpoint3 : MonoBehaviour
                 //LoadPlayerParts();
                 LoadPlayers();
                 LoadObjects();
-                SetupOthersOnLoad();
+                StartCoroutine(SetupOthersOnLoad());
             }
         }
     }
@@ -115,11 +115,22 @@ public class Checkpoint3 : MonoBehaviour
         InstantiatePlayers();
     }
 
-    void SetupOthersOnLoad(){
+    IEnumerator SetupOthersOnLoad(){
+        Cinemachine.CinemachineTransposer vcamC = Object.FindObjectOfType<Cinemachine.CinemachineTransposer>();
+        float x = vcamC.m_XDamping;
+        float y = vcamC.m_YDamping;
+        vcamC.m_XDamping = 0;
+        vcamC.m_YDamping = 0;
+
         Object.FindObjectOfType<ControlManager>().SetupPlayers();
         Object.FindObjectOfType<CameraFollowPivot>().ChangeTarget(human); //error
         if (dog) {
             if (dog.GetComponent<NavMeshMovement>()) dog.GetComponent<NavMeshMovement>().target = human;
         }
+        vcamC.transform.SetPositionAndRotation(HumanResetPos.position, HumanResetPos.rotation);
+        yield return new WaitForFixedUpdate();
+        vcamC.m_XDamping = x;
+        vcamC.m_YDamping = y;
+        yield return null;
     }
 }

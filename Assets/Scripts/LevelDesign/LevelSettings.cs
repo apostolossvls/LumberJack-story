@@ -31,10 +31,14 @@ public class LevelSettings : MonoBehaviour
     }
 
     public static void RestartScene(){
-        instance.StartCoroutine(LoadSceneIndex(SceneManager.GetActiveScene().buildIndex, false));
+        instance.StartCoroutine(LoadSceneIndexCoroutine(SceneManager.GetActiveScene().buildIndex, false));
     }
 
-    public static IEnumerator LoadSceneIndex(int index, bool resetCheckpoint=true){
+    public static void LoadSceneIndex(int index, bool resetCheckpoint=true){
+        instance.StartCoroutine(LoadSceneIndexCoroutine(index, resetCheckpoint));
+    }
+
+    private static IEnumerator LoadSceneIndexCoroutine(int index, bool resetCheckpoint=true){
         if (!loadingScene){
             loadingScene=true;
             AsyncOperation async = SceneManager.LoadSceneAsync(index);
@@ -42,7 +46,7 @@ public class LevelSettings : MonoBehaviour
                 //do loop on loading
                 yield return null;
             }
-            if (resetCheckpoint) Destroy(instance.checkpoint);
+            if (resetCheckpoint && instance.checkpoint) Destroy(instance.checkpoint);
             else instance.SetupOnCheckpoint();
         }
     }
