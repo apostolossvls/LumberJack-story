@@ -38,6 +38,7 @@ public class NavMeshMovement : MonoBehaviour
         lastPos = transform.position;
         pathPendingCounter=0;
         StartCoroutine("DoStart");
+        //NavMeshBuilder.UpdateNavMeshData();
     }
     void OnDisable(){
         activated=false;
