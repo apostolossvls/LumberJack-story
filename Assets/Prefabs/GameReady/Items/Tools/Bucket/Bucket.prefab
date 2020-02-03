@@ -164,6 +164,8 @@ GameObject:
   - component: {fileID: 4699083898342295282}
   - component: {fileID: 4699083898342295285}
   - component: {fileID: 4699083898342295284}
+  - component: {fileID: 9180049426909390739}
+  - component: {fileID: 4085885020111418875}
   m_Layer: 0
   m_Name: Bucket
   m_TagString: Item
@@ -233,3 +235,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.4, z: 0.4}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1818360610 &9180049426909390739
+ScaleConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4699083898342295280}
+  m_Enabled: 1
+  m_Weight: 0
+  m_ScaleAtRest: {x: 1, y: 1, z: 1}
+  m_ScaleOffset: {x: 1, y: 1, z: 1}
+  m_AffectScalingX: 1
+  m_AffectScalingY: 1
+  m_AffectScalingZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 0}
+    weight: 1
+--- !u!114 &4085885020111418875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4699083898342295280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f2a8e22a07c20418e2172d3cac3952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  original: 1

@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 3088640460746222767}
   - component: {fileID: 3088640460746222738}
   - component: {fileID: 3088640460746222741}
+  - component: {fileID: 7533388475388776007}
   m_Layer: 0
   m_Name: JumpAttacker
   m_TagString: Enemy
@@ -193,3 +194,17 @@ MonoBehaviour:
   - PlayerDog
   jumpDelay: 1
   force: 1.5
+--- !u!114 &7533388475388776007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088640460746222742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f2a8e22a07c20418e2172d3cac3952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  original: 1

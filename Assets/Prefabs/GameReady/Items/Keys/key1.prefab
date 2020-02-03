@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3773237429110498496}
   - component: {fileID: 3836986219186120634}
   - component: {fileID: 3008141480179272915}
+  - component: {fileID: 4630289380366902550}
   m_Layer: 0
   m_Name: key1
   m_TagString: Item
@@ -83,6 +84,20 @@ ScaleConstraint:
   m_Sources:
   - sourceTransform: {fileID: 0}
     weight: 1
+--- !u!114 &4630289380366902550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2508657126428970169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f2a8e22a07c20418e2172d3cac3952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  original: 1
 --- !u!1 &5487030828942938563
 GameObject:
   m_ObjectHideFlags: 0

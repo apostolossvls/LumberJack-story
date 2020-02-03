@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Checkpoint3 : MonoBehaviour
 {
@@ -44,16 +45,22 @@ public class Checkpoint3 : MonoBehaviour
     }
 
     void InstantiateObjects(){
-        Resetable[] res = Resources.FindObjectsOfTypeAll(typeof(Resetable)) as Resetable[];
-        for (int i = 0; i < res.Length; i++)
+        //Resetable[] res = Resources.FindObjectsOfTypeAll(typeof(Resetable)) as Resetable[];
+        GameObject[] all = SceneManager.GetActiveScene().GetRootGameObjects();
+        for (int j = 0; j < all.Length; j++)
         {
-            if (res[i]){
-                if (res[i].original && res[i].active){
-                    GameObject g = GameObject.Instantiate(res[i].gameObject, res[i].transform.position, res[i].transform.rotation);
-                    g.transform.parent = res[i].transform.parent;
-                    g.name = res[i].name;
-                    g.GetComponent<Resetable>().original = false;
-                    g.SetActive(false);
+            //Debug.Log("-----"+ all[j].name+"-----");
+            foreach (Resetable res in all[j].GetComponentsInChildren<Resetable>(true))
+            {
+                //Debug.Log("name: "+ res.name);
+                if (res){
+                    if (res.original && res.active){
+                        GameObject g = GameObject.Instantiate(res.gameObject, res.transform.position, res.transform.rotation);
+                        g.transform.parent = res.transform.parent;
+                        g.name = res.name;
+                        g.GetComponent<Resetable>().original = false;
+                        g.SetActive(false);
+                    }
                 }
             }
         }
@@ -75,17 +82,20 @@ public class Checkpoint3 : MonoBehaviour
     }
 
     void LoadObjects(){
-        Resetable[] res = Resources.FindObjectsOfTypeAll(typeof(Resetable)) as Resetable[];
-        for (int i = 0; i < res.Length; i++)
+        GameObject[] all = SceneManager.GetActiveScene().GetRootGameObjects();
+        for (int j = 0; j < all.Length; j++)
         {
-            if (res[i]){
-                if (res[i].original){
-                    res[i].active = false;
-                    Destroy(res[i].gameObject);
-                }
-                else {
-                    res[i].original = true;
-                    res[i].gameObject.SetActive(true);
+            foreach (Resetable res in all[j].GetComponentsInChildren<Resetable>(true))
+            {
+                if (res){
+                    if (res.original){
+                        res.active = false;
+                        Destroy(res.gameObject);
+                    }
+                    else {
+                        res.original = true;
+                        res.gameObject.SetActive(true);
+                    }
                 }
             }
         }
