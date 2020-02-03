@@ -29,7 +29,10 @@ public class FallOnTouch : MonoBehaviour
     IEnumerator DelayFall(){
         if (falldelay>0) yield return new WaitForSeconds(falldelay);
         Fall();
+        NavMeshAgentDisabler dis = GetComponent<NavMeshAgentDisabler>();
+        if (dis) dis.SetAgent(false);
         yield return new WaitForSeconds(deathDelayAfterFall);
+        if (dis) dis.SetAgent(true);
         Destroy(gameObject);
         yield return null;
     }
