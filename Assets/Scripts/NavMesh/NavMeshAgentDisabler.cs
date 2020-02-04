@@ -34,7 +34,7 @@ public class NavMeshAgentDisabler : MonoBehaviour
         if (!triggered) triggered = true;
         else if (active == activated) return;
         activated = active;
-        Debug.Log("SetAgent: "+name);
+        //Debug.Log("SetAgent: "+name);
         /*if (active){
             NavMeshLinkPoints s = GetComponentInChildren<NavMeshLinkPoints>();
             if (s) {
@@ -45,7 +45,7 @@ public class NavMeshAgentDisabler : MonoBehaviour
         if (agent){
             if (!col) return;
             if (col.bounds.Contains(agent.transform.position)){
-                Debug.Log("disabler has agent");
+                //Debug.Log("disabler has agent");
                 //NavMeshSurface s = GetComponent<NavMeshSurface>();
                 //s.BuildNavMesh();
                 agent.enabled = active;

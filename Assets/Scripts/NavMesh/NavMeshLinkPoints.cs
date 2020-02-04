@@ -24,14 +24,14 @@ public class NavMeshLinkPoints : MonoBehaviour
     }
 
     public void AlighPoints(){
-        if (link && start && end) {
+        if (link) {
             //if (link.)
-            link.startPoint = start.position - transform.position;
-            link.endPoint = end.position - transform.position;
+            if (start) link.startPoint = start.position - transform.position;
+            if (end) link.endPoint = end.position - transform.position;
         }
     }
 
     public void DisableLink(){
-        
+
     }
 }
