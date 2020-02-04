@@ -30,4 +30,8 @@ public class NavMeshLinkPoints : MonoBehaviour
             link.endPoint = end.position - transform.position;
         }
     }
+
+    public void DisableLink(){
+        
+    }
 }

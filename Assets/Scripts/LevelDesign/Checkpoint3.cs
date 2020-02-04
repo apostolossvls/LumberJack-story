@@ -30,6 +30,7 @@ public class Checkpoint3 : MonoBehaviour
             InstantiatePlayers();
             //InstantiatePlayerParts();
             InstantiateObjects();
+            SetupOthersOnCheckpoint();
         }
     }
 
@@ -81,6 +82,13 @@ public class Checkpoint3 : MonoBehaviour
         dogInstance.SetActive(false); 
     }
 
+    void SetupOthersOnCheckpoint(){
+        foreach (NavMeshLinkPoints link in Object.FindObjectsOfType<NavMeshLinkPoints>())
+        {
+            link.AlighPoints();
+        }
+    }
+
     void LoadObjects(){
         GameObject[] all = SceneManager.GetActiveScene().GetRootGameObjects();
         for (int j = 0; j < all.Length; j++)
@@ -126,6 +134,11 @@ public class Checkpoint3 : MonoBehaviour
     }
 
     IEnumerator SetupOthersOnLoad(){
+        foreach (NavMeshLinkPoints link in Object.FindObjectsOfType<NavMeshLinkPoints>())
+        {
+            link.AlighPoints();
+        }
+
         Cinemachine.CinemachineTransposer vcamC = Object.FindObjectOfType<Cinemachine.CinemachineTransposer>();
         float x = vcamC.m_XDamping;
         float y = vcamC.m_YDamping;

@@ -43,6 +43,7 @@ public class NavMeshAgentDisabler : MonoBehaviour
         }*/
         NavMeshAgent agent = GameObject.FindGameObjectWithTag("PlayerDog").GetComponent<NavMeshAgent>();
         if (agent){
+            if (!col) return;
             if (col.bounds.Contains(agent.transform.position)){
                 Debug.Log("disabler has agent");
                 //NavMeshSurface s = GetComponent<NavMeshSurface>();
