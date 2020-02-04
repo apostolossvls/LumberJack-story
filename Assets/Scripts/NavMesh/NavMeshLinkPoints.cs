@@ -13,6 +13,7 @@ public class NavMeshLinkPoints : MonoBehaviour
     void Start()
     {
         link = GetComponent<NavMeshLink>();
+        AlighPoints();
     }
 
     void Update()
@@ -24,6 +25,7 @@ public class NavMeshLinkPoints : MonoBehaviour
 
     public void AlighPoints(){
         if (link && start && end) {
+            //if (link.)
             link.startPoint = start.position - transform.position;
             link.endPoint = end.position - transform.position;
         }

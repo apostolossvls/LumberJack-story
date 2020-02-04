@@ -16,23 +16,45 @@ public class MoveWithPlatform : MonoBehaviour
     public string[] tags;
     List<Transform> obj;
     Rigidbody rig;
+    public bool moving;
+
+    NavMeshAgentDisabler dis;
+    NavMeshLinkPoints[] links;
+    bool setLinks;
 
     void Start(){
+        moving = false;
         rig = GetComponent<Rigidbody>();
         obj = new List<Transform>{};
         if (points.Length > 0){
             currentTarget = points[0];
         }
         tolerance = speed * Time.fixedDeltaTime;
+        
+        dis = GetComponent<NavMeshAgentDisabler>();
+        links = GetComponentsInChildren<NavMeshLinkPoints>();
+        setLinks  = false;
     }
 
     void FixedUpdate(){
         if (transform.localPosition!=currentTarget){
             MovePlatform();
+            moving = true;
+            setLinks = false;
         }
         else {
             dif=Vector3.zero;
             UpdateTarget();
+            moving = false;
+        }
+
+        if (dis) dis.SetAgent(!moving);
+        if (!moving && links!=null && !setLinks) {
+            setLinks = true;
+            foreach (NavMeshLinkPoints link in links)
+            {
+                link.AlighPoints();
+            }
         }
         /*
         for (int i = 0; i < obj.Count; i++)
