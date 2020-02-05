@@ -6,36 +6,35 @@ using UnityEngine.SceneManagement;
 public class Checkpoint3 : MonoBehaviour
 {
     bool reached;
-    bool isLastCheckpoint;
+    public static Checkpoint3 LastCheckpoint;
     public Transform human;
     public Transform dog;
     public Transform HumanResetPos;
     public Transform DogResetPos;
     public GameObject humanInstance;
     public GameObject dogInstance;
-    GameObject[] instances;
 
     void Start()
     {
         reached = false;
-        isLastCheckpoint = false;
         human = GameObject.FindWithTag("PlayerHuman").transform;
         dog = GameObject.FindWithTag("PlayerDog").transform;
     }
 
     void OnTriggerEnter(Collider other){
         if (other.tag == "PlayerHuman" && !reached){
+            Debug.Log("Checkpoint: "+transform.name);
             reached = true;
-            isLastCheckpoint = true;
+            LastCheckpoint = this;
+            SetupOthersOnCheckpoint();
             InstantiatePlayers();
             //InstantiatePlayerParts();
             InstantiateObjects();
-            SetupOthersOnCheckpoint();
         }
     }
 
     void Update(){
-        if (isLastCheckpoint){
+        if (LastCheckpoint == this){
             if (Input.GetKeyUp(KeyCode.P)){
                 //LoadPlayerParts();
                 LoadPlayers();
@@ -83,10 +82,38 @@ public class Checkpoint3 : MonoBehaviour
     }
 
     void SetupOthersOnCheckpoint(){
+        //links
         foreach (NavMeshLinkPoints link in Object.FindObjectsOfType<NavMeshLinkPoints>())
         {
             link.AlighPoints();
         }
+
+        //objects
+        GameObject[] all = SceneManager.GetActiveScene().GetRootGameObjects();
+        for (int j = 0; j < all.Length; j++)
+        {
+            foreach (Resetable res in all[j].GetComponentsInChildren<Resetable>(true))
+            {
+                if (res){
+                    if (!res.original){
+                        res.active = false;
+                        Destroy(res.gameObject);
+                    }
+                }
+            }
+        }
+
+        //players
+        if (humanInstance){
+            humanInstance.gameObject.SetActive(false);
+            Destroy(humanInstance.gameObject);
+        }
+        if (dogInstance) {
+            dogInstance.gameObject.SetActive(false);
+            Destroy(dogInstance.gameObject);
+        }
+        humanInstance = null;
+        dogInstance = null;
     }
 
     void LoadObjects(){
@@ -96,7 +123,7 @@ public class Checkpoint3 : MonoBehaviour
             foreach (Resetable res in all[j].GetComponentsInChildren<Resetable>(true))
             {
                 if (res){
-                    if (res.original){
+                    if (res.original || !res.active){
                         res.active = false;
                         Destroy(res.gameObject);
                     }
@@ -138,6 +165,15 @@ public class Checkpoint3 : MonoBehaviour
         {
             link.AlighPoints();
         }
+
+        foreach (Checkpoint3 c in Object.FindObjectsOfType<Checkpoint3>())
+        {
+            if (c != this) {
+                c.human = human;
+                c.dog = dog;
+            }
+        }
+
 
         Cinemachine.CinemachineTransposer vcamC = Object.FindObjectOfType<Cinemachine.CinemachineTransposer>();
         float x = vcamC.m_XDamping;
