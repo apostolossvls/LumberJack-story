@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    //public Hero h;
+    public static PauseMenuManager Instance;
     //public AudioManager audioManager;
     public int previousGameState=0;
     public Button[] menuButtons;
@@ -17,10 +17,18 @@ public class PauseMenuManager : MonoBehaviour
     public TMP_Dropdown[] dropdowns;
     public GameObject FPStext;
     public bool isShowFPS;
-    public GameObject KickButton;
-    public bool isShowKickButton;
     public float[] Volumes = new float[6];
     public bool[] AudioMute = new bool[1];
+    static float myTimeScale;
+
+    void Awake(){
+        if (Instance!=null && Instance!=this){
+            Destroy(this.gameObject);
+        }
+        else {
+            Instance = this;
+        }
+    }
     
     void OnEnable(){
         for (int i = 0; i < planes.Length; i++)
@@ -28,18 +36,26 @@ public class PauseMenuManager : MonoBehaviour
             planes[i].SetActive(false);
             menuButtons[i].interactable = true;
         }
+        myTimeScale = Time.timeScale;
+    }
+
+    public static void Pause(){
+        myTimeScale = Time.timeScale;
+        Time.timeScale = 0;
+        Instance.gameObject.SetActive(true);
     }
     
     public void Unpause(){
-        if (SceneManager.GetActiveScene().buildIndex==1){
+        /*if (SceneManager.GetActiveScene().buildIndex==1){
             //if (previousGameState!=0) h.GameState=previousGameState;
             //else h.GameState=1;
             //h.LightsParent.GetComponent<Animator>().speed=1;
             //h.ChangeGameStateOnEnemies();
-        }
+        }*/
         //audioManager.UIaudio1[1].Play();
         this.gameObject.SetActive(false);
         SaveOptions();
+        Time.timeScale = myTimeScale;
     }
 
     public void ShowPlane(int index){
@@ -107,25 +123,6 @@ public class PauseMenuManager : MonoBehaviour
             FPStext.SetActive(tog.isOn);
         }
         isShowFPS=tog.isOn;
-    }
-
-    public void ShowTutorialCircle (Toggle tog){
-        /*
-        if (SceneManager.GetActiveScene().buildIndex==1){
-            h.ShowTutorialCircle = tog.isOn;
-        }
-        */
-    }
-
-    public void ShowKickButton (Toggle tog){
-        if (SceneManager.GetActiveScene().buildIndex==1){
-            KickButton.SetActive(tog.isOn);
-        }
-        isShowKickButton=tog.isOn;
-    }
-
-    public void AccelerationSqrMagnitude () {
-        //if (h!=null) h.accelerationSqrMagnitude = sliders[0].value;
     }
 
     public void SetVolume (Slider s){
