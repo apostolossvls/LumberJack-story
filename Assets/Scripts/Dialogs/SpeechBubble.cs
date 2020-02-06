@@ -15,6 +15,8 @@ public class SpeechBubble : MonoBehaviour
     public Image bubbleImage;
     public float speed; //0 instant'
     public float lifeTime=5;
+    public Transform followParent;
+    public Vector3 parentOffset = new Vector3(0,2,0);
     int charIndex;
 
     void OnEnable()
@@ -28,6 +30,10 @@ public class SpeechBubble : MonoBehaviour
     }
 
     IEnumerator ShowText(){
+        if (followParent) {
+            transform.parent = followParent;
+            transform.localPosition = Vector3.zero + parentOffset;
+        }
         if (speed==0){
             if (textMeshPro.isActiveAndEnabled) textMeshPro.text = message;
             else if (textUI.isActiveAndEnabled) textUI.text = message;

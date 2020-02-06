@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5325144271107067165}
   - component: {fileID: 5325144271107067164}
   m_Layer: 0
-  m_Name: Seesaw
+  m_Name: anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 5325144272147227876}
   - component: {fileID: 5325144272147227875}
   m_Layer: 0
-  m_Name: anchor
+  m_Name: seesaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,14 +198,14 @@ HingeJoint:
     min: -60
     max: 60
     bounciness: 0
-    bounceMinVelocity: 0.2
+    bounceMinVelocity: 0.1
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
   m_MassScale: 1
-  m_ConnectedMassScale: 1
+  m_ConnectedMassScale: 10
 --- !u!1 &5325144272212764204
 GameObject:
   m_ObjectHideFlags: 0

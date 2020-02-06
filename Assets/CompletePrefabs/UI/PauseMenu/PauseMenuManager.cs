@@ -9,7 +9,8 @@ public class PauseMenuManager : MonoBehaviour
 {
     public static PauseMenuManager Instance;
     //public AudioManager audioManager;
-    public int previousGameState=0;
+    //public int previousGameState=0;
+    public GameObject menuParent;
     public Button[] menuButtons;
     public GameObject[] planes;
     public Toggle[] toggles;
@@ -20,6 +21,7 @@ public class PauseMenuManager : MonoBehaviour
     public float[] Volumes = new float[6];
     public bool[] AudioMute = new bool[1];
     static float myTimeScale;
+    static bool onPause;
 
     void Awake(){
         if (Instance!=null && Instance!=this){
@@ -28,24 +30,37 @@ public class PauseMenuManager : MonoBehaviour
         else {
             Instance = this;
         }
+        onPause = false;
+    }
+
+    void Update (){
+        if (Input.GetButtonUp("Pause")){
+            if (onPause) Unpause();
+            else Pause();
+        }
     }
     
-    void OnEnable(){
+    void ResetButtonAndPlanes(){
         for (int i = 0; i < planes.Length; i++)
         {
             planes[i].SetActive(false);
             menuButtons[i].interactable = true;
         }
-        myTimeScale = Time.timeScale;
     }
 
     public static void Pause(){
+        onPause = true;
         myTimeScale = Time.timeScale;
-        Time.timeScale = 0;
-        Instance.gameObject.SetActive(true);
+        Time.timeScale = 0f;
+        Instance.menuParent.gameObject.SetActive(true);
+        Instance.ResetButtonAndPlanes();
     }
     
     public void Unpause(){
+        onPause = false;
+        Instance.menuParent.gameObject.SetActive(false);
+        SaveOptions();
+        Time.timeScale = myTimeScale;
         /*if (SceneManager.GetActiveScene().buildIndex==1){
             //if (previousGameState!=0) h.GameState=previousGameState;
             //else h.GameState=1;
@@ -53,9 +68,6 @@ public class PauseMenuManager : MonoBehaviour
             //h.ChangeGameStateOnEnemies();
         }*/
         //audioManager.UIaudio1[1].Play();
-        this.gameObject.SetActive(false);
-        SaveOptions();
-        Time.timeScale = myTimeScale;
     }
 
     public void ShowPlane(int index){
@@ -119,10 +131,8 @@ public class PauseMenuManager : MonoBehaviour
     }
     
     public void ShowFPS (Toggle tog){
-        if (SceneManager.GetActiveScene().buildIndex==1){
-            FPStext.SetActive(tog.isOn);
-        }
         isShowFPS=tog.isOn;
+        FPStext.SetActive(isShowFPS);
     }
 
     public void SetVolume (Slider s){
