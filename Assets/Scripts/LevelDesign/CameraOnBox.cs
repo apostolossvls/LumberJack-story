@@ -7,34 +7,36 @@ public class CameraOnBox : MonoBehaviour
 {
     public CinemachineVirtualCamera vcam;
     Collider col;
+    ControlManager controlManager;
+    int previousCameraPriority;
     bool active;
-    ControlManager cm;
 
     void Start()
     {
-        cm = Object.FindObjectOfType<ControlManager>();
+        controlManager = Object.FindObjectOfType<ControlManager>();
         col = GetComponent<Collider>();
         active = false;
     }
 
-
-    void OnTriggerEnter(Collider other){
-        if ((ControlManager.onHuman && other.tag=="PlayerHuman") || (ControlManager.onDog && other.tag=="PlayerDog")){
-            Activate();
+    void Update(){
+        if ((ControlManager.onHuman && col.bounds.Contains(controlManager.human.position)) || (ControlManager.onDog && col.bounds.Contains(controlManager.dog.position))){
+            if (!active){
+                Activate();
+            }
         }
-    }
-
-    void OnTriggerExit(Collider other){
-        if ((ControlManager.onHuman && other.tag=="PlayerHuman") || (ControlManager.onDog && other.tag=="PlayerDog")){
+        else if (active){
             Deactivate();
         }
     }
 
     void Activate(){
-        vcam.m_Priority = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.Priority + 1;
+        active = true;
+        previousCameraPriority = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.Priority;
+        vcam.m_Priority = previousCameraPriority + 1;
     }
 
     void Deactivate(){
-        vcam.m_Priority -= 2;
+        active = false;
+        vcam.m_Priority = previousCameraPriority - 1;
     }
 }
