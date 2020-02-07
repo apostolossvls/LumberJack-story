@@ -13893,6 +13893,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689951916132614055, guid: b5276928b625c4148af0da7935c9daa6,
         type: 3}
+      propertyPath: DogInactive.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4689951916132614055, guid: b5276928b625c4148af0da7935c9daa6,
+        type: 3}
       propertyPath: human
       value: 
       objectReference: {fileID: 42067942}
@@ -13906,6 +13911,11 @@ PrefabInstance:
       propertyPath: PlayerPivot
       value: 
       objectReference: {fileID: 905971244}
+    - target: {fileID: 4689951916132614055, guid: b5276928b625c4148af0da7935c9daa6,
+        type: 3}
+      propertyPath: DogInactive.Array.data[0]
+      value: NavMeshMovement
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5276928b625c4148af0da7935c9daa6, type: 3}
 --- !u!1001 &4952686711651273286

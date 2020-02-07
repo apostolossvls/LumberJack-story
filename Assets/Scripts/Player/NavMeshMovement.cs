@@ -17,6 +17,7 @@ public class NavMeshMovement : MonoBehaviour
     public Transform target;
     public Vector3 offset;
     NavMeshAgent agent;
+    Collider col;
     public float jumpDuration=1f;
     bool activated=true;
     public bool follow=true;
@@ -33,32 +34,47 @@ public class NavMeshMovement : MonoBehaviour
     public AnimationCurve curve = new AnimationCurve ();
 
     void OnEnable(){
-        activated=true;
+        activated=false;
         lastPosFar = 0;
         lastPos = transform.position;
         pathPendingCounter=0;
-        StartCoroutine("DoStart");
+        col = GetComponent<Collider>();
+        agent = GetComponent<NavMeshAgent> ();
+        agent.autoTraverseOffMeshLink = false;
+        //StartCoroutine("DoStart");
+        StartCoroutine("CheckGround");
         //NavMeshBuilder.UpdateNavMeshData();
     }
     void OnDisable(){
         activated=false;
+        agent.enabled = false;
         StopCoroutine("DoStart");
+    }
+
+    IEnumerator CheckGround(){
+        while (!IsGrounded()) {
+            yield return null;
+        }
+        agent.enabled = true;
+        StartCoroutine("DoStart");
+        yield return null;
     }
 
 
     IEnumerator DoStart () {
-        agent = GetComponent<NavMeshAgent> ();
-        agent.autoTraverseOffMeshLink = false;
+        activated=true;
         follow=true;
-        while (activated && follow) {
-            if (agent.isOnOffMeshLink) {
-                if (method == OffMeshLinkMoveMethod.NormalSpeed)
-                yield return StartCoroutine (NormalSpeed (agent));
-                else if (method == OffMeshLinkMoveMethod.Parabola)
-                yield return StartCoroutine (Parabola (agent, 2.0f, agent.speed*jumpDuration));
-                else if (method == OffMeshLinkMoveMethod.Curve)
-                yield return StartCoroutine (Curve (agent, 0.5f));
-                agent.CompleteOffMeshLink ();
+        while (activated) {
+            if (follow){
+                if (agent.isOnOffMeshLink) {
+                    if (method == OffMeshLinkMoveMethod.NormalSpeed)
+                    yield return StartCoroutine (NormalSpeed (agent));
+                    else if (method == OffMeshLinkMoveMethod.Parabola)
+                    yield return StartCoroutine (Parabola (agent, 2.0f, agent.speed*jumpDuration));
+                    else if (method == OffMeshLinkMoveMethod.Curve)
+                    yield return StartCoroutine (Curve (agent, 0.5f));
+                    agent.CompleteOffMeshLink ();
+                }
             }
             yield return null;
         }
@@ -100,68 +116,77 @@ public class NavMeshMovement : MonoBehaviour
 
     void Update()
     {
-        if (target && activated && wantsToFollow){
-            NavMeshPath path = new NavMeshPath();
-            NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, path);
-            bool followError = false;
-            if (follow) {
-                agent.SetDestination(target.position+offset);
-                float dist=agent.remainingDistance;
+        /*
+        if (IsGrounded()){
+            agent.enabled = true;
+        }
+        else if (!agent.enabled){
+            return;
+        }
+        */
+        if (activated){
+            if (target && activated && wantsToFollow){
+                NavMeshPath path = new NavMeshPath();
+                NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, path);
+                bool followError = false;
+                if (follow) {
+                    agent.SetDestination(target.position+offset);
+                    float dist=agent.remainingDistance;
 
-                if (dist!=Mathf.Infinity && agent.pathStatus==NavMeshPathStatus.PathComplete && agent.remainingDistance>agent.stoppingDistance){
-                    //running to human
-                }
+                    if (dist!=Mathf.Infinity && agent.pathStatus==NavMeshPathStatus.PathComplete && agent.remainingDistance>agent.stoppingDistance){
+                        //running to human
+                    }
 
-                if (dist!=Mathf.Infinity && agent.pathPending){
-                    pathPendingCounter+=Time.deltaTime;
-                    followError = true;
-                }
-                else {
-                    pathPendingCounter=0;
-                }
-                if (pathPendingCounter>4) {
-                    pathPendingCounter=0;
-                    StartCoroutine(CantReachTalk(true, false));
-                    Debug.Log("pathProblem1");
-                }
-
-                if (agent.remainingDistance > agent.stoppingDistance){
-                    if (Vector3.Distance(transform.position, lastPos) < 0.2f){
-                        lastPosFar+=Time.deltaTime;
+                    if (dist!=Mathf.Infinity && agent.path.status!=NavMeshPathStatus.PathComplete){
+                        pathPendingCounter+=Time.deltaTime;
                         followError = true;
                     }
                     else {
-                        lastPosFar = 0;
+                        pathPendingCounter=0;
                     }
-                    lastPos = transform.position;
-                    if (lastPosFar > 8){
-                        lastPosFar = 0;
-                        follow = false;
-                        StartCoroutine(CantReachTalk(true, false)); 
-                        Debug.Log("pathProblem2");
-                    }          
-                }
-            }
-            else {
-                if (Vector3.Distance(transform.position, target.position) < 5f){
-                    lastPosFar = 0;
-                    follow = true;
-                }
-                else{
-                    lastPosFar+=Time.deltaTime;
-                    if (lastPosFar > 4){
-                        lastPosFar = 0;
-                        follow = false;
-                        StartCoroutine(CantReachTalk(true, true)); 
-                        Debug.Log("pathProblem2");
-                    }  
-                }
-            }
-        }
-        else { 
-            agent.SetDestination(transform.position);
-        }
+                    if (pathPendingCounter>8) {
+                        pathPendingCounter=0;
+                        StartCoroutine(CantReachTalk(true, false));
+                        Debug.Log("pathProblem1");
+                    }
 
+                    if (agent.remainingDistance > agent.stoppingDistance){
+                        if (Vector3.Distance(transform.position, lastPos) < 0.2f){
+                            lastPosFar+=Time.deltaTime;
+                            followError = true;
+                        }
+                        else {
+                            lastPosFar = 0;
+                        }
+                        lastPos = transform.position;
+                        if (lastPosFar > 8){
+                            lastPosFar = 0;
+                            follow = false;
+                            StartCoroutine(CantReachTalk(true, false)); 
+                            Debug.Log("pathProblem2");
+                        }          
+                    }
+                }
+                else {
+                    if (Vector3.Distance(transform.position, target.position) < 5f){
+                        lastPosFar = 0;
+                        follow = true;
+                    }
+                    else{
+                        lastPosFar+=Time.deltaTime;
+                        if (lastPosFar > 4){
+                            lastPosFar = 0;
+                            follow = false;
+                            StartCoroutine(CantReachTalk(true, true)); 
+                            Debug.Log("pathProblem2");
+                        }  
+                    }
+                }
+            }
+            else { 
+                agent.SetDestination(transform.position);
+            }
+        }
     }
 
     IEnumerator CantReachTalk(bool confused, bool sad){
@@ -178,7 +203,9 @@ public class NavMeshMovement : MonoBehaviour
             ;
             talkImageParent.position = pos;
             //Debug.Log(a + ", c: "+c);
-            talkImage1.rotation = Quaternion.Euler(talkImage1.rotation.x, talkImage1.rotation.y, Mathf.Rad2Deg * Mathf.Sign(c.x) *((transform.position - talkImage1.position).normalized.x));
+            //talkImage1.rotation = Quaternion.Euler(talkImage1.rotation.x, talkImage1.rotation.y, Mathf.Rad2Deg * Mathf.Sign(c.x) *((transform.position - talkImage1.position).normalized.x));
+            //talkImage1.LookAt(transform.position);
+            talkImage1.rotation  = Quaternion.FromToRotation(Vector3.up, (talkImage1.position - transform.position).normalized);
             timer+=Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -187,6 +214,17 @@ public class NavMeshMovement : MonoBehaviour
         talkImageParent.gameObject.SetActive(false);
         yield return null;
     }
+
+    bool IsGrounded() {
+        if (GetComponent<Rigidbody>().velocity.y==0) return true;
+        else return Physics.Raycast(transform.position, -Vector3.up, col.bounds.extents.y + 0.2f);
+    }
+
+    /*
+    bool IsGrounded(){
+        return Physics.CheckCapsule(col.bounds.center,new Vector3(col.bounds.center.x,col.bounds.min.y-0.1f,col.bounds.center.z),0.2f);
+    }
+    */
 
     /*
     public Transform target;
