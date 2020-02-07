@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 5773418543636917601}
   - component: {fileID: 5773418543636917600}
   - component: {fileID: 5773418543636917613}
+  - component: {fileID: 8372159708236732850}
   - component: {fileID: 5773418543636917611}
   - component: {fileID: 5773418543636917612}
   - component: {fileID: 5773418543636917610}
@@ -376,6 +377,24 @@ MonoBehaviour:
   jumpPressed: 0
   onJumpHold: 0
   JumpOnDemand: 0
+--- !u!114 &8372159708236732850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5773418543636917602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 473e85ce55eb28a43b3d93354a253ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  col: {fileID: 0}
+  rig: {fileID: 0}
+  JumpForce: 5
+  WallJumpForce: 5
+  ControlTime: 1
+  Gravity: 14
 --- !u!114 &5773418543636917611
 MonoBehaviour:
   m_ObjectHideFlags: 0

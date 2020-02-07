@@ -18,18 +18,6 @@ public class WallJump : MonoBehaviour
         if (rig==null) rig = GetComponent<Rigidbody>(); 
         distToGround = col.bounds.extents.y;
     }
-    void Update()
-    {
-        if (IsGrounded()){
-            if (Input.GetKeyDown(KeyCode.Space)){
-                rig.AddForce(new Vector3(0,JumpForce,0), ForceMode.Impulse);
-                rig.velocity += new Vector3(0,10,0);
-            }
-        }
-        else {
-            rig.AddForce(new Vector3(0,-Gravity*Time.deltaTime,0));
-        }
-    }
 
     bool IsGrounded() {
         if (rig.velocity.y==0) return true;
@@ -49,7 +37,7 @@ public class WallJump : MonoBehaviour
             }
             contactsPosAverage = new Vector3 (contactsPosAverage.x/other.contactCount,contactsPosAverage.y/other.contactCount,contactsPosAverage.z/other.contactCount);
             if (allContactsCorrectY) {
-                if (Input.GetKeyDown(KeyCode.Space)){
+                if (Input.GetButtonDown("Jump")){
                     Vector3 dir = other.contacts[0].normal;
                     //dir.Set(dir.x, dir.y+0.5f, dir.z); //dir.y+0.5f*Mathf.Sign(rig.velocity.y)
                     //dir.Normalize();

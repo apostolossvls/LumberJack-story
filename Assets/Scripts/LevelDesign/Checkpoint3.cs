@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class Checkpoint3 : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class Checkpoint3 : MonoBehaviour
             Debug.Log("Checkpoint: "+transform.name);
             reached = true;
             LastCheckpoint = this;
-            SetupOthersOnCheckpoint();
+            StartCoroutine(SetupOthersOnCheckpoint());
             InstantiatePlayers();
             //InstantiatePlayerParts();
             InstantiateObjects();
@@ -36,12 +37,16 @@ public class Checkpoint3 : MonoBehaviour
     void Update(){
         if (LastCheckpoint == this){
             if (Input.GetKeyUp(KeyCode.P)){
-                //LoadPlayerParts();
-                LoadPlayers();
-                LoadObjects();
-                StartCoroutine(SetupOthersOnLoad());
+                ResetOnCheckpoint();
             }
         }
+    }
+
+    public void ResetOnCheckpoint(){
+        //LoadPlayerParts();
+        LoadPlayers();
+        LoadObjects();
+        StartCoroutine(SetupOthersOnLoad());
     }
 
     void InstantiateObjects(){
@@ -81,13 +86,7 @@ public class Checkpoint3 : MonoBehaviour
         dogInstance.SetActive(false); 
     }
 
-    void SetupOthersOnCheckpoint(){
-        //links
-        foreach (NavMeshLinkPoints link in Object.FindObjectsOfType<NavMeshLinkPoints>())
-        {
-            link.AlighPoints();
-        }
-
+    IEnumerator SetupOthersOnCheckpoint(){
         //objects
         GameObject[] all = SceneManager.GetActiveScene().GetRootGameObjects();
         for (int j = 0; j < all.Length; j++)
@@ -114,6 +113,18 @@ public class Checkpoint3 : MonoBehaviour
         }
         humanInstance = null;
         dogInstance = null;
+
+        //links
+        foreach (NavMeshLinkPoints link in Object.FindObjectsOfType<NavMeshLinkPoints>())
+        {
+            link.AlighPoints();
+        }
+        foreach (NavMeshLink link in Object.FindObjectsOfType<NavMeshLink>())
+        {
+            link.enabled = false;
+            yield return new WaitForEndOfFrame();
+            link.enabled = true;
+        }
     }
 
     void LoadObjects(){
@@ -161,6 +172,7 @@ public class Checkpoint3 : MonoBehaviour
     }
 
     IEnumerator SetupOthersOnLoad(){
+
         foreach (NavMeshLinkPoints link in Object.FindObjectsOfType<NavMeshLinkPoints>())
         {
             link.AlighPoints();
