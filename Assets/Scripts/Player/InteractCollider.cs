@@ -37,7 +37,6 @@ public class InteractCollider : MonoBehaviour
     {
         if (this.enabled){
             if ((TagMatch(other.tag) && LayerMatch(LayerMask.LayerToName(other.gameObject.layer))) && OnArray(other.transform)==-1){
-                Debug.Log("interact");
                 //small test (if on other playable cahracter then get only if is on the right hand)
                 if (!other.GetComponentInParent<InteractControl>())
                     possibleinteracts.Add(other.transform);
