@@ -17,7 +17,7 @@ public class DamageOnTriggerEnter : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if ((TagMatch(other.transform.tag) || LayerMatch(other.gameObject.layer.ToString()))){
+        if ((TagMatch(other.transform.tag) || LayerMatch(LayerMask.LayerToName(other.gameObject.layer)))){
             DealDamage(other.transform);
         }
     }

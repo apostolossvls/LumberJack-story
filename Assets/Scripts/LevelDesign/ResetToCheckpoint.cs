@@ -14,7 +14,7 @@ public class ResetToCheckpoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if ((TagMatch(other.transform.tag) || LayerMatch(other.gameObject.layer.ToString()))){
+        if ((TagMatch(other.transform.tag) || LayerMatch(LayerMask.LayerToName(other.gameObject.layer)))){
             if (Checkpoint3.LastCheckpoint) {
                 Checkpoint3.LastCheckpoint.ResetOnCheckpoint();
             }

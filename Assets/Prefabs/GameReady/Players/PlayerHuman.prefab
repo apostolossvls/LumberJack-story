@@ -1022,7 +1022,7 @@ GameObject:
   - component: {fileID: 5773418544180347778}
   - component: {fileID: 5773418544180347777}
   - component: {fileID: 5773418544180347791}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: InteractCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1075,6 +1075,7 @@ MonoBehaviour:
   - Draggable
   - HumanInteractable
   layers:
+  - Default
   - IgnorePlayer
 --- !u!1 &5773418544183803660
 GameObject:

@@ -11,16 +11,20 @@ public class InteractCollider : MonoBehaviour
     void Start(){
         possibleinteracts = new List<Transform>{};
     }
-
+    
     void Update(){
         List<int> indexes = new List<int>{};
         for (int i = 0; i < possibleinteracts.Count; i++)
         {
             if (possibleinteracts[i]){
-                if (!TagMatch(possibleinteracts[i].tag)) indexes.Add(OnArray(possibleinteracts[i]));
+                if (!TagMatch(possibleinteracts[i].tag)){ 
+                    //indexes.Add(OnArray(possibleinteracts[i]));
+                    indexes.Add(i);
+                }
             }
             else{
-                possibleinteracts.RemoveAt(i);
+                //possibleinteracts.RemoveAt(i);
+                indexes.Add(i);
             }
         }
         foreach (int i in indexes)
@@ -32,7 +36,8 @@ public class InteractCollider : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         if (this.enabled){
-            if ((TagMatch(other.tag) || LayerMatch(other.gameObject.layer.ToString())) && OnArray(other.transform)==-1){
+            if ((TagMatch(other.tag) && LayerMatch(LayerMask.LayerToName(other.gameObject.layer))) && OnArray(other.transform)==-1){
+                Debug.Log("interact");
                 //small test (if on other playable cahracter then get only if is on the right hand)
                 if (!other.GetComponentInParent<InteractControl>())
                     possibleinteracts.Add(other.transform);

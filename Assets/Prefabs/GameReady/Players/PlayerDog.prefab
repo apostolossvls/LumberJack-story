@@ -1507,7 +1507,7 @@ GameObject:
   - component: {fileID: 5779581161260497686}
   - component: {fileID: 5779581161260497684}
   - component: {fileID: 5779581161260497685}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: InteractCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1558,6 +1558,7 @@ MonoBehaviour:
   - Item
   - DogInteractable
   layers:
+  - Default
   - IgnorePlayer
 --- !u!1 &5779581161266729023
 GameObject:

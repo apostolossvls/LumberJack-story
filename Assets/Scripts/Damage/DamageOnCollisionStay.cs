@@ -43,7 +43,7 @@ public class DamageOnCollisionStay : MonoBehaviour
     {
         if (this.enabled){
             if (TicksPerSecond!=0){
-                if ((TagMatch(other.transform.tag) || LayerMatch(other.gameObject.layer.ToString())) && OnArray(other.transform)==-1){
+                if ((TagMatch(other.transform.tag) || LayerMatch(LayerMask.LayerToName(other.gameObject.layer))) && OnArray(other.transform)==-1){
                     targets.Add(other.transform);
                     tickTimer.Add(TicksPerSecond);
                 }
