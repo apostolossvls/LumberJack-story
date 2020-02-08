@@ -9,16 +9,6 @@ public class Trampoline : MonoBehaviour
     public float radius = 5f;
     public string[] tags;
     public Transform deformObject;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void OnTriggerEnter(Collider other){
         if (TagMatch(other.tag)){
@@ -42,7 +32,7 @@ public class Trampoline : MonoBehaviour
     }
 
     void Push(Transform t){
-        Debug.Log("Pushing: "+t.name);
+        //Debug.Log("Pushing: "+t.name);
         Rigidbody rig = t.GetComponent<Rigidbody>();
         if (rig){
             rig.AddExplosionForce(power, transform.position, radius, 3.0F, ForceMode.Impulse);
@@ -50,12 +40,12 @@ public class Trampoline : MonoBehaviour
     }
 
     void Deform(){
-        Debug.Log("Deform");
+        //Debug.Log("Deform");
         deformObject.localScale = new Vector3(deformObject.localScale.x, deformObject.localScale.y/2, deformObject.localScale.z);
     }
 
     void ResetForm(){
-        Debug.Log("ResetForm");
+        //Debug.Log("ResetForm");
         deformObject.localScale = new Vector3(deformObject.localScale.x, deformObject.localScale.y*2, deformObject.localScale.z);
     }
 
