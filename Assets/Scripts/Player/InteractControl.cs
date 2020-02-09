@@ -557,7 +557,13 @@ public class InteractControl : MonoBehaviour
         leftGrab=null;
         rightHandGrabbing=false;
         leftHandGrabbing=false;
-        Destroy(t.GetComponent<SpringJoint>());
+        SpringJoint[] sj = t.GetComponents<SpringJoint>();
+        foreach (var joint in sj)
+        {
+            if (joint.connectedBody == GetComponent<Rigidbody>()){
+                Destroy(joint);
+            }
+        }
         //if (holdingGameObject.GetComponent<Rigidbody>()) holdingGameObject.GetComponent<Rigidbody>().constraints = rigidbodyConstraints;
         if (t.position.z!=0) 
             t.position = new Vector3(t.position.x, t.position.y, 0);
