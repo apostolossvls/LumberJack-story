@@ -435,6 +435,8 @@ public class InteractControl : MonoBehaviour
         obj.parent = GrabPivots[0];
         GrabPivotsUsing[0] = true;
 
+        rightGrab.SendMessage("OnGrab", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+
         StopCoroutine("GrabOverTime");
         StartCoroutine(GrabOverTime(rightGrab, GrabPivots[0], 10f));
 
@@ -501,6 +503,8 @@ public class InteractControl : MonoBehaviour
             rigidbodyConstraints = holdingGameObject.GetComponent<Rigidbody>().constraints;
             //holdingGameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }*/
+
+        rightGrab.SendMessage("OnGrab", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
 
         if (GetComponent<Jump>()) GetComponent<Jump>().enabled =false;
     }

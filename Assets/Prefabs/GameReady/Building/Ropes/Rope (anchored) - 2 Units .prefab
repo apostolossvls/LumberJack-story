@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3990463280247447848}
   - component: {fileID: 3990463280247447849}
   m_Layer: 0
-  m_Name: Cube (8)
+  m_Name: joint8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 3990463280478516354}
   - component: {fileID: 3990463280478516357}
   m_Layer: 0
-  m_Name: Rope (anchored)
+  m_Name: 'Rope (anchored) - 2 Units '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 3990463280584221215}
   - component: {fileID: 3990463280584221212}
   m_Layer: 0
-  m_Name: start
+  m_Name: joint1 (start)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 3990463280946873815}
   - component: {fileID: 3990463280946873812}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: joint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 3990463281020155906}
   - component: {fileID: 3990463281020155907}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: joint4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -931,7 +931,7 @@ GameObject:
   - component: {fileID: 3990463281256098412}
   - component: {fileID: 3990463281256098413}
   m_Layer: 0
-  m_Name: Cube (6)
+  m_Name: joint7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1175,7 +1175,7 @@ GameObject:
   - component: {fileID: 3990463281440234408}
   - component: {fileID: 3990463281440234409}
   m_Layer: 0
-  m_Name: Cube (10)
+  m_Name: joint10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1420,7 +1420,7 @@ GameObject:
   - component: {fileID: 3990463281531937253}
   - component: {fileID: 3990463281531937250}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: joint6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1664,7 +1664,7 @@ GameObject:
   - component: {fileID: 3990463281618073896}
   - component: {fileID: 3990463281618073899}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: joint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1909,7 +1909,7 @@ GameObject:
   - component: {fileID: 3990463281997841701}
   - component: {fileID: 3990463281997841698}
   m_Layer: 0
-  m_Name: Cube (9)
+  m_Name: joint9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2153,7 +2153,7 @@ GameObject:
   - component: {fileID: 3990463282162261455}
   - component: {fileID: 3990463282162261452}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: joint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2396,8 +2396,9 @@ GameObject:
   - component: {fileID: 3990463282182525282}
   - component: {fileID: 3990463282182525283}
   - component: {fileID: 3990463282182525280}
+  - component: {fileID: 6718080770220825978}
   m_Layer: 0
-  m_Name: Cube (11)
+  m_Name: joint11 (end)
   m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2624,3 +2625,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 3990463281440234415}
+--- !u!114 &6718080770220825978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3990463282182525294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31ed576d3914bc4cb39169a5c1b1177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
