@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 3990463280478516355}
   - component: {fileID: 3990463280478516354}
   - component: {fileID: 3990463280478516357}
+  - component: {fileID: 3164160796916121466}
   m_Layer: 0
   m_Name: 'Rope (anchored) - 2 Units '
   m_TagString: Untagged
@@ -316,6 +317,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3164160796916121466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3990463280478516352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83f2a8e22a07c20418e2172d3cac3952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  original: 1
 --- !u!1 &3990463280584221210
 GameObject:
   m_ObjectHideFlags: 0
