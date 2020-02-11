@@ -28,5 +28,9 @@ public class Health : MonoBehaviour
         {
             LevelSettings.RestartScene();
         }
+        else {
+            Debug.Log(gameObject+" died");
+            Destroy(gameObject);
+        }
     }
 }
