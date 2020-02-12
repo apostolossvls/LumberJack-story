@@ -132,7 +132,7 @@ public class InteractControl : MonoBehaviour
         if (Input.GetButtonUp("Release")  && (rightGrab || leftGrab)){
             HoldingReleaseIndicator.SetActive(false);
             if (HoldReleaseTimer < HoldReleaseTimerTarget){
-                ReleaseHand();
+                ReleaseHand(rightGrab? true:false, rightGrab? false:true);
             }
             else if (rightGrab){
                 //HoldRelease
