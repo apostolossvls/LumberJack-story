@@ -5,6 +5,7 @@ using UnityEngine;
 public class CutDownTree : MonoBehaviour
 {
     public Transform log;
+    public Rigidbody top;
     Transform cutter;
     Vector3 cutterPos;
     public bool activated;
@@ -54,8 +55,13 @@ public class CutDownTree : MonoBehaviour
         log.tag = "Grabbable";
         if (log.GetComponent<Rigidbody>()) {
             log.GetComponent<Rigidbody>().isKinematic = false;
-            if (cutter) log.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(transform.position.x-cutter.transform.position.x), 0, 0) * 0.5f, ForceMode.Impulse);
+            top.isKinematic = false;
+            if (cutter) {
+                log.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(transform.position.x-cutter.transform.position.x), 0, 0) * 0.5f, ForceMode.Impulse);
+                top.GetComponent<Rigidbody>().AddForce(new Vector3(Mathf.Sign(transform.position.x-cutter.transform.position.x), 0, 0) * 0.5f, ForceMode.Impulse);
+            }
         }
+        Destroy(top.gameObject, 3f);
         Destroy(this);
     }
 
