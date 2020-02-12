@@ -73,10 +73,20 @@ public class CameraFollowPivot : MonoBehaviour
     }
 
     void Magnetize(Collider col){
+        Vector3 v = col.ClosestPoint(target.position);
+        transform.position = new Vector3(v.x, v.y, transform.position.z);
+        /*
         transform.position = new Vector3(
-            Mathf.Clamp(Mathf.Abs(target.position.x), float.MinValue, col.bounds.extents.x + Mathf.Abs(col.transform.position.x)) * Mathf.Sign(target.position.x),
-            Mathf.Clamp(Mathf.Abs(target.position.y), float.MinValue, col.bounds.extents.y + Mathf.Abs(col.transform.position.y)) * Mathf.Sign(target.position.y),
+            //Mathf.Clamp(Mathf.Abs(target.position.x), float.MinValue, col.bounds.extents.x + Mathf.Abs(col.transform.position.x)) * Mathf.Sign(target.position.x),
+            //Mathf.Clamp(Mathf.Abs(target.position.y), float.MinValue, col.bounds.extents.y + Mathf.Abs(col.transform.position.y)) * Mathf.Sign(target.position.y),
+            //Mathf.Clamp(Mathf.Abs(target.position.x), float.MinValue, col.bounds.extents.x + Mathf.Abs(col.bounds.center.x)) * Mathf.Sign(target.position.x),           
+            //Mathf.Clamp(Mathf.Abs(target.position.x), float.MinValue, col.bounds.extents.x + Mathf.Abs(col.transform.position.x) + col.bounds.center.x) * Mathf.Sign(target.position.x),
+            //Mathf.Clamp(Mathf.Abs(target.position.x), float.MinValue, col.bounds.extents.x + col.bounds.center.x) * Mathf.Sign(target.position.x),
+            //Mathf.Clamp(Mathf.Abs(target.position.x), float.MinValue, col.bounds.max.x + Mathf.Abs(col.transform.position.x +(col.bounds.center.x - col.transform.position.x))) * Mathf.Sign(target.position.x),
+            Mathf.Clamp(Mathf.Abs(target.position.x), float.MinValue, col.bounds.extents.x + Mathf.Abs(2 * col.transform.position.x - col.transform.position.x)) * Mathf.Sign(target.position.x),
+            Mathf.Clamp(Mathf.Abs(target.position.y), float.MinValue, col.bounds.extents.y + Mathf.Abs(col.bounds.center.y)) * Mathf.Sign(target.position.y),
             target.position.z
         );
+        */
     }
 }
