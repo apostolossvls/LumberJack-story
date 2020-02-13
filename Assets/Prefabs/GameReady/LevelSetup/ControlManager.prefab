@@ -54,6 +54,7 @@ MonoBehaviour:
   - Call
   - Inventory
   - Attack
+  - WallJump
   DogActive:
   - PlayerMovement
   - Jump
@@ -70,3 +71,4 @@ MonoBehaviour:
   HumanBehavioursInactive: []
   DogBehavioursInactive: []
   PlayerPivot: {fileID: 0}
+  acceptInputs: 0

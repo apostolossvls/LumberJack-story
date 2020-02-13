@@ -19,9 +19,11 @@ public class ControlManager : MonoBehaviour
     public static bool onDog;
     bool[] HumanBehavioursActiveWasActive;
     bool[] DogBehavioursActiveWasActive;
+    public bool acceptInputs;
     void Start()
     {
         SetupPlayers();
+        acceptInputs = true;
     }
 
     public void SetupPlayers(){
@@ -37,7 +39,7 @@ public class ControlManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("SwitchCharacter")){
+        if (Input.GetButtonDown("SwitchCharacter") && acceptInputs){
             if (onHuman){
                 onHuman = false;
                 onDog = true;
@@ -119,6 +121,38 @@ public class ControlManager : MonoBehaviour
 
         HumanBehavioursActiveWasActive = new bool[HumanBehavioursActive.Count];
         DogBehavioursActiveWasActive = new bool[DogBehavioursActive.Count];
+    }
+
+    public void PlayersActive(bool active){
+        if (!active){
+            if (onHuman) SetBehavioursActive(0);
+            if (onDog) SetBehavioursActive(1);
+        }
+        for (int i = 0; i < HumanBehavioursActive.Count; i++)
+        {
+            HumanBehavioursActive[i].enabled = active && onHuman && HumanBehavioursActiveWasActive[i];
+        }
+        for (int i = 0; i < DogBehavioursActive.Count; i++)
+        {
+            DogBehavioursActive[i].enabled = active && onDog && DogBehavioursActiveWasActive[i];
+        }
+        foreach (Behaviour b in HumanBehavioursInactive)
+        {
+            b.enabled = active && !onHuman;
+        }
+        foreach (Behaviour b in DogBehavioursInactive)
+        {
+            b.enabled = active && !onDog;
+        }
+        
+        if (PlayerPivot){
+            if (PlayerPivot.GetComponent<CameraFollowPivot>()){
+                Transform t = null;
+                if (onHuman) t = human;
+                else if (onDog) t = dog;
+                PlayerPivot.GetComponent<CameraFollowPivot>().ChangeTarget(t);
+            }
+        }
     }
 
     List<Behaviour> SetupBehaviours(Transform obj, string[] s){
