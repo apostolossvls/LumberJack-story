@@ -50,7 +50,7 @@ public class InteractControl : MonoBehaviour
 
     void Start()
     {
-        ReleaseHand();
+        //ReleaseHand();
         IsThrowing=false;
         holdingInteract = false;
         if (IsHuman) rigidbodyConstraints = new RigidbodyConstraints[2];
@@ -273,43 +273,47 @@ public class InteractControl : MonoBehaviour
         Debug.Log("release");
         if (rRight && rightHandGrabbing){
             rightHandGrabbing = false;
-            rightGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);          
-            if (rightGrab.tag=="Item"){
-                Transform obj = rightGrab;
-                ReleaseItem(rightGrab, true);
-                if (!fromThrow) {
-                    obj.SendMessage("OnReleaseInventory", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+            if (rightGrab){
+                rightGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);          
+                if (rightGrab.tag=="Item"){
+                    Transform obj = rightGrab;
+                    ReleaseItem(rightGrab, true);
+                    if (!fromThrow) {
+                        obj.SendMessage("OnReleaseInventory", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+                    }
                 }
-            }
-            else if (rightGrab.tag=="Grabbable"){
-                ReleaseGrabbable(rightGrab);
-            }
-            else if (rightGrab.tag=="Draggable"){
-                ReleaseDraggable(rightGrab);
-            }
-            else if (rightGrab.tag=="HumanInteractable"){
-                //do something
+                else if (rightGrab.tag=="Grabbable"){
+                    ReleaseGrabbable(rightGrab);
+                }
+                else if (rightGrab.tag=="Draggable"){
+                    ReleaseDraggable(rightGrab);
+                }
+                else if (rightGrab.tag=="HumanInteractable"){
+                    //do something
+                }
             }
             rightGrab=null;
         }
         if (rLeft && leftHandGrabbing){
             leftHandGrabbing = false;
-            leftGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
-            if (leftGrab.tag=="Item"){
-                Transform obj = leftGrab;
-                ReleaseItem(leftGrab, false);
-                if (!fromThrow) {
-                    obj.SendMessage("OnReleaseInventory", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+            if (leftGrab){
+                leftGrab.SendMessage("OnRelease", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+                if (leftGrab.tag=="Item"){
+                    Transform obj = leftGrab;
+                    ReleaseItem(leftGrab, false);
+                    if (!fromThrow) {
+                        obj.SendMessage("OnReleaseInventory", new MessageArgs(transform), SendMessageOptions.DontRequireReceiver);
+                    }
                 }
-            }
-            else if (leftGrab.tag=="Grabbable"){
-                ReleaseGrabbable(leftGrab);
-            }
-            if (leftGrab.tag=="Draggable"){
-                ReleaseDraggable(leftGrab);
-            }
-            if (leftGrab.tag=="HumanInteractable"){
-                //do something
+                else if (leftGrab.tag=="Grabbable"){
+                    ReleaseGrabbable(leftGrab);
+                }
+                if (leftGrab.tag=="Draggable"){
+                    ReleaseDraggable(leftGrab);
+                }
+                if (leftGrab.tag=="HumanInteractable"){
+                    //do something
+                }
             }
             leftGrab=null;
         }
