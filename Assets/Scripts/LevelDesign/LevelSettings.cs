@@ -30,7 +30,14 @@ public class LevelSettings : MonoBehaviour
         secondZLine = secondZLineInspector;
     }
 
-    public static void RestartScene(){
+    public static void RestartScene(bool OnCheckpoint=true){
+        if (instance.checkpoint && OnCheckpoint){
+            Checkpoint3 c = instance.checkpoint.GetComponent<Checkpoint3>();
+            if (c){
+                c.ResetOnCheckpoint();
+                return;
+            }
+        }
         instance.StartCoroutine(LoadSceneIndexCoroutine(SceneManager.GetActiveScene().buildIndex, false));
     }
 

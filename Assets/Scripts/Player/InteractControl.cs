@@ -57,6 +57,37 @@ public class InteractControl : MonoBehaviour
         else rigidbodyConstraints = new RigidbodyConstraints[1];
     }
 
+    void OnEnable(){
+        StartCoroutine(OnEnableCo());
+    }
+
+    IEnumerator OnEnableCo(){
+        yield return new WaitForEndOfFrame();
+        if (!rightGrab && HandPivot.Length > 0) {
+            if (HandPivot[0].childCount > 0){
+                foreach (Transform t in HandPivot[0])
+                {
+                    if (t.gameObject.activeInHierarchy) {
+                        rightGrab = t;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!leftGrab && HandPivot.Length > 1) {
+            if (HandPivot[1].childCount > 0){
+                foreach (Transform t in HandPivot[1])
+                {
+                    if (t.gameObject.activeInHierarchy) {
+                        leftGrab = t;
+                        break;
+                    }
+                }
+            }
+        }
+        yield return null;
+    }
+
     void Update(){
         possibleinteracts = interactCollider.possibleinteracts;
         interactTags = interactCollider.tags;

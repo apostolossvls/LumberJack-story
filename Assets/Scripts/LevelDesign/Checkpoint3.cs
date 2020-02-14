@@ -125,6 +125,8 @@ public class Checkpoint3 : MonoBehaviour
             yield return new WaitForEndOfFrame();
             link.enabled = true;
         }
+
+        LevelSettings.instance.checkpoint = gameObject;
     }
 
     void LoadObjects(){

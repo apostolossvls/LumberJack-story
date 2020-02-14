@@ -53,6 +53,7 @@ public class CutDownTree : MonoBehaviour
     void CutDown(){
         log.parent = null;
         log.tag = "Grabbable";
+        Resetable res = log.gameObject.AddComponent<Resetable>() as Resetable;
         if (log.GetComponent<Rigidbody>()) {
             log.GetComponent<Rigidbody>().isKinematic = false;
             top.isKinematic = false;
