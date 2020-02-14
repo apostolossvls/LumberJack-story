@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -13,13 +14,24 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject menuParent;
     public Button[] menuButtons;
     public GameObject[] planes;
-    public Toggle[] toggles;
-    public Slider[] sliders;
-    public TMP_Dropdown[] dropdowns;
+    //graphics
+    [Header("Graphics")]
+    public Toggle[] graphicsToggles;
+    public Slider[] graphicsSliders;
+    public TMP_Dropdown[] graphicsdropdowns;
     public GameObject FPStext;
     public bool isShowFPS;
+    //audio
+    [Header("Audio")]
+    public AudioMixer audioMixer;
+    public Toggle[] audioToggles;
+    public Slider[] audioSliders;
     public float[] Volumes = new float[6];
     public bool[] AudioMute = new bool[1];
+    //gameplay
+    [Header("Gameplay")]
+    //controls
+    [Header("Controls")]
     static float myTimeScale;
     static bool onPause;
 
@@ -136,34 +148,40 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     public void SetVolume (Slider s){
-        /*
-        for (int i = 1; i < 8; i++)
+        for (int i = 0; i < audioSliders.Length; i++)
         {
-            if (sliders[i]==s){
+            if (audioSliders[i]==s){
                 float v = s.value;
                 if (v<0) v*=4f;
-                Volumes[i-1] = v;
-                if (sliders[1]!=s || toggles[3].isOn) audioManager.audioMixer.SetFloat(s.name, Volumes[i-1]);
+                Volumes[i] = v;
+                audioMixer.SetFloat(s.name, Volumes[i]);
+                //if (audioSliders[1]!=s || audioToggles[3].isOn) audioManager.audioMixer.SetFloat(s.name, Volumes[i-1]);
                 break;
             }
         }
-        */
     }
 
-    public void SetMasterAudioMute(){
-        /*
-        for (int i = 3; i < 4; i++)
+    public void SetAudioMute(Toggle t){
+        for (int i = 0; i < audioToggles.Length; i++)
         {
-            string s="MasterVolume";
-            if (i==3) s = "MasterVolume";
-            if (!toggles[i].isOn){
-                audioManager.audioMixer.SetFloat(s, -80);
+            if (t == audioToggles[i]){
+                if (!t.isOn){
+                    audioMixer.SetFloat(t.name, -80);
+                }
+                else {
+                    audioMixer.SetFloat(t.name, Volumes[AudioToggleToSlider(t)]);
+                }
+                AudioMute[i]=t.isOn;
+                break;
             }
-            else {
-                audioManager.audioMixer.SetFloat(s, Volumes[0]);
-            }
-            AudioMute[i-3]=toggles[i].isOn;
         }
-        */
+    }
+
+    int AudioToggleToSlider(Toggle t){
+        for (int i = 0; i < audioSliders.Length; i++)
+        {
+            if (t.name == audioSliders[i].name) return i;
+        }
+        return -1;
     }
 }

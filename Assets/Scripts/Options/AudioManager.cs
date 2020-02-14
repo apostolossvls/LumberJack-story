@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public AudioMixer audioMixer;
+    public AudioSource[] Music;
+    public AudioSource[] UIaudio1;
+    public AudioSource[] Heroaudio1;
+    public AudioSource[] MenuBuildings;
+    public AudioSource[] Notifications;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void BypassEffectsMusic (bool f){
+        if (f) audioMixer.SetFloat("MusicDriMix", 0);
+        else audioMixer.SetFloat("MusicDriMix", 100);
     }
 }

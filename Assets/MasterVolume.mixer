@@ -91,7 +91,21 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 4b747d4e44bd9714c9eafc5f5b48ae6e
+    name: CharactersVolume
+  - guid: 0b30388e336043c468023ef5ed692843
+    name: DogVolume
+  - guid: 9dfb64c219f056e49b1f129283074373
+    name: HumanVolume
+  - guid: 4d3f0386f16a4104083cad18169e9f7e
+    name: MasterVolume
+  - guid: cc636ecabab2aaa488c5f7cce51945b8
+    name: MusicVolume
+  - guid: acdac652b0a0afd42beaaf7e28d1400c
+    name: SFXVolume
+  - guid: 9b7ff9d6f9770484097060f9e261f10a
+    name: UIVolume
   m_AudioMixerGroupViews:
   - guids:
     - 3081b3bc909683c48b409c08828ae181
