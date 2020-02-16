@@ -157,8 +157,7 @@ public class PauseMenuManager : MonoBehaviour
                 float v = s.value;
                 if (v<0) v*=4f;
                 Volumes[i] = v;
-                audioMixer.SetFloat(s.name, Volumes[i]);
-                //if (audioSliders[1]!=s || audioToggles[3].isOn) audioManager.audioMixer.SetFloat(s.name, Volumes[i-1]);
+                if (!AudioMute[i]) audioMixer.SetFloat(s.name, Volumes[i]);
                 break;
             }
         }
@@ -174,11 +173,16 @@ public class PauseMenuManager : MonoBehaviour
                 else {
                     audioMixer.SetFloat(t.name, Volumes[AudioToggleToSlider(t)]);
                 }
-                AudioMute[i]=t.isOn;
+                AudioMute[i]=!t.isOn;
                 break;
             }
         }
         AudioManager.instance.Play("MenuClick");
+    }
+
+    public void ExitToMainMenu(int index){
+        LevelSettings.LoadSceneIndex(index);
+        Debug.Log("Exit");
     }
 
     int AudioToggleToSlider(Toggle t){
