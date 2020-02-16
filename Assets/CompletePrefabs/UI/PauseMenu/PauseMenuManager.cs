@@ -66,6 +66,7 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         Instance.menuParent.gameObject.SetActive(true);
         Instance.ResetButtonAndPlanes();
+        AudioManager.instance.Play("MenuClick");
     }
     
     public void Unpause(){
@@ -79,7 +80,7 @@ public class PauseMenuManager : MonoBehaviour
             //h.LightsParent.GetComponent<Animator>().speed=1;
             //h.ChangeGameStateOnEnemies();
         }*/
-        //audioManager.UIaudio1[1].Play();
+        AudioManager.instance.Play("MenuClick");
     }
 
     public void ShowPlane(int index){
@@ -94,7 +95,7 @@ public class PauseMenuManager : MonoBehaviour
                 planes[i].SetActive(false);
             }
         }
-        //audioManager.UIaudio1[0].Play();
+        AudioManager.instance.Play("MenuClick");
     }
 
     public void SaveOptions(){
@@ -138,6 +139,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void ChangeQuality(TMP_Dropdown dr){
         QualitySettings.SetQualityLevel(QualitySettings.names.Length-1 - dr.value, true);
+        AudioManager.instance.Play("MenuClick");
         //Debug.Log(QualitySettings.GetQualityLevel().ToString());
         //Debug.Log(QualitySettings.names[QualitySettings.GetQualityLevel()].ToString());
     }
@@ -145,6 +147,7 @@ public class PauseMenuManager : MonoBehaviour
     public void ShowFPS (Toggle tog){
         isShowFPS=tog.isOn;
         FPStext.SetActive(isShowFPS);
+        AudioManager.instance.Play("MenuClick");
     }
 
     public void SetVolume (Slider s){
@@ -175,6 +178,7 @@ public class PauseMenuManager : MonoBehaviour
                 break;
             }
         }
+        AudioManager.instance.Play("MenuClick");
     }
 
     int AudioToggleToSlider(Toggle t){
@@ -183,5 +187,12 @@ public class PauseMenuManager : MonoBehaviour
             if (t.name == audioSliders[i].name) return i;
         }
         return -1;
+    }
+
+    public void OnSliderBeginDrag(){
+        AudioManager.instance.Play("MenuClick");
+    }
+    public void OnSliderdEndDrag(){
+        AudioManager.instance.Play("MenuClick");
     }
 }

@@ -6,11 +6,21 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager instance;
     public AudioMixer audioMixer;
-    public Sound[] sounds;
     public Transform parent;
+    public Sound[] sounds;
 
     void Awake(){
+
+        if (instance == null)
+            instance = this;
+        else{
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+
         foreach (Sound s in sounds)
         {
             s.source = parent.gameObject.AddComponent<AudioSource>();
@@ -18,6 +28,7 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            s.source.outputAudioMixerGroup = s.output;
         }
     }
 

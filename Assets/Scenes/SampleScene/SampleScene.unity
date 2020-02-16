@@ -6905,17 +6905,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd95e79977fd9a49b4fa48a3ea50d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
-  Music: []
-  UIaudio1: []
-  Heroaudio1: []
-  MenuBuildings: []
-  Notifications: []
+  audioMixer: {fileID: 24100000, guid: 9779b6f3eb65f1a4c8d07a337c1d31b9, type: 2}
+  parent: {fileID: 778974510}
   sounds:
   - name: MenuClick
     clip: {fileID: 8300000, guid: 3180fa05068e3f741a2f999b5cfecff7, type: 3}
+    output: {fileID: -8077694122337224737, guid: 9779b6f3eb65f1a4c8d07a337c1d31b9,
+      type: 2}
     volume: 1
     pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &805453850 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5253853584386529699, guid: 34c4e429d6c418a40beeebc40982a33e,
