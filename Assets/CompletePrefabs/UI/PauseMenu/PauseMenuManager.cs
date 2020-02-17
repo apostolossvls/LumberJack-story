@@ -193,6 +193,14 @@ public class PauseMenuManager : MonoBehaviour
         return -1;
     }
 
+    public void InteractIndicatorToggle(Toggle t){
+        foreach (InteractIndicator ind in Object.FindObjectsOfType<InteractIndicator>())
+        {
+            ind.active = t.isOn;
+            ind.IsActive();
+        }
+    }
+
     public void OnSliderBeginDrag(){
         AudioManager.instance.Play("MenuClick");
     }
