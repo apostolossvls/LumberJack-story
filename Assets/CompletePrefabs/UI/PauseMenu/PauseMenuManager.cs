@@ -193,12 +193,17 @@ public class PauseMenuManager : MonoBehaviour
         return -1;
     }
 
+    //Gameplay
     public void InteractIndicatorToggle(Toggle t){
         foreach (InteractIndicator ind in Object.FindObjectsOfType<InteractIndicator>())
         {
             ind.active = t.isOn;
             ind.IsActive();
         }
+    }
+
+    public void DogPPVolume(Toggle t){
+        GameObject.FindGameObjectWithTag("PlayerDog").GetComponentInChildren<UnityEngine.Rendering.PostProcessing.PostProcessVolume>(true).gameObject.SetActive(t.isOn);
     }
 
     public void OnSliderBeginDrag(){

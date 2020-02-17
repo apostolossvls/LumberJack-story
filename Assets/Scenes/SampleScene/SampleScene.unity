@@ -22287,6 +22287,11 @@ PrefabInstance:
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 914841524}
+    - target: {fileID: 5758284511567647589, guid: 7636ed6dc3f753045bfafa3305daa4ee,
+        type: 3}
+      propertyPath: m_Sources.Array.data[0].sourceTransform
+      value: 
+      objectReference: {fileID: 914841524}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7636ed6dc3f753045bfafa3305daa4ee, type: 3}
 --- !u!1001 &6328659542479200726
