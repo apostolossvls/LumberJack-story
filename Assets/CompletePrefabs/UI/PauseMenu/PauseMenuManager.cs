@@ -206,6 +206,13 @@ public class PauseMenuManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("PlayerDog").GetComponentInChildren<UnityEngine.Rendering.PostProcessing.PostProcessVolume>(true).gameObject.SetActive(t.isOn);
     }
 
+    public void ShowHint(Toggle t){
+        foreach (InteractIndicator ind in Object.FindObjectsOfType<InteractIndicator>())
+        {
+            ind.showHint = t.isOn;
+        }
+    }
+
     public void OnSliderBeginDrag(){
         AudioManager.instance.Play("MenuClick");
     }
