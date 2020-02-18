@@ -8,8 +8,9 @@ public class InteractIndicator : MonoBehaviour
     public bool showHint = true;
     public GameObject hint;
     public float timeBeforeHint = 5f;
-    float timer;
-    public Vector3 pos;
+    Vector3 pos;
+    public string keyboardString = "E";
+    public string gamepadString = "button2";
 
     void OnEnable()
     {
@@ -18,6 +19,10 @@ public class InteractIndicator : MonoBehaviour
         if (IsActive()){
             StartCoroutine(HintDisplay());
         }
+    }
+
+    void OnDisable(){
+        StopCoroutine(HintDisplay());
     }
 
     void Update(){
@@ -30,19 +35,30 @@ public class InteractIndicator : MonoBehaviour
 
     IEnumerator HintDisplay(){
         if (showHint){
-            timer = 0;
+            //timer = 0;
+            hint.SetActive(false);
         
-            while (timer < timeBeforeHint){
-                timer += Time.deltaTime;
-                yield return null;
-            }
+            yield return new WaitForSeconds(timeBeforeHint);
 
             DisplayHint();
         }
     }
 
-    public void DisplayHint(){
-        hint.SetActive(true);
+    public void DisplayHint(bool b = true){
+        hint.SetActive(b);
+        if (b){
+            string[] temp = Input.GetJoystickNames();
+            if(temp.Length > 0){
+                for(int i =0; i < temp.Length; ++i){
+                    if(!string.IsNullOrEmpty(temp[i])){
+                        hint.GetComponentInChildren<TMPro.TextMeshPro>().text = gamepadString;
+                    }
+                    else {
+                        hint.GetComponentInChildren<TMPro.TextMeshPro>().text = keyboardString;
+                    }
+                }
+            }
+        }
     }
 
     public bool IsActive(){

@@ -210,6 +210,7 @@ public class PauseMenuManager : MonoBehaviour
         foreach (InteractIndicator ind in Object.FindObjectsOfType<InteractIndicator>())
         {
             ind.showHint = t.isOn;
+            ind.DisplayHint(false);
         }
     }
 
