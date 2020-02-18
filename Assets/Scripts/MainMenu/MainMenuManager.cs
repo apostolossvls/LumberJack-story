@@ -29,4 +29,8 @@ public class MainMenuManager : MonoBehaviour
     public void LoadScene(int index){
         SceneManager.LoadSceneAsync(index);
     }
+
+    public void QuitGame(){
+        Application.Quit();
+    }
 }
