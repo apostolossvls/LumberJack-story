@@ -823,7 +823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5779581160758411362
 Transform:
   m_ObjectHideFlags: 0
@@ -1853,7 +1853,7 @@ RotationConstraint:
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
-  m_IsContraintActive: 0
+  m_IsContraintActive: 1
   m_IsLocked: 0
   m_Sources:
   - sourceTransform: {fileID: 0}

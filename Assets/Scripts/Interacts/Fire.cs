@@ -25,4 +25,13 @@ public class Fire : MonoBehaviour
         Destroy(gameObject);
     }
 
+
+    void OnTriggerEnter(Collider other){
+        LiquidSource lq = other.GetComponent<LiquidSource>();
+        if (lq){
+            if (lq.name == "Water"){
+                SetPower(0, true);
+            }
+        }
+    }
 }
