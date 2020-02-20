@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.InputSystem;
 using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] public InputMaster controls;
     public Collider col;
     public Rigidbody rig;
     public CinemachineVirtualCamera cam;
@@ -17,6 +18,11 @@ public class PlayerMovement : MonoBehaviour
     public float movementControl=1f;
     float distToGround;
     CinemachineComposer cinemachineTransposer;
+
+    void Awake(){
+        controls.Player.Movement.performed += cxt => Move(cxt.ReadValue<Vector2>());
+    }
+
     void Start(){
         if (col==null) col  = GetComponent<Collider>();
         if (rig==null && gameObject.GetComponent<Rigidbody>()){
@@ -28,10 +34,15 @@ public class PlayerMovement : MonoBehaviour
         cinemachineTransposer = cam.GetCinemachineComponent<CinemachineComposer>();
     }
 
+    void Move(Vector2 direction){
+        Debug.Log("Player new move: "+ direction);
+    }
+
     void Update(){
         //Debug.DrawRay(transform.position, transform.forward, Color.green);
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.z = Input.GetAxisRaw("Vertical");
+
         movement.Normalize();
 
         //if hit wall on x, dont move on x
