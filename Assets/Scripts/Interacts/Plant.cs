@@ -29,7 +29,12 @@ public class Plant : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Fire"){
-            SetPower(-1 * Time.deltaTime);
+            Fire fire = other.GetComponentInChildren<Fire>();
+            if (fire){
+                if (fire.onFire) {
+                    SetPower(-1 * Time.deltaTime);
+                }
+            }
         }
     }
 }

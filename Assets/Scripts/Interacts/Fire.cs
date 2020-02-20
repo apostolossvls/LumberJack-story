@@ -5,6 +5,8 @@ using UnityEngine;
 public class Fire : MonoBehaviour
 {
     public float power=1f;
+    public GameObject fire;
+    public bool onFire = true;
 
     void Update(){
         if (power<=0){
@@ -22,15 +24,28 @@ public class Fire : MonoBehaviour
     }
 
     public void PutOut(){
-        Destroy(gameObject);
+        fire.SetActive(false);
+        onFire = false;
+    }
+
+    public void LightUp(){
+        fire.SetActive(true);
+        onFire = true;
+        power = 1f;
     }
 
 
-    void OnTriggerEnter(Collider other){
-        LiquidSource lq = other.GetComponent<LiquidSource>();
+    void OnTriggerStay(Collider other){
+        LiquidSource lq = other.GetComponentInChildren<LiquidSource>();
         if (lq){
-            if (lq.name == "Water"){
+            if (lq.liquidName == "Water"){
                 SetPower(0, true);
+            }
+        }
+        Fire f = other.GetComponentInChildren<Fire>();
+        if (f) {
+            if (f.onFire && !onFire){
+                LightUp();
             }
         }
     }
