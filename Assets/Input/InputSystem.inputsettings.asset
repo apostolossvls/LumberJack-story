@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: InputSystem.inputsettings
   m_EditorClassIdentifier: 
   m_SupportedDevices:
-  - Keyboard
   - Mouse
   - Gamepad
+  - Keyboard
   m_UpdateMode: 1
   m_CompensateForScreenOrientation: 1
   m_FilterNoiseOnCurrent: 0
