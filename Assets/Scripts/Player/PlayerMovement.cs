@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] public InputMaster controls;
+    public InputMaster controls;
     public Collider col;
     public Rigidbody rig;
     public CinemachineVirtualCamera cam;
@@ -19,8 +20,18 @@ public class PlayerMovement : MonoBehaviour
     float distToGround;
     CinemachineComposer cinemachineTransposer;
 
+
     void Awake(){
+        controls = new InputMaster();
         controls.Player.Movement.performed += cxt => Move(cxt.ReadValue<Vector2>());
+    }
+
+    void OnEnable(){
+        controls.Player.Enable();
+    }
+
+    void OnDisable(){
+        controls.Player.Disable();
     }
 
     void Start(){
