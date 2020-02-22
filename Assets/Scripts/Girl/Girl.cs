@@ -22,7 +22,7 @@ public class Girl : MonoBehaviour
         msg.received = true;
         //let release
         //reset
-        GetComponent<Collider>().isTrigger = false;
+        //GetComponent<Collider>().isTrigger = false;
     }
 
     void OnInteract(MessageArgs msg){
@@ -32,7 +32,8 @@ public class Girl : MonoBehaviour
         inventory = msg.sender.GetComponentInChildren<Inventory>();
 
         inventory.SaveToInventory(transform, 0, true, false);
-        GetComponent<Collider>().isTrigger = true;
+        gameObject.layer = LayerMask.NameToLayer("IgnorePlayer");
+        //GetComponent<Collider>().isTrigger = true;
         Debug.Log("girl inventory");
         /*
         if (interactControl.rightGrab != null && inventory.slots[0] != null){

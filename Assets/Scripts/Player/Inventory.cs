@@ -87,23 +87,28 @@ public class Inventory : MonoBehaviour
             if (!obj) otherItem = interactControl.rightGrab;
             else otherItem = obj;
             Transform slotItem = slots[slot];
-
-            if (slotItem){
-                Debug.Log("slot filled");
-                ReleaseItemFromSlot(slot);
-                MessageArgs msg = new MessageArgs(transform);
-                slotItem.SendMessage("OnInventoryRelease", msg, SendMessageOptions.DontRequireReceiver);
-                if (!msg.received)
-                    interactControl.GrabItem(slotItem, true);
-            }
+            string tempTag = tags[slot];
 
             if (otherItem){
-                interactControl.ReleaseHand(true, false);
+                if (!obj) interactControl.ReleaseHand(true, false);
                 SetItemToSlot(otherItem, slot);
                 StartCoroutine(ChangePosOverTime(otherItem, slotsPos[slot], 10f));
             }
             else {
                 slots[slot] = null;
+            }
+            if (slotItem){
+                Debug.Log("slot filled");
+                Rigidbody r = slotItem.GetComponent<Rigidbody>();
+                if (r) r.isKinematic = false;
+                slotItem.SetParent(null);
+                slotItem.tag = (tempTag!=null && tempTag!="") ? tempTag : "Item";
+                MessageArgs msg = new MessageArgs(transform);
+                slotItem.SendMessage("OnInventoryRelease", msg, SendMessageOptions.DontRequireReceiver);
+                if (!msg.received){
+                    if (!interactControl.rightHandGrabbing)
+                        interactControl.GrabItem(slotItem, true);
+                }
             }
         }
     }
@@ -117,13 +122,6 @@ public class Inventory : MonoBehaviour
         t.parent = slotsPos[slot];
         t.localPosition = new Vector3(0,0,0);
         t.localRotation = new Quaternion(0,0,0,0);
-    }
-
-    public void ReleaseItemFromSlot(int slot){
-        Rigidbody r = slots[slot].GetComponent<Rigidbody>();
-        if (r) r.isKinematic = false;
-        slots[slot].tag = (tags[slot]!=null && tags[slot]!="") ? tags[slot] : "Item";
-        slots[slot].SetParent(null);
     }
 
     void OpenInventory(){
