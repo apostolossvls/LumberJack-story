@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     public bool inventoryOpen;
     public int slotSelected;
     string[] tags = new string[3];
+    RigidbodyConstraints[] rigidbodyConstraints = new RigidbodyConstraints[3];
     //bool opening, closing;
 
     //UI
@@ -88,6 +89,7 @@ public class Inventory : MonoBehaviour
             else otherItem = obj;
             Transform slotItem = slots[slot];
             string tempTag = tags[slot];
+            RigidbodyConstraints rc = rigidbodyConstraints[slot];
 
             if (otherItem){
                 if (!obj) interactControl.ReleaseHand(true, false);
@@ -99,10 +101,9 @@ public class Inventory : MonoBehaviour
             }
             if (slotItem){
                 Debug.Log("slot filled");
-                Rigidbody r = slotItem.GetComponent<Rigidbody>();
-                if (r) r.isKinematic = false;
-                slotItem.SetParent(null);
                 slotItem.tag = (tempTag!=null && tempTag!="") ? tempTag : "Item";
+                slotItem.SetParent(null);
+                slotItem.GetComponent<Rigidbody>().constraints = rc;
                 MessageArgs msg = new MessageArgs(transform);
                 slotItem.SendMessage("OnInventoryRelease", msg, SendMessageOptions.DontRequireReceiver);
                 if (!msg.received){
@@ -117,7 +118,10 @@ public class Inventory : MonoBehaviour
         tags[slot] = t.tag;
         t.tag = "Untagged";
         Rigidbody r = t.GetComponent<Rigidbody>();
-        if (r) r.isKinematic = true;
+        if (r){
+            rigidbodyConstraints[slot] = r.constraints;
+            r.constraints = RigidbodyConstraints.FreezeAll;
+        }
         slots[slot] = t;
         t.parent = slotsPos[slot];
         t.localPosition = new Vector3(0,0,0);
