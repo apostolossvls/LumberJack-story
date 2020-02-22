@@ -37,15 +37,15 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
-                    ""id"": ""82ac0caa-0146-4cce-8f3e-d32f16ac51ff"",
+                    ""id"": ""b6684aa2-d1ba-4305-a8c2-00f522847474"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Interact1"",
+                    ""name"": ""Release"",
                     ""type"": ""Button"",
-                    ""id"": ""b6684aa2-d1ba-4305-a8c2-00f522847474"",
+                    ""id"": ""82ac0caa-0146-4cce-8f3e-d32f16ac51ff"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -250,22 +250,22 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3401cb6a-81ef-4efc-8a5c-b5c7bc5b5640"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Interact"",
+                    ""action"": ""Release"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""34bf0b11-25a0-4477-9d54-fc8f318faa81"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
+                    ""action"": ""Release"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -309,7 +309,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Interact1"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -320,7 +320,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Interact1"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -362,7 +362,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_Interact1 = m_Player.FindAction("Interact1", throwIfNotFound: true);
+        m_Player_Release = m_Player.FindAction("Release", throwIfNotFound: true);
         m_Player_Duck = m_Player.FindAction("Duck", throwIfNotFound: true);
     }
 
@@ -416,7 +416,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_Interact1;
+    private readonly InputAction m_Player_Release;
     private readonly InputAction m_Player_Duck;
     public struct PlayerActions
     {
@@ -425,7 +425,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @Interact1 => m_Wrapper.m_Player_Interact1;
+        public InputAction @Release => m_Wrapper.m_Player_Release;
         public InputAction @Duck => m_Wrapper.m_Player_Duck;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -445,9 +445,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Interact1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract1;
-                @Interact1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract1;
-                @Interact1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract1;
+                @Release.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRelease;
+                @Release.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRelease;
+                @Release.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRelease;
                 @Duck.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDuck;
                 @Duck.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDuck;
                 @Duck.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDuck;
@@ -464,9 +464,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Interact1.started += instance.OnInteract1;
-                @Interact1.performed += instance.OnInteract1;
-                @Interact1.canceled += instance.OnInteract1;
+                @Release.started += instance.OnRelease;
+                @Release.performed += instance.OnRelease;
+                @Release.canceled += instance.OnRelease;
                 @Duck.started += instance.OnDuck;
                 @Duck.performed += instance.OnDuck;
                 @Duck.canceled += instance.OnDuck;
@@ -497,7 +497,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnInteract1(InputAction.CallbackContext context);
+        void OnRelease(InputAction.CallbackContext context);
         void OnDuck(InputAction.CallbackContext context);
     }
 }

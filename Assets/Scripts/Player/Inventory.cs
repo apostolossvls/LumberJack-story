@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     public Transform[] slotsPos;
     public bool inventoryOpen;
     public int slotSelected;
+    string[] tags = new string[3];
     //bool opening, closing;
 
     //UI
@@ -56,50 +57,59 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void SaveToInventory(Transform t){
+    public void SaveToInventory(Transform t, int slot=-1, bool forced = false, bool OnHand = true){
         Debug.Log("SaveToInventory");
-        int index = -1;
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i]==null) {
-                index = i;
-                break;
+        if (slot < 0){
+            int index = -1;
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i]==null) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index>=0){
+                SwapItems(index);
+            }
+            else if (forced){
+                SwapItems(0);
             }
         }
-        if (index>=0){
-            SwapItems(index);
-        }
-        else {
-            SwapItems(0);
+        else if (forced || slots[slot] == null) {
+            if (OnHand) SwapItems(0);
+            else SwapItems(0, t);
         }
     }
 
-    public void SwapItems(int slot){
+    public void SwapItems(int slot , Transform obj = null){
         if (interactControl){
-            Transform handItem = interactControl.rightGrab;
+            Transform otherItem;
+            if (!obj) otherItem = interactControl.rightGrab;
+            else otherItem = obj;
             Transform slotItem = slots[slot];
-
-            if (handItem){
-                interactControl.ReleaseHand(true, false);
-                SetItemToSlot(handItem, slot);
-                StartCoroutine(ChangePosOverTime(handItem, slotsPos[slot], 10f));
-            }
-            else {
-                slots[slot] = null;
-            }
 
             if (slotItem){
                 Debug.Log("slot filled");
-                Rigidbody r = slotItem.GetComponent<Rigidbody>();
-                if (r) r.isKinematic = false;
-                slotItem.tag = "Item";
-                slotItem.SetParent(null);
-                interactControl.GrabItem(slotItem, true);
+                ReleaseItemFromSlot(slot);
+                MessageArgs msg = new MessageArgs(transform);
+                slotItem.SendMessage("OnInventoryRelease", msg, SendMessageOptions.DontRequireReceiver);
+                if (!msg.received)
+                    interactControl.GrabItem(slotItem, true);
+            }
+
+            if (otherItem){
+                interactControl.ReleaseHand(true, false);
+                SetItemToSlot(otherItem, slot);
+                StartCoroutine(ChangePosOverTime(otherItem, slotsPos[slot], 10f));
+            }
+            else {
+                slots[slot] = null;
             }
         }
     }
 
     void SetItemToSlot(Transform t, int slot){
+        tags[slot] = t.tag;
         t.tag = "Untagged";
         Rigidbody r = t.GetComponent<Rigidbody>();
         if (r) r.isKinematic = true;
@@ -107,6 +117,13 @@ public class Inventory : MonoBehaviour
         t.parent = slotsPos[slot];
         t.localPosition = new Vector3(0,0,0);
         t.localRotation = new Quaternion(0,0,0,0);
+    }
+
+    public void ReleaseItemFromSlot(int slot){
+        Rigidbody r = slots[slot].GetComponent<Rigidbody>();
+        if (r) r.isKinematic = false;
+        slots[slot].tag = (tags[slot]!=null && tags[slot]!="") ? tags[slot] : "Item";
+        slots[slot].SetParent(null);
     }
 
     void OpenInventory(){

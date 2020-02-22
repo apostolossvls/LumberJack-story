@@ -24,15 +24,15 @@
                 {
                     "name": "Interact",
                     "type": "Button",
-                    "id": "82ac0caa-0146-4cce-8f3e-d32f16ac51ff",
+                    "id": "b6684aa2-d1ba-4305-a8c2-00f522847474",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "Interact1",
+                    "name": "Release",
                     "type": "Button",
-                    "id": "b6684aa2-d1ba-4305-a8c2-00f522847474",
+                    "id": "82ac0caa-0146-4cce-8f3e-d32f16ac51ff",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -237,22 +237,22 @@
                 {
                     "name": "",
                     "id": "3401cb6a-81ef-4efc-8a5c-b5c7bc5b5640",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/r",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
-                    "action": "Interact",
+                    "action": "Release",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "34bf0b11-25a0-4477-9d54-fc8f318faa81",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Interact",
+                    "action": "Release",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -296,7 +296,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
-                    "action": "Interact1",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -307,7 +307,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Interact1",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

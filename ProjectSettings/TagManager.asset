@@ -15,6 +15,7 @@ TagManager:
   - Water
   - Enemy
   - Plant
+  - Girl
   layers:
   - Default
   - TransparentFX

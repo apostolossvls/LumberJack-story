@@ -78,7 +78,7 @@ public class Axe : MonoBehaviour
         Inventory i = msg.sender.GetComponent<Inventory>();
         if (i) {
             if (i.isActiveAndEnabled){
-                i.SaveToInventory(transform);
+                i.SaveToInventory(transform, -1, true);
                 msg.received = true;
             }
         }

@@ -131,7 +131,7 @@ public class InteractControl : MonoBehaviour
                             ReleaseHand();
                             GrabDraggable(possibleinteracts[index]);
                         }
-                        else if (possibleinteracts[index].tag==interactTags[3]){ //interact
+                        else if (possibleinteracts[index].tag==interactTags[3] || possibleinteracts[index].tag=="Girl"){ //interact
                             //Debug.Log("interacting (InteractControl)");
                             //ReleaseHand();
                             //GrabDraggable(possibleinteracts[index]);
