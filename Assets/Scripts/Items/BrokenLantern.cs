@@ -6,6 +6,7 @@ public class BrokenLantern : MonoBehaviour
 {
     public float forceToBreak = 8f;
     public float delayAfterBreak = 5f;
+    public float delayLight=3f;
     public GameObject[] parts;
 
     void OnCollisionEnter(Collision other){
@@ -16,6 +17,7 @@ public class BrokenLantern : MonoBehaviour
     }
 
     void Impact(){
+        StartCoroutine(PutOutLight());
         foreach (GameObject part in parts)
         {
             Rigidbody r = part.GetComponent<Rigidbody>();
@@ -31,5 +33,22 @@ public class BrokenLantern : MonoBehaviour
             Destroy(part, delayAfterBreak);
         }
         Destroy(gameObject, delayAfterBreak);
+    }
+
+    IEnumerator PutOutLight(){
+        Transform fire = GetComponentInChildren<ParticleSystem>().transform;
+        Light light = GetComponentInChildren<Light>();
+        Vector3 s = fire.localScale / delayLight;
+        float i = light.intensity / delayLight;
+        Debug.Log("Light-fire"+ s + " "+i);
+        float timer = 0;
+        while (timer<delayLight)
+        {
+            timer += Time.deltaTime;
+            fire.localScale -= s * Time.deltaTime;
+            light.intensity -= i * Time.deltaTime;
+            yield return null;
+        }
+        yield return null;
     }
 }
