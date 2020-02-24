@@ -8,9 +8,12 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
     [HideInInspector] public string m_Path;
-    public int counter = 0;
+    public LevelDataManager levelDataManager;
     public bool InspectorTriggerSave;
     public bool InspectorTriggerLoad;
+    public bool InspectorTriggerLevel;
+    public int TestIndex;
+    public bool TestBool;
 
     void Awake(){
         if (instance == null)
@@ -37,6 +40,10 @@ public class SaveManager : MonoBehaviour
             InspectorTriggerLoad = false;
             LoadFile();
         }
+        if (InspectorTriggerLevel){
+            InspectorTriggerLevel = false;
+            levelDataManager.levelDatas[TestIndex].cleared = TestBool;
+        }
     }
 
     public void SaveFile()
@@ -47,7 +54,7 @@ public class SaveManager : MonoBehaviour
         if(File.Exists(destination)) file = File.OpenWrite(destination);
         else file = File.Create(destination);
 
-        GameData data = new GameData(counter);
+        GameData data = new GameData(levelDataManager.GetLevelsIndexes(), levelDataManager.GetLevelsCleared());
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file, data);
         file.Close();
@@ -69,6 +76,7 @@ public class SaveManager : MonoBehaviour
         GameData data = (GameData) bf.Deserialize(file);
         file.Close();
 
-        counter = data.counter;
+        //  TEST
+        LevelDataManager.instance.SetLevelsAll(data.levelIndexes, data.levelCleared);
     }
 }
