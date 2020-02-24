@@ -24,12 +24,12 @@ public class Fire : MonoBehaviour
     }
 
     public void PutOut(){
-        fire.SetActive(false);
+        if (fire) fire.SetActive(false);
         onFire = false;
     }
 
     public void LightUp(){
-        fire.SetActive(true);
+        if (fire) fire.SetActive(true);
         onFire = true;
         power = 1f;
     }
