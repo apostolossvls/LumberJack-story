@@ -9,6 +9,7 @@ public class SaveManager : MonoBehaviour
     public static SaveManager instance;
     [HideInInspector] public string m_Path;
     public LevelDataManager levelDataManager;
+    public PauseMenuManager pauseMenuManager;
     public bool InspectorTriggerSave;
     public bool InspectorTriggerLoad;
     public bool InspectorTriggerLevel;
@@ -34,11 +35,11 @@ public class SaveManager : MonoBehaviour
     void Update(){
         if (InspectorTriggerSave){
             InspectorTriggerSave = false;
-            SaveFile();
+            Save();
         }
         if (InspectorTriggerLoad){
             InspectorTriggerLoad = false;
-            LoadFile();
+            Load();
         }
         if (InspectorTriggerLevel){
             InspectorTriggerLevel = false;
@@ -46,7 +47,25 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public void SaveFile()
+    public void Save(){
+        GameData data = new GameData(levelDataManager, pauseMenuManager);
+        SaveFile(data);
+    }
+
+    public void Load(){
+        GameData data = LoadFile();
+
+        SetValues(data);
+    }
+
+    public void SetValues(GameData data){
+        //level
+        LevelDataManager.instance.SetLevelsAll(data.levelIndexes, data.levelCleared);
+        //pauseMenu
+        pauseMenuManager.SetAll(data);
+    }
+
+    void SaveFile(GameData data)
     {
         string destination = m_Path + "/save.dat";
         FileStream file;
@@ -54,13 +73,12 @@ public class SaveManager : MonoBehaviour
         if(File.Exists(destination)) file = File.OpenWrite(destination);
         else file = File.Create(destination);
 
-        GameData data = new GameData(levelDataManager.GetLevelsIndexes(), levelDataManager.GetLevelsCleared());
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(file, data);
         file.Close();
     }
 
-    public void LoadFile()
+    GameData LoadFile()
     {
         string destination = m_Path + "/save.dat";
         FileStream file;
@@ -69,14 +87,13 @@ public class SaveManager : MonoBehaviour
         else
         {
             Debug.LogError("File not found");
-            return;
+            return null;
         }
 
         BinaryFormatter bf = new BinaryFormatter();
         GameData data = (GameData) bf.Deserialize(file);
         file.Close();
 
-        //  TEST
-        LevelDataManager.instance.SetLevelsAll(data.levelIndexes, data.levelCleared);
+        return data;
     }
 }

@@ -19,6 +19,7 @@ public class PauseMenuManager : MonoBehaviour
     public Toggle[] graphicsToggles;
     public Slider[] graphicsSliders;
     public TMP_Dropdown[] graphicsdropdowns;
+    public int qualityIndex;
     public GameObject FPStext;
     public bool isShowFPS;
     //audio
@@ -30,6 +31,9 @@ public class PauseMenuManager : MonoBehaviour
     public bool[] AudioMute = new bool[1];
     //gameplay
     [Header("Gameplay")]
+    public bool showInteractIndicator;
+    public bool showHintIndicator;
+    public bool showDogVision;
     //controls
     [Header("Controls")]
     static float myTimeScale;
@@ -138,7 +142,8 @@ public class PauseMenuManager : MonoBehaviour
     */
 
     public void ChangeQuality(TMP_Dropdown dr){
-        QualitySettings.SetQualityLevel(QualitySettings.names.Length-1 - dr.value, true);
+        qualityIndex = dr.value;
+        QualitySettings.SetQualityLevel(QualitySettings.names.Length-1 - qualityIndex, true);
         AudioManager.instance.Play("MenuClick");
         //Debug.Log(QualitySettings.GetQualityLevel().ToString());
         //Debug.Log(QualitySettings.names[QualitySettings.GetQualityLevel()].ToString());
@@ -219,5 +224,20 @@ public class PauseMenuManager : MonoBehaviour
     }
     public void OnSliderdEndDrag(){
         AudioManager.instance.Play("MenuClick");
+    }
+
+    public void SetAll(GameData data){
+        //Audio
+        AudioMute = data.audioMutes;
+        Volumes = data.audioVolumes;
+
+        //Quality
+        qualityIndex = data.qualityIndex;
+        isShowFPS = data.qualityShowFPS;
+
+        //Gameplay
+        showInteractIndicator = data.gameplayShowInteractIndicator;
+        showHintIndicator = data.gameplayShowHintIndicator;
+        showDogVision = data.gameplayShowDogVision;
     }
 }

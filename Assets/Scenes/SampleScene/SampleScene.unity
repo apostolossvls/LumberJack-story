@@ -7944,6 +7944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Path: 
   levelDataManager: {fileID: 232540805}
+  pauseMenuManager: {fileID: 1317904900}
   InspectorTriggerSave: 0
   InspectorTriggerLoad: 0
   InspectorTriggerLevel: 0
@@ -12629,6 +12630,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1317904900 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2195348012441491190, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2195348012677507227}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c8c860f55937c7498ade29ba8f86dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1318255897
 Mesh:
   m_ObjectHideFlags: 0
@@ -22992,12 +23005,12 @@ PrefabInstance:
     - target: {fileID: 4952686711498647346, guid: c542365fb8fec314d94bd786b1e50330,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000029437603
+      value: 0.0000000013547116
       objectReference: {fileID: 0}
     - target: {fileID: 4952686711498647346, guid: c542365fb8fec314d94bd786b1e50330,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000020918934
+      value: 0.000000020755031
       objectReference: {fileID: 0}
     - target: {fileID: 4952686711498647346, guid: c542365fb8fec314d94bd786b1e50330,
         type: 3}
@@ -24434,12 +24447,12 @@ PrefabInstance:
     - target: {fileID: 8181313015511473640, guid: afa4c377cf295dc44833b0a70568ca58,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000029437603
+      value: 0.0000000013547116
       objectReference: {fileID: 0}
     - target: {fileID: 8181313015511473640, guid: afa4c377cf295dc44833b0a70568ca58,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000020918934
+      value: 0.000000020755031
       objectReference: {fileID: 0}
     - target: {fileID: 8181313015511473640, guid: afa4c377cf295dc44833b0a70568ca58,
         type: 3}
