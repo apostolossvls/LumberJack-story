@@ -31,9 +31,10 @@ public class PauseMenuManager : MonoBehaviour
     public bool[] AudioMute = new bool[1];
     //gameplay
     [Header("Gameplay")]
+    public Toggle[] gameplayToggles;
     public bool showInteractIndicator;
-    public bool showHintIndicator;
     public bool showDogVision;
+    public bool showHintIndicator;
     //controls
     [Header("Controls")]
     static float myTimeScale;
@@ -76,7 +77,6 @@ public class PauseMenuManager : MonoBehaviour
     public void Unpause(){
         onPause = false;
         Instance.menuParent.gameObject.SetActive(false);
-        SaveOptions();
         Time.timeScale = myTimeScale;
         /*if (SceneManager.GetActiveScene().buildIndex==1){
             //if (previousGameState!=0) h.GameState=previousGameState;
@@ -102,59 +102,35 @@ public class PauseMenuManager : MonoBehaviour
         AudioManager.instance.Play("MenuClick");
     }
 
-    public void SaveOptions(){
-        //GameObject.Find("GameData").GetComponent<GameData>().SaveGameDataOptions(this);
-    }
-
-    /*public void LoadOptions(GameData gd){
-        QualitySettings.SetQualityLevel(gd.OptionsQualityIndex, true);
-        //Debug.Log("options quality: "+gd.OptionsQualityIndex+" level: "+QualitySettings.names[gd.OptionsQualityIndex]);
-        isShowFPS=gd.OptionsShowFPS;
-        isShowKickButton=gd.OptionsShowKickButton;
-        toggles[0].isOn = gd.OptionsShowFPS;
-        toggles[1].isOn = gd.OptionsShowTutorialCircle;
-        toggles[2].isOn = gd.OptionsShowKickButton;
-        dropdowns[0].value = QualitySettings.names.Length-1 - gd.OptionsQualityIndex;
-        sliders[0].value = gd.OptionsaccelerationSqrMagnitude;
-        if (gd.OptionsVolumes.Length>=6) Volumes = gd.OptionsVolumes;
-        //AudioMute = gd.OptionsAudioMutes;
-        for (int i = 1; i < 8; i++)
-        {
-            if (Volumes.Length>=i){
-                float v = Volumes[i-1];
-                if (v<0) v/=4f;
-                Volumes[i-1] = v;
-                sliders[i].value = Volumes[i-1];
-            }
-        }
-        for (int i = 3; i < 3+gd.OptionsAudioMutes.Length; i++)
-        {
-            AudioMute[i-3] = gd.OptionsAudioMutes[i-3];
-            toggles[i].isOn = AudioMute[i-3];
-            SetMasterAudioMute();
-        }
-        if (SceneManager.GetActiveScene().buildIndex!=0){
-            h.ShowTutorialCircle = gd.OptionsShowTutorialCircle;
-            KickButton.SetActive(gd.OptionsShowKickButton);
-            FPStext.SetActive(gd.OptionsShowFPS);
-        }
-    }
-    */
-
-    public void ChangeQuality(TMP_Dropdown dr){
-        qualityIndex = dr.value;
+    //Quality
+    void ChangeQuality(){
         QualitySettings.SetQualityLevel(QualitySettings.names.Length-1 - qualityIndex, true);
-        AudioManager.instance.Play("MenuClick");
         //Debug.Log(QualitySettings.GetQualityLevel().ToString());
         //Debug.Log(QualitySettings.names[QualitySettings.GetQualityLevel()].ToString());
     }
-    
-    public void ShowFPS (Toggle tog){
-        isShowFPS=tog.isOn;
-        FPStext.SetActive(isShowFPS);
+    public void ChangeQualityDropDown(TMP_Dropdown dr){
+        qualityIndex = dr.value;
+        ChangeQuality();
         AudioManager.instance.Play("MenuClick");
     }
+    void ChangeQualityDropDown(){
+        graphicsdropdowns[0].value = qualityIndex;
+    }
+    
+    void ShowFPS (){
+        FPStext.SetActive(isShowFPS);
+    }
+    public void ShowFPSToggle (Toggle t){
+        isShowFPS = t.isOn;
+        ShowFPS();
+        AudioManager.instance.Play("MenuClick");
+    }
+    void ShowFPSToggle (){
+        graphicsToggles[0].isOn = isShowFPS;
+    }
+    //end Quality
 
+    //Audio
     public void SetVolume (Slider s){
         for (int i = 0; i < audioSliders.Length; i++)
         {
@@ -185,9 +161,29 @@ public class PauseMenuManager : MonoBehaviour
         AudioManager.instance.Play("MenuClick");
     }
 
-    public void ExitToMainMenu(int index){
-        LevelSettings.LoadSceneIndex(index);
-        Debug.Log("Exit");
+    public void VolumeAllConfig (){
+        for (int i = 0; i < Volumes.Length; i++)
+        {
+            if (!AudioMute[i]) {
+                audioMixer.SetFloat(audioSliders[i].name, Volumes[i]);
+                audioSliders[i].value = Volumes[i];
+            }
+        }
+    }
+
+    public void AudioMuteAllConfig (){
+        for (int i = 0; i < audioToggles.Length; i++)
+        {
+            if (AudioMute[i]){
+                audioMixer.SetFloat(audioToggles[i].name, -80);
+            }
+            else
+            {
+                audioMixer.SetFloat(audioToggles[i].name, Volumes[AudioToggleToSlider(audioToggles[i])]);
+            }
+            audioToggles[i].isOn = !AudioMute[i];
+        }
+        AudioManager.instance.Play("MenuClick");
     }
 
     int AudioToggleToSlider(Toggle t){
@@ -197,26 +193,57 @@ public class PauseMenuManager : MonoBehaviour
         }
         return -1;
     }
+    //end Audio
 
     //Gameplay
-    public void InteractIndicatorToggle(Toggle t){
+    void InteractIndicator(){
         foreach (InteractIndicator ind in Object.FindObjectsOfType<InteractIndicator>())
         {
-            ind.active = t.isOn;
+            ind.active = showInteractIndicator;
             ind.IsActive();
         }
     }
-
-    public void DogPPVolume(Toggle t){
-        GameObject.FindGameObjectWithTag("PlayerDog").GetComponentInChildren<UnityEngine.Rendering.PostProcessing.PostProcessVolume>(true).gameObject.SetActive(t.isOn);
+    public void InteractIndicatorToggle(Toggle t){
+        showInteractIndicator = t.isOn;
+        InteractIndicator();
+        AudioManager.instance.Play("MenuClick");
+    }
+    void InteractIndicatorSetToggle(){
+        gameplayToggles[0].isOn = showInteractIndicator;
     }
 
-    public void ShowHint(Toggle t){
+    void DogPPVolume(){
+        GameObject.FindGameObjectWithTag("PlayerDog").GetComponentInChildren<UnityEngine.Rendering.PostProcessing.PostProcessVolume>(true).gameObject.SetActive(showDogVision);
+    }
+    public void DogPPVolumeToggle(Toggle t){
+        showDogVision = t.isOn;
+        DogPPVolume();
+        AudioManager.instance.Play("MenuClick");
+    }
+    void DogPPVolumeSetToggle(){
+        gameplayToggles[1].isOn = showDogVision;
+    }
+
+    void ShowHint(){
         foreach (InteractIndicator ind in Object.FindObjectsOfType<InteractIndicator>())
         {
-            ind.showHint = t.isOn;
-            if (!t.isOn) ind.DisplayHint(false);
+            ind.showHint = showHintIndicator;
+            if (!showHintIndicator) ind.DisplayHint(false);
         }
+    }
+    public void ShowHintToggle(Toggle t){
+        showHintIndicator = t.isOn;
+        ShowHint();
+        AudioManager.instance.Play("MenuClick");
+    }
+    void ShowHintSetToggle(){
+        gameplayToggles[2].isOn = showHintIndicator;
+    }
+    //end Gameplay
+
+    public void ExitToMainMenu(int index){
+        LevelSettings.LoadSceneIndex(index);
+        Debug.Log("Exit");
     }
 
     public void OnSliderBeginDrag(){
@@ -230,14 +257,26 @@ public class PauseMenuManager : MonoBehaviour
         //Audio
         AudioMute = data.audioMutes;
         Volumes = data.audioVolumes;
+        VolumeAllConfig();
+        AudioMuteAllConfig();
 
         //Quality
         qualityIndex = data.qualityIndex;
         isShowFPS = data.qualityShowFPS;
+        ChangeQuality();
+        ChangeQualityDropDown();
+        ShowFPS();
+        ShowFPSToggle();
 
         //Gameplay
         showInteractIndicator = data.gameplayShowInteractIndicator;
         showHintIndicator = data.gameplayShowHintIndicator;
         showDogVision = data.gameplayShowDogVision;
+        InteractIndicator();
+        DogPPVolume();
+        ShowHint();
+        InteractIndicatorSetToggle();
+        DogPPVolumeSetToggle();
+        ShowHintSetToggle();
     }
 }

@@ -54,8 +54,10 @@ public class SaveManager : MonoBehaviour
 
     public void Load(){
         GameData data = LoadFile();
-
-        SetValues(data);
+        
+        if (data != null) {
+            SetValues(data);
+        }
     }
 
     public void SetValues(GameData data){
@@ -86,7 +88,7 @@ public class SaveManager : MonoBehaviour
         if(File.Exists(destination)) file = File.OpenRead(destination);
         else
         {
-            Debug.LogError("File not found");
+            Debug.LogWarning("File not found");
             return null;
         }
 
