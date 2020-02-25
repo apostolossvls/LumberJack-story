@@ -30,6 +30,7 @@ public class SaveManager : MonoBehaviour
     {
         m_Path = Application.dataPath;
         Debug.Log("dataPath : " + m_Path);
+        Load();
     }
 
     void Update(){

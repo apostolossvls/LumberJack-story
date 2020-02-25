@@ -7,8 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
-{
-    public static PauseMenuManager Instance;
+{    public static PauseMenuManager Instance;
     //public AudioManager audioManager;
     //public int previousGameState=0;
     public GameObject menuParent;
@@ -69,6 +68,7 @@ public class PauseMenuManager : MonoBehaviour
         onPause = true;
         myTimeScale = Time.timeScale;
         Time.timeScale = 0f;
+        SaveManager.instance.Load();
         Instance.menuParent.gameObject.SetActive(true);
         Instance.ResetButtonAndPlanes();
         AudioManager.instance.Play("MenuClick");
@@ -76,6 +76,7 @@ public class PauseMenuManager : MonoBehaviour
     
     public void Unpause(){
         onPause = false;
+        SaveManager.instance.Save();
         Instance.menuParent.gameObject.SetActive(false);
         Time.timeScale = myTimeScale;
         /*if (SceneManager.GetActiveScene().buildIndex==1){
@@ -166,8 +167,10 @@ public class PauseMenuManager : MonoBehaviour
         {
             if (!AudioMute[i]) {
                 audioMixer.SetFloat(audioSliders[i].name, Volumes[i]);
-                audioSliders[i].value = Volumes[i];
             }
+            float v = Volumes[i];
+            if (v<0) v/=4f;
+            audioSliders[i].value = v;
         }
     }
 

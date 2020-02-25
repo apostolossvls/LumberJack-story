@@ -48,6 +48,7 @@ public class LevelSettings : MonoBehaviour
     private static IEnumerator LoadSceneIndexCoroutine(int index, bool resetCheckpoint=true){
         if (!loadingScene){
             loadingScene=true;
+            SaveManager.instance.Save();
             AsyncOperation async = SceneManager.LoadSceneAsync(index);
             while (!async.isDone){
                 //do loop on loading
@@ -56,6 +57,11 @@ public class LevelSettings : MonoBehaviour
             if (resetCheckpoint && instance.checkpoint) Destroy(instance.checkpoint);
             else instance.SetupOnCheckpoint();
         }
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveManager.instance.Save();
     }
 
     public void SetCheckpoint(GameObject g){
