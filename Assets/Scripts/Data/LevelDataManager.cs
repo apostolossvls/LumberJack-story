@@ -6,6 +6,7 @@ public class LevelDataManager : MonoBehaviour
 {
     public static LevelDataManager instance;
     public LevelData[] levelDatas;
+    public int levelIndex;
 
     void Awake()
     {
@@ -57,6 +58,17 @@ public class LevelDataManager : MonoBehaviour
             //levelDatas[i].cleared = clears[i]; 
         }
         levelDatas = list.ToArray();
-        Debug.Log("Length: "+levelDatas.Length);
+        //Debug.Log("Length: "+levelDatas.Length);
+    }
+
+    public void LevelCompleted(){
+        if (levelIndex != -1) {
+            for (int i = 0; i < levelDatas.Length; i++)
+            {
+                if (levelDatas[i].buildIndex == levelIndex){
+                    levelDatas[i].cleared = true;
+                }
+            }
+        }
     }
 }

@@ -7,12 +7,20 @@ public class ExitSceneCollider : MonoBehaviour
     public int SceneIndex;
     public string[] tags;
     public string[] layers;
+    public bool isGoal = true;
 
     void OnTriggerEnter(Collider other)
     {
         if ((TagMatch(other.transform.tag) || LayerMatch(LayerMask.LayerToName(other.gameObject.layer)))){
-            LevelSettings.LoadSceneIndex(SceneIndex);
+            Goal();
         }
+    }
+
+    public void Goal(){
+        if (isGoal){
+            LevelDataManager.instance.LevelCompleted();
+        }
+        LevelSettings.LoadSceneIndex(SceneIndex);
     }
 
     bool TagMatch (string s){

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class MainMenuManager : MonoBehaviour
     public int pointer=0;
     public Transform[] canvas; //start=0 , levels=1
     public Transform optionCanvas;
+    public Button[] levelButtons;
     void Awake(){
         if (Instance!=null && Instance!=this){
             Destroy(this.gameObject);
@@ -26,6 +28,7 @@ public class MainMenuManager : MonoBehaviour
     public void GoToPanel(int index){
         pointer = index;
         target.SetPositionAndRotation(canvas[pointer].position, canvas[pointer].rotation);
+        AudioManager.instance.Play("MenuClick");
     }
 
     public void GoToOptions(){
@@ -35,6 +38,7 @@ public class MainMenuManager : MonoBehaviour
             pointer = 2;
             target.SetPositionAndRotation(optionCanvas.position, optionCanvas.rotation);
         }
+        AudioManager.instance.Play("MenuClick");
     }
     public void LeaveOptions(int index){
         if (PauseMenuManager.instance){
@@ -43,9 +47,28 @@ public class MainMenuManager : MonoBehaviour
             pointer = index;
             target.SetPositionAndRotation(canvas[pointer].position, canvas[pointer].rotation);
         }
+        AudioManager.instance.Play("MenuClick");
     }
 
-    public void LoadScene(int index){
+    public void SetLevelInfo(){
+        for (int i = 0; i < levelButtons.Length; i++)
+        {
+            LevelData level = LevelDataManager.instance.levelDatas[i];
+            levelButtons[i].GetComponentInChildren<Toggle>().isOn = level.cleared;
+        }
+    }
+
+    public void LoadLevel(int pointer){
+        int index = -1;
+        for (int i = 0; i < LevelDataManager.instance.levelDatas.Length; i++)
+        {
+            if (LevelDataManager.instance.levelDatas[i].buildIndex == pointer){
+                index = LevelDataManager.instance.levelDatas[i].buildIndex;
+            }
+        }
+
+        LevelDataManager.instance.levelIndex = index;
+
         SceneManager.LoadSceneAsync(index);
     }
 

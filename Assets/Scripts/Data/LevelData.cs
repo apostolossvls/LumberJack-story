@@ -14,6 +14,6 @@ public class LevelData
         buildIndex = index;
         buildName = SceneManager.GetSceneByBuildIndex(buildIndex).name;
         cleared = clear;
-        Debug.Log("buildName: "+buildName+" - buildIndex: "+buildIndex+" - cleared: "+cleared);
+        //Debug.Log("buildName: "+buildName+" - buildIndex: "+buildIndex+" - cleared: "+cleared);
     }
 }
