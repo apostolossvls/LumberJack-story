@@ -9,7 +9,6 @@ public class SaveManager : MonoBehaviour
     public static SaveManager instance;
     [HideInInspector] public string m_Path;
     public LevelDataManager levelDataManager;
-    public PauseMenuManager pauseMenuManager;
     public bool InspectorTriggerSave;
     public bool InspectorTriggerLoad;
     public bool InspectorTriggerLevel;
@@ -49,7 +48,7 @@ public class SaveManager : MonoBehaviour
     }
 
     public void Save(){
-        GameData data = new GameData(levelDataManager, pauseMenuManager);
+        GameData data = new GameData(LevelDataManager.instance, PauseMenuManager.instance);
         SaveFile(data);
     }
 
@@ -65,7 +64,7 @@ public class SaveManager : MonoBehaviour
         //level
         LevelDataManager.instance.SetLevelsAll(data.levelIndexes, data.levelCleared);
         //pauseMenu
-        pauseMenuManager.SetAll(data);
+        if (PauseMenuManager.instance) PauseMenuManager.instance.SetAll(data);
     }
 
     void SaveFile(GameData data)

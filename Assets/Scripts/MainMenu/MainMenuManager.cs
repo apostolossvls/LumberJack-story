@@ -7,8 +7,9 @@ public class MainMenuManager : MonoBehaviour
 {
     public static MainMenuManager Instance;
     public Transform target;
-    public Transform startPanelTransform;
-    public Transform scenePanelTransform;
+    public int pointer=0;
+    public Transform[] canvas; //start=0 , levels=1
+    public Transform optionCanvas;
     void Awake(){
         if (Instance!=null && Instance!=this){
             Destroy(this.gameObject);
@@ -18,12 +19,30 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    public void GoToStart(){
-        target.SetPositionAndRotation(startPanelTransform.position, startPanelTransform.rotation);
+    void Start(){
+        pointer = 0;
     }
 
-    public void GoToScenePanel(){
-        target.SetPositionAndRotation(scenePanelTransform.position, scenePanelTransform.rotation);
+    public void GoToPanel(int index){
+        pointer = index;
+        target.SetPositionAndRotation(canvas[pointer].position, canvas[pointer].rotation);
+    }
+
+    public void GoToOptions(){
+        if (PauseMenuManager.instance){
+            PauseMenuManager.instance.MainMenuSetup();
+
+            pointer = 2;
+            target.SetPositionAndRotation(optionCanvas.position, optionCanvas.rotation);
+        }
+    }
+    public void LeaveOptions(int index){
+        if (PauseMenuManager.instance){
+            SaveManager.instance.Save();
+
+            pointer = index;
+            target.SetPositionAndRotation(canvas[pointer].position, canvas[pointer].rotation);
+        }
     }
 
     public void LoadScene(int index){

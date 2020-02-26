@@ -7,9 +7,9 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
-{    public static PauseMenuManager Instance;
-    //public AudioManager audioManager;
-    //public int previousGameState=0;
+{    
+    public static PauseMenuManager instance;
+    public bool onMainMenu = false;
     public GameObject menuParent;
     public Button[] menuButtons;
     public GameObject[] planes;
@@ -40,17 +40,17 @@ public class PauseMenuManager : MonoBehaviour
     static bool onPause;
 
     void Awake(){
-        if (Instance!=null && Instance!=this){
+        if (instance!=null && instance!=this){
             Destroy(this.gameObject);
         }
         else {
-            Instance = this;
+            instance = this;
         }
         onPause = false;
     }
 
     void Update (){
-        if (Input.GetButtonUp("Pause")){
+        if (Input.GetButtonUp("Pause") && !onMainMenu){
             if (onPause) Unpause();
             else Pause();
         }
@@ -69,15 +69,20 @@ public class PauseMenuManager : MonoBehaviour
         myTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         SaveManager.instance.Load();
-        Instance.menuParent.gameObject.SetActive(true);
-        Instance.ResetButtonAndPlanes();
+        instance.menuParent.gameObject.SetActive(true);
+        instance.ResetButtonAndPlanes();
         AudioManager.instance.Play("MenuClick");
+    }
+
+    public void MainMenuSetup(){
+        SaveManager.instance.Load();
+        instance.ResetButtonAndPlanes();
     }
     
     public void Unpause(){
         onPause = false;
         SaveManager.instance.Save();
-        Instance.menuParent.gameObject.SetActive(false);
+        instance.menuParent.gameObject.SetActive(false);
         Time.timeScale = myTimeScale;
         /*if (SceneManager.GetActiveScene().buildIndex==1){
             //if (previousGameState!=0) h.GameState=previousGameState;
@@ -119,7 +124,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     
     void ShowFPS (){
-        FPStext.SetActive(isShowFPS);
+        if (FPStext) FPStext.SetActive(isShowFPS);
     }
     public void ShowFPSToggle (Toggle t){
         isShowFPS = t.isOn;
@@ -186,7 +191,6 @@ public class PauseMenuManager : MonoBehaviour
             }
             audioToggles[i].isOn = !AudioMute[i];
         }
-        AudioManager.instance.Play("MenuClick");
     }
 
     int AudioToggleToSlider(Toggle t){
@@ -208,7 +212,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     public void InteractIndicatorToggle(Toggle t){
         showInteractIndicator = t.isOn;
-        InteractIndicator();
+        if (!onMainMenu) InteractIndicator();
         AudioManager.instance.Play("MenuClick");
     }
     void InteractIndicatorSetToggle(){
@@ -220,7 +224,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     public void DogPPVolumeToggle(Toggle t){
         showDogVision = t.isOn;
-        DogPPVolume();
+        if (!onMainMenu) DogPPVolume();
         AudioManager.instance.Play("MenuClick");
     }
     void DogPPVolumeSetToggle(){
@@ -236,7 +240,7 @@ public class PauseMenuManager : MonoBehaviour
     }
     public void ShowHintToggle(Toggle t){
         showHintIndicator = t.isOn;
-        ShowHint();
+        if (!onMainMenu) ShowHint();
         AudioManager.instance.Play("MenuClick");
     }
     void ShowHintSetToggle(){
@@ -275,9 +279,11 @@ public class PauseMenuManager : MonoBehaviour
         showInteractIndicator = data.gameplayShowInteractIndicator;
         showHintIndicator = data.gameplayShowHintIndicator;
         showDogVision = data.gameplayShowDogVision;
-        InteractIndicator();
-        DogPPVolume();
-        ShowHint();
+        if (!onMainMenu){
+            InteractIndicator();
+            DogPPVolume();
+            ShowHint();
+        }
         InteractIndicatorSetToggle();
         DogPPVolumeSetToggle();
         ShowHintSetToggle();
