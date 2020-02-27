@@ -1855,6 +1855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c8c860f55937c7498ade29ba8f86dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onMainMenu: 0
   menuParent: {fileID: 3218844909020193266}
   menuButtons:
   - {fileID: 3218844907157333658}
@@ -1904,9 +1905,9 @@ MonoBehaviour:
   - {fileID: 3218844907351809232}
   - {fileID: 2758066964762839735}
   - {fileID: 9162651134930983734}
-  showInteractIndicator: 0
-  showDogVision: 0
-  showHintIndicator: 0
+  showInteractIndicator: 1
+  showDogVision: 1
+  showHintIndicator: 1
 --- !u!1 &2221632504262615557
 GameObject:
   m_ObjectHideFlags: 0
@@ -3910,6 +3911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3218844907351809233}
   - component: {fileID: 3218844907351809232}
+  - component: {fileID: 6793633311592218683}
   m_Layer: 5
   m_Name: InteractIndicatorToggle
   m_TagString: Untagged
@@ -3984,19 +3986,36 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2195348012441491190}
-        m_MethodName: InteractIndicatorToggle
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 3218844907351809232}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 1
+--- !u!114 &6793633311592218683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218844907351809234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2195348012441491190}
+          m_MethodName: InteractIndicatorToggle
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 3218844907351809232}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3218844907484966171
 GameObject:
   m_ObjectHideFlags: 0
@@ -4217,7 +4236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -6437,7 +6456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3218844908439521809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7841,7 +7860,18 @@ MonoBehaviour:
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2195348012441491190}
+        m_MethodName: ChangeQualityDropDown
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3218844907542180264}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Dropdown, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3218844909020193266
 GameObject:
   m_ObjectHideFlags: 0
@@ -8589,6 +8619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646816472341422349}
   - component: {fileID: 9162651134930983734}
+  - component: {fileID: 1710282102659782530}
   m_Layer: 5
   m_Name: ShowHintToggle
   m_TagString: Untagged
@@ -8662,19 +8693,36 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2195348012441491190}
-        m_MethodName: ShowHintToggle
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 9162651134930983734}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 1
+--- !u!114 &1710282102659782530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4323199485975690057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2195348012441491190}
+          m_MethodName: ShowHintToggle
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 9162651134930983734}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4414097406880160080
 GameObject:
   m_ObjectHideFlags: 0
@@ -10171,6 +10219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4544193852450195979}
   - component: {fileID: 2758066964762839735}
+  - component: {fileID: 2628257466358846529}
   m_Layer: 5
   m_Name: DogPostProcessingVolumeToggle
   m_TagString: Untagged
@@ -10244,19 +10293,36 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2195348012441491190}
-        m_MethodName: DogPPVolumeToggle
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2758066964762839735}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_IsOn: 1
+--- !u!114 &2628257466358846529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6331955109431777740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2195348012441491190}
+          m_MethodName: DogPPVolumeToggle
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2758066964762839735}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6348222288480377198
 GameObject:
   m_ObjectHideFlags: 0

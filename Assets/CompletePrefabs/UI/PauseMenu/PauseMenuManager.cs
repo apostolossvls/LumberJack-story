@@ -38,6 +38,7 @@ public class PauseMenuManager : MonoBehaviour
     [Header("Controls")]
     static float myTimeScale;
     static bool onPause;
+    static bool loading;
 
     void Awake(){
         if (instance!=null && instance!=this){
@@ -47,6 +48,8 @@ public class PauseMenuManager : MonoBehaviour
             instance = this;
         }
         onPause = false;
+        loading = false;
+        SaveManager.instance.Load();
     }
 
     void Update (){
@@ -71,7 +74,7 @@ public class PauseMenuManager : MonoBehaviour
         SaveManager.instance.Load();
         instance.menuParent.gameObject.SetActive(true);
         instance.ResetButtonAndPlanes();
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
     public void MainMenuSetup(){
@@ -90,7 +93,7 @@ public class PauseMenuManager : MonoBehaviour
             //h.LightsParent.GetComponent<Animator>().speed=1;
             //h.ChangeGameStateOnEnemies();
         }*/
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
     public void ShowPlane(int index){
@@ -105,7 +108,7 @@ public class PauseMenuManager : MonoBehaviour
                 planes[i].SetActive(false);
             }
         }
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
     //Quality
@@ -117,7 +120,7 @@ public class PauseMenuManager : MonoBehaviour
     public void ChangeQualityDropDown(TMP_Dropdown dr){
         qualityIndex = dr.value;
         ChangeQuality();
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
     void ChangeQualityDropDown(){
         graphicsdropdowns[0].value = qualityIndex;
@@ -129,7 +132,7 @@ public class PauseMenuManager : MonoBehaviour
     public void ShowFPSToggle (Toggle t){
         isShowFPS = t.isOn;
         ShowFPS();
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
     void ShowFPSToggle (){
         graphicsToggles[0].isOn = isShowFPS;
@@ -164,7 +167,7 @@ public class PauseMenuManager : MonoBehaviour
                 break;
             }
         }
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
     public void VolumeAllConfig (){
@@ -213,7 +216,7 @@ public class PauseMenuManager : MonoBehaviour
     public void InteractIndicatorToggle(Toggle t){
         showInteractIndicator = t.isOn;
         if (!onMainMenu) InteractIndicator();
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
     void InteractIndicatorSetToggle(){
         gameplayToggles[0].isOn = showInteractIndicator;
@@ -225,7 +228,7 @@ public class PauseMenuManager : MonoBehaviour
     public void DogPPVolumeToggle(Toggle t){
         showDogVision = t.isOn;
         if (!onMainMenu) DogPPVolume();
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
     void DogPPVolumeSetToggle(){
         gameplayToggles[1].isOn = showDogVision;
@@ -241,7 +244,7 @@ public class PauseMenuManager : MonoBehaviour
     public void ShowHintToggle(Toggle t){
         showHintIndicator = t.isOn;
         if (!onMainMenu) ShowHint();
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
     void ShowHintSetToggle(){
         gameplayToggles[2].isOn = showHintIndicator;
@@ -254,13 +257,15 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     public void OnSliderBeginDrag(){
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
     public void OnSliderdEndDrag(){
-        AudioManager.instance.Play("MenuClick");
+        if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
     public void SetAll(GameData data){
+        loading = true;
+
         //Audio
         AudioMute = data.audioMutes;
         Volumes = data.audioVolumes;
@@ -287,5 +292,7 @@ public class PauseMenuManager : MonoBehaviour
         InteractIndicatorSetToggle();
         DogPPVolumeSetToggle();
         ShowHintSetToggle();
+
+        loading = false;
     }
 }
