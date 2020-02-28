@@ -26,7 +26,7 @@ public class Health : MonoBehaviour
     void Die(){
         if (tag=="PlayerHuman" || tag=="PlayerDog")
         {
-            LevelSettings.RestartScene();
+            LevelSettings.RestartScene(true, tag=="PlayerHuman"? true:false, tag=="PlayerDog"? true:false);
         }
         else {
             Debug.Log(gameObject+" died");

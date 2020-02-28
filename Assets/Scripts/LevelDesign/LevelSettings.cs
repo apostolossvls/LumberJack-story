@@ -14,6 +14,10 @@ public class LevelSettings : MonoBehaviour
     public float mainZLineInspector=0;
     public float secondZLineInspector=-1;
     public GameObject checkpoint;
+    //stats
+    public int HumanDeaths = 0;
+    public int DogDeaths = 0;
+    
 
     //scene
     static bool loadingScene;
@@ -26,11 +30,20 @@ public class LevelSettings : MonoBehaviour
         }
         else Destroy(gameObject);
         loadingScene = false;
+        restartLoading = false;
         mainZLine = mainZLineInspector;
         secondZLine = secondZLineInspector;
+        Debug.Log("LevelsettingsAwake");
     }
 
-    public static void RestartScene(bool OnCheckpoint=true){
+    bool restartLoading = false;
+    public static void RestartScene(bool OnCheckpoint=true, bool HumanDeathCounter=false, bool DogDeathCounter=false){
+        if (instance.restartLoading){
+            return;
+        }
+        instance.restartLoading = true;
+        instance.HumanDeaths += HumanDeathCounter ? 1 : 0;
+        instance.DogDeaths += DogDeathCounter ? 1 : 0;
         if (instance.checkpoint && OnCheckpoint){
             Checkpoint3 c = instance.checkpoint.GetComponent<Checkpoint3>();
             if (c){
@@ -48,6 +61,11 @@ public class LevelSettings : MonoBehaviour
     private static IEnumerator LoadSceneIndexCoroutine(int index, bool resetCheckpoint=true){
         if (!loadingScene){
             loadingScene=true;
+            if (index != SceneManager.GetActiveScene().buildIndex){
+                LevelDataManager.instance.SetLevelInfo(LevelSettings.instance);
+                instance.HumanDeaths = 0;
+                instance.DogDeaths = 0;
+            }
             SaveManager.instance.Save();
             AsyncOperation async = SceneManager.LoadSceneAsync(index);
             while (!async.isDone){
@@ -56,6 +74,7 @@ public class LevelSettings : MonoBehaviour
             }
             if (resetCheckpoint && instance.checkpoint) Destroy(instance.checkpoint);
             else instance.SetupOnCheckpoint();
+            instance.restartLoading = false;
         }
     }
 

@@ -62,7 +62,7 @@ public class SaveManager : MonoBehaviour
 
     public void SetValues(GameData data){
         //level
-        LevelDataManager.instance.SetLevelsAll(data.levelIndexes, data.levelCleared);
+        LevelDataManager.instance.SetLevelsAll(data);
         //pauseMenu
         if (PauseMenuManager.instance) PauseMenuManager.instance.SetAll(data);
     }

@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
     void Awake()
     {
         controls = new InputMaster();
-        controls.Player.Any.performed += ctx => AnyKeyPressed(ctx.action.bindings[0]);
+        //controls.Player.Any.performed += ctx => AnyKeyPressed(ctx.action.bindings[0]);
         controls.Player.Interact.performed += ctx => PressInteract();
 
         /*

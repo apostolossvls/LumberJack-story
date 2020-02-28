@@ -8,6 +8,8 @@ public class GameData
     //level
     public int[] levelIndexes;
     public bool[] levelCleared;
+    public List<int>[] levelHumanDeaths;
+    public List<int>[] levelDogDeaths;
 
     //audio
     public bool[] audioMutes;
@@ -26,6 +28,8 @@ public class GameData
         //level
         levelIndexes = lm.GetLevelsIndexes();
         levelCleared = lm.GetLevelsCleared();
+        levelHumanDeaths = lm.GetLevelsHumanDeaths();
+        levelDogDeaths = lm.GetLevelsDogDeaths();
         //audio
         audioMutes = pm.AudioMute;
         audioVolumes = pm.Volumes;
