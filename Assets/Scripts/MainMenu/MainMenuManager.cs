@@ -12,6 +12,7 @@ public class MainMenuManager : MonoBehaviour
     public Transform[] canvas; //start=0 , levels=1
     public Transform optionCanvas;
     public Button[] levelButtons;
+    public Selectable[] firstSelectables;
     void Awake(){
         if (Instance!=null && Instance!=this){
             Destroy(this.gameObject);
@@ -23,10 +24,12 @@ public class MainMenuManager : MonoBehaviour
 
     void Start(){
         pointer = 0;
+        firstSelectables[0].Select();
     }
 
     public void GoToPanel(int index){
         pointer = index;
+        firstSelectables[index+1].Select();
         target.SetPositionAndRotation(canvas[pointer].position, canvas[pointer].rotation);
         AudioManager.instance.Play("MenuClick");
     }
@@ -45,6 +48,7 @@ public class MainMenuManager : MonoBehaviour
             SaveManager.instance.Save();
 
             pointer = index;
+            firstSelectables[index+1].Select();
             target.SetPositionAndRotation(canvas[pointer].position, canvas[pointer].rotation);
         }
         AudioManager.instance.Play("MenuClick");
