@@ -13,6 +13,7 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject menuParent;
     public Button[] menuButtons;
     public GameObject[] planes;
+    public Selectable FirstSelected;
     //graphics
     [Header("Graphics")]
     public Toggle[] graphicsToggles;
@@ -39,6 +40,7 @@ public class PauseMenuManager : MonoBehaviour
     static float myTimeScale;
     static bool onPause;
     static bool loading;
+    public bool draggingSelectable = false;
 
     void Awake(){
         if (instance!=null && instance!=this){
@@ -74,12 +76,14 @@ public class PauseMenuManager : MonoBehaviour
         SaveManager.instance.Load();
         instance.menuParent.gameObject.SetActive(true);
         instance.ResetButtonAndPlanes();
+        if (instance.FirstSelected) instance.FirstSelected.Select();
         if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
     public void MainMenuSetup(){
         SaveManager.instance.Load();
         instance.ResetButtonAndPlanes();
+        if (instance.FirstSelected) instance.FirstSelected.Select();
     }
     
     public void Unpause(){
@@ -100,11 +104,11 @@ public class PauseMenuManager : MonoBehaviour
         for (int i = 0; i < planes.Length; i++)
         {
             if (i==index){
-                menuButtons[i].interactable = false;
+                //menuButtons[i].interactable = false;
                 planes[i].SetActive(true);
             }
             else {
-                menuButtons[i].interactable = true;
+                //menuButtons[i].interactable = true;
                 planes[i].SetActive(false);
             }
         }
@@ -151,6 +155,7 @@ public class PauseMenuManager : MonoBehaviour
                 break;
             }
         }
+        //if (!loading && !draggingSelectable) AudioManager.instance.Play("MenuClick");
     }
 
     public void SetAudioMute(Toggle t){
@@ -260,6 +265,10 @@ public class PauseMenuManager : MonoBehaviour
         if (!loading) AudioManager.instance.Play("MenuClick");
     }
     public void OnSliderdEndDrag(){
+        if (!loading) AudioManager.instance.Play("MenuClick");
+    }
+
+    public void OnSliderdMove(){
         if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
