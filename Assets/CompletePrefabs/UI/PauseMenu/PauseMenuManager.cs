@@ -39,6 +39,7 @@ public class PauseMenuManager : MonoBehaviour
     //controls
     [Header("Controls")]
     public Toggle[] controlsToggles;
+    public GameObject controlBarrier;
     public string[] controlsPaths;
     static float myTimeScale;
     static bool onPause;
@@ -73,6 +74,7 @@ public class PauseMenuManager : MonoBehaviour
             planes[i].SetActive(false);
             menuButtons[i].interactable = true;
         }
+        controlBarrier.SetActive(false);
     }
 
     public static void Pause(){
@@ -264,9 +266,12 @@ public class PauseMenuManager : MonoBehaviour
 
     //Controls
     public void SetInputPath(){
-        
+        //gamedata
     }
     public void SetInputPathToggle(Toggle t){
+        StartCoroutine(SetInputPathToggleIEnumerator(t));
+    }
+    IEnumerator SetInputPathToggleIEnumerator(Toggle t){
         InputAction action = null;
         InputMaster.PlayerActions p = InputManager.controls.Player;
       
@@ -288,11 +293,27 @@ public class PauseMenuManager : MonoBehaviour
                 action = p.Jump;
                 break;
         }
+
         if (!loading) AudioManager.instance.Play("MenuClick");
+
+        
+
         action.Disable();
-        action.PerformInteractiveRebinding().Start();
+        controlBarrier.SetActive(true);
+        InputActionRebindingExtensions.RebindingOperation operation = action.PerformInteractiveRebinding();
+        operation.Start();
+        while (!operation.completed){
+            yield return null;
+        }
+        operation.Dispose();
+        controlBarrier.SetActive(false);
+        t.Select();
         action.Enable();
+
+        t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = action.bindings[0].effectivePath;
         Debug.Log("Action:" +action.name+" , "+action.bindings[0].effectivePath);
+
+        yield return null;
     }
     //end Controls
 
