@@ -49,8 +49,11 @@ public class PauseMenuManager : MonoBehaviour
         else {
             instance = this;
         }
-        onPause = false;
         loading = false;
+    }
+
+    void Start () {
+        onPause = false;
         SaveManager.instance.Load();
     }
 
@@ -257,6 +260,7 @@ public class PauseMenuManager : MonoBehaviour
     //end Gameplay
 
     public void ExitToMainMenu(int index){
+        SaveManager.instance.Save();
         LevelSettings.LoadSceneIndex(index);
         Debug.Log("Exit");
     }

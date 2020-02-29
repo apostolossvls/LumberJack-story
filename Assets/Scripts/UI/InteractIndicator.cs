@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractIndicator : MonoBehaviour
 {
@@ -47,16 +48,32 @@ public class InteractIndicator : MonoBehaviour
     public void DisplayHint(bool b = true){
         hint.SetActive(b);
         if (b){
-            string[] temp = Input.GetJoystickNames();
-            if(temp.Length > 0){
-                for(int i =0; i < temp.Length; ++i){
-                    if(!string.IsNullOrEmpty(temp[i])){
-                        hint.GetComponentInChildren<TMPro.TextMeshPro>().text = gamepadString;
-                    }
-                    else {
-                        hint.GetComponentInChildren<TMPro.TextMeshPro>().text = keyboardString;
-                    }
-                }
+            if (Input.GetJoystickNames().Length > 0){
+
+            }
+            /*
+            var gamepad = Gamepad.current;
+            if(gamepad.device.enabled){
+                hint.GetComponentInChildren<TMPro.TextMeshPro>().text = gamepadString;
+            }
+            else {
+                hint.GetComponentInChildren<TMPro.TextMeshPro>().text = keyboardString;
+            }
+            Debug.Log("Gamepad: "+gamepad.name);
+            */
+            string[] joystickList = Input.GetJoystickNames();
+            Debug.Log("---Joysticks---");
+            bool joystickFlag = false;
+            for (int i = 0; i < joystickList.Length; i++)
+            {
+                if (joystickList[i]!="" && joystickList[i]!=null && joystickList[i]!="vJoy - Virtual Joystick") joystickFlag = true;
+                Debug.Log(i+": "+joystickList[i]);
+            }
+            if (joystickFlag){
+                hint.GetComponentInChildren<TMPro.TextMeshPro>().text = gamepadString;
+            }
+            else {
+                hint.GetComponentInChildren<TMPro.TextMeshPro>().text = keyboardString;
             }
         }
     }
