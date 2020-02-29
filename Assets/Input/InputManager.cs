@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    InputMaster controls;
+    public static InputMaster controls;
 
     void Awake()
     {
-        controls = new InputMaster();
+        if (InputManager.controls==null) controls = new InputMaster();
         //controls.Player.Any.performed += ctx => AnyKeyPressed(ctx.action.bindings[0]);
         controls.Player.Interact.performed += ctx => PressInteract();
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PauseMenuManager : MonoBehaviour
 {    
@@ -37,6 +38,8 @@ public class PauseMenuManager : MonoBehaviour
     public bool showHintIndicator;
     //controls
     [Header("Controls")]
+    public Toggle[] controlsToggles;
+    public string[] controlsPaths;
     static float myTimeScale;
     static bool onPause;
     static bool loading;
@@ -258,6 +261,40 @@ public class PauseMenuManager : MonoBehaviour
         gameplayToggles[2].isOn = showHintIndicator;
     }
     //end Gameplay
+
+    //Controls
+    public void SetInputPath(){
+        
+    }
+    public void SetInputPathToggle(Toggle t){
+        InputAction action = null;
+        InputMaster.PlayerActions p = InputManager.controls.Player;
+      
+        switch (t.gameObject.name)
+        {
+            case "Jump":
+                action = p.Jump;
+                break;
+            case "Action":
+                action = p.Action;
+                break;
+            case "Interact":
+            action = p.Interact;
+                break;
+            case "Release":
+                action = p.Release;
+                break;
+            default:
+                action = p.Jump;
+                break;
+        }
+        if (!loading) AudioManager.instance.Play("MenuClick");
+        action.Disable();
+        action.PerformInteractiveRebinding().Start();
+        action.Enable();
+        Debug.Log("Action:" +action.name+" , "+action.bindings[0].effectivePath);
+    }
+    //end Controls
 
     public void ExitToMainMenu(int index){
         SaveManager.instance.Save();

@@ -59,9 +59,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Any"",
+                    ""name"": ""Any1"",
                     ""type"": ""Button"",
                     ""id"": ""8cb67066-01fa-47e4-879e-8aa50a2ad4d2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Action"",
+                    ""type"": ""Button"",
+                    ""id"": ""7444730d-9387-4af2-b8a9-9cc76c4c2107"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -339,7 +347,18 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
-                    ""action"": ""Any"",
+                    ""action"": ""Any1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f12c3fa2-0faf-4342-a78a-814dee32803c"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -383,7 +402,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Release = m_Player.FindAction("Release", throwIfNotFound: true);
         m_Player_Duck = m_Player.FindAction("Duck", throwIfNotFound: true);
-        m_Player_Any = m_Player.FindAction("Any", throwIfNotFound: true);
+        m_Player_Any1 = m_Player.FindAction("Any1", throwIfNotFound: true);
+        m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -438,7 +458,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Release;
     private readonly InputAction m_Player_Duck;
-    private readonly InputAction m_Player_Any;
+    private readonly InputAction m_Player_Any1;
+    private readonly InputAction m_Player_Action;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -448,7 +469,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Release => m_Wrapper.m_Player_Release;
         public InputAction @Duck => m_Wrapper.m_Player_Duck;
-        public InputAction @Any => m_Wrapper.m_Player_Any;
+        public InputAction @Any1 => m_Wrapper.m_Player_Any1;
+        public InputAction @Action => m_Wrapper.m_Player_Action;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -473,9 +495,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Duck.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDuck;
                 @Duck.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDuck;
                 @Duck.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDuck;
-                @Any.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAny;
-                @Any.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAny;
-                @Any.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAny;
+                @Any1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAny1;
+                @Any1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAny1;
+                @Any1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAny1;
+                @Action.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction;
+                @Action.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction;
+                @Action.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -495,9 +520,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Duck.started += instance.OnDuck;
                 @Duck.performed += instance.OnDuck;
                 @Duck.canceled += instance.OnDuck;
-                @Any.started += instance.OnAny;
-                @Any.performed += instance.OnAny;
-                @Any.canceled += instance.OnAny;
+                @Any1.started += instance.OnAny1;
+                @Any1.performed += instance.OnAny1;
+                @Any1.canceled += instance.OnAny1;
+                @Action.started += instance.OnAction;
+                @Action.performed += instance.OnAction;
+                @Action.canceled += instance.OnAction;
             }
         }
     }
@@ -527,6 +555,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnRelease(InputAction.CallbackContext context);
         void OnDuck(InputAction.CallbackContext context);
-        void OnAny(InputAction.CallbackContext context);
+        void OnAny1(InputAction.CallbackContext context);
+        void OnAction(InputAction.CallbackContext context);
     }
 }

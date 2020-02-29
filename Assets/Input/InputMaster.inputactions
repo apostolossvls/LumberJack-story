@@ -46,9 +46,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Any",
+                    "name": "Any1",
                     "type": "Button",
                     "id": "8cb67066-01fa-47e4-879e-8aa50a2ad4d2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Action",
+                    "type": "Button",
+                    "id": "7444730d-9387-4af2-b8a9-9cc76c4c2107",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -326,7 +334,18 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
-                    "action": "Any",
+                    "action": "Any1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f12c3fa2-0faf-4342-a78a-814dee32803c",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
