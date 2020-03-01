@@ -38,6 +38,8 @@ public class PauseMenuManager : MonoBehaviour
     public bool showHintIndicator;
     //controls
     [Header("Controls")]
+    public GameObject[] controlsPages;
+    public GameObject[] controlsPageIndicator;
     public Toggle[] controlsToggles;
     public GameObject controlBarrier;
     public string[] controlsPaths;
@@ -265,6 +267,14 @@ public class PauseMenuManager : MonoBehaviour
     //end Gameplay
 
     //Controls
+    public void ControlPage(int index){
+        for (int i = 0; i < controlsPages.Length; i++)
+        {
+            controlsPages[i].SetActive(i==index? true:false);
+            controlsPageIndicator[i].SetActive(i==index? true:false);
+        }
+    }
+
     public void SetInputPath(){
         //gamedata
     }
@@ -310,7 +320,10 @@ public class PauseMenuManager : MonoBehaviour
         t.Select();
         action.Enable();
 
-        t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = action.bindings[0].effectivePath;
+        string path = action.bindings[0].effectivePath;
+        path = path.Substring(path.LastIndexOf("/")+1);
+        path = path.ToUpper();
+        t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
         Debug.Log("Action:" +action.name+" , "+action.bindings[0].effectivePath);
 
         yield return null;
