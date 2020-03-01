@@ -348,7 +348,7 @@ public class PauseMenuManager : MonoBehaviour
 
         action.Disable();
         controlBarrier.SetActive(true);
-        InputActionRebindingExtensions.RebindingOperation operation = action.PerformInteractiveRebinding();
+        InputActionRebindingExtensions.RebindingOperation operation = action.PerformInteractiveRebinding().WithBindingGroup(deviceIndex==0? "Keyboard and Mouse" : "Gamepad");
         operation.Start();
         while (!operation.completed){
             yield return null;
@@ -358,12 +358,36 @@ public class PauseMenuManager : MonoBehaviour
         t.Select();
         action.Enable();
 
-        string path = action.bindings[0].effectivePath;
+        List<InputBinding>[] bindings = new List<InputBinding>[2];
+        bindings[0] = new List<InputBinding>{};
+        bindings[1] = new List<InputBinding>{};
+        for (int i = 0; i < action.bindings.Count; i++)
+        {
+            if (action.bindings[i].isComposite) continue;
+            //Debug.Log("groups: "+action.bindings[i].groups);
+            if (action.bindings[i].groups=="Keyboard and Mouse")
+                bindings[0].Add(action.bindings[i]);
+            else if (action.bindings[i].groups=="Gamepad")
+                bindings[1].Add(action.bindings[i]);
+        }
+
+        string path = bindings[deviceIndex][0].effectivePath;
         controlsPaths[deviceIndex,actionIndex] = path;
         path = path.Substring(path.LastIndexOf("/")+1);
         path = path.ToUpper();
         t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
-        Debug.Log("Action:" +action.name+" , "+action.bindings[0].effectivePath);
+        Debug.Log("Action:" +action.name+" , "+bindings[deviceIndex][0].effectivePath);
+        /*
+        for (int j = 0; j < bindings.Length; j++)
+        {
+            Debug.Log("--- device "+j+" ---");
+            for (int i = 0; i < bindings[j].Count; i++)
+            {
+                Debug.Log(bindings[j][i].path +" : "+bindings[j][i].overridePath);
+                
+            }
+        }
+        */
 
         yield return null;
     }

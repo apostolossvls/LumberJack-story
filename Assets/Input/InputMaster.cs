@@ -209,7 +209,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""arrows"",
+                    ""name"": ""LeftStick"",
                     ""id"": ""a41a5e93-a9d7-46bf-b837-138bc5da796c"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
