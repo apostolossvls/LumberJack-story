@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 8340612127198887490}
   - component: {fileID: 6164000124116000046}
   m_Layer: 5
-  m_Name: Action
+  m_Name: Keyboard/Action
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1444,7 +1444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7463655817759177434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2068,7 +2068,7 @@ GameObject:
   - component: {fileID: 7207855507453069812}
   - component: {fileID: 4246265370414026446}
   m_Layer: 5
-  m_Name: Jump
+  m_Name: Controller/Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2975,7 +2975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6550594075124721954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3684,9 +3684,33 @@ MonoBehaviour:
   controlsPageIndicator:
   - {fileID: 5973687389264008660}
   - {fileID: 8084636632331875239}
-  controlsToggles: []
+  controlsTogglesKeyboard:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 5161735914046691830}
+  - {fileID: 6164000124116000046}
+  - {fileID: 8692528198962845037}
+  - {fileID: 1961330266444440781}
+  controlsTogglesGamepad:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 4246265370414026446}
+  - {fileID: 8999615687105975816}
+  - {fileID: 4345727272079135288}
+  - {fileID: 8215449758709653558}
   controlBarrier: {fileID: 490695148449131024}
-  controlsPaths: []
   draggingSelectable: 0
 --- !u!1 &2221632504262615557
 GameObject:
@@ -6093,7 +6117,7 @@ GameObject:
   - component: {fileID: 1218487101134331717}
   - component: {fileID: 8215449758709653558}
   m_Layer: 5
-  m_Name: Release
+  m_Name: Controller/Release
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11138,7 +11162,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1891788205975477459}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.44999996
+  m_Size: 0.44149998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11970,7 +11994,7 @@ GameObject:
   - component: {fileID: 383854165723960941}
   - component: {fileID: 5161735914046691830}
   m_Layer: 5
-  m_Name: Jump
+  m_Name: Keyboard/Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14856,7 +14880,7 @@ GameObject:
   - component: {fileID: 8663251056758136634}
   - component: {fileID: 8999615687105975816}
   m_Layer: 5
-  m_Name: Action
+  m_Name: Controller/Action
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16954,7 +16978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3885699713581496924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18802,7 +18826,7 @@ GameObject:
   - component: {fileID: 8832057856004648381}
   - component: {fileID: 8692528198962845037}
   m_Layer: 5
-  m_Name: Interact
+  m_Name: Keyboard/Interact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19240,7 +19264,7 @@ GameObject:
   - component: {fileID: 4791589166315768095}
   - component: {fileID: 4345727272079135288}
   m_Layer: 5
-  m_Name: Interact
+  m_Name: Controller/Interact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20077,7 +20101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5495622408447335098
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20600,7 +20624,7 @@ GameObject:
   - component: {fileID: 22948788709387065}
   - component: {fileID: 1961330266444440781}
   m_Layer: 5
-  m_Name: Release
+  m_Name: Keyboard/Release
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

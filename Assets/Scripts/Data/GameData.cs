@@ -24,6 +24,9 @@ public class GameData
     public bool gameplayShowHintIndicator;
     public bool gameplayShowDogVision;
 
+    //Controls
+    public string[,] controlsInputPaths;
+
     public GameData(LevelDataManager lm, PauseMenuManager pm) {
         //level
         levelIndexes = lm.GetLevelsIndexes();
@@ -40,5 +43,7 @@ public class GameData
         gameplayShowInteractIndicator = pm.showInteractIndicator;
         gameplayShowHintIndicator = pm.showHintIndicator;
         gameplayShowDogVision = pm.showDogVision;
+        //controls
+        controlsInputPaths = pm.controlsPaths;
     }
 }

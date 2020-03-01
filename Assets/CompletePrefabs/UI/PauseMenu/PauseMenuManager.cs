@@ -40,9 +40,10 @@ public class PauseMenuManager : MonoBehaviour
     [Header("Controls")]
     public GameObject[] controlsPages;
     public GameObject[] controlsPageIndicator;
-    public Toggle[] controlsToggles;
+    public Toggle[] controlsTogglesKeyboard;
+    public Toggle[] controlsTogglesGamepad;
     public GameObject controlBarrier;
-    public string[] controlsPaths;
+    public string[,] controlsPaths = new string[2,32];
     static float myTimeScale;
     static bool onPause;
     static bool loading;
@@ -276,37 +277,74 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     public void SetInputPath(){
-        //gamedata
+        for (int j = 0; j < 2; j++)
+        {
+            Toggle[] group;
+            if (j==0) group = controlsTogglesKeyboard;
+            else group = controlsTogglesGamepad;
+            for (int i = 0; i < controlsTogglesKeyboard.Length; i++)
+            {
+                if (group[i] != null){
+                    string path = controlsPaths[j,i];
+                    if (path!=null && path!="") {
+                        path = path.Substring(path.LastIndexOf("/")+1);
+                        path = path.ToUpper();
+                        group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
+                    }
+                    else group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "";
+                }
+            }
+        }
     }
     public void SetInputPathToggle(Toggle t){
         StartCoroutine(SetInputPathToggleIEnumerator(t));
     }
     IEnumerator SetInputPathToggleIEnumerator(Toggle t){
         InputAction action = null;
+        int deviceIndex = -1;
+        int actionIndex = -1;
         InputMaster.PlayerActions p = InputManager.controls.Player;
-      
-        switch (t.gameObject.name)
-        {
-            case "Jump":
-                action = p.Jump;
-                break;
-            case "Action":
-                action = p.Action;
-                break;
-            case "Interact":
-            action = p.Interact;
-                break;
-            case "Release":
-                action = p.Release;
-                break;
-            default:
-                action = p.Jump;
-                break;
+
+        string[] info = t.gameObject.name.Split('/');
+
+        if (info.Length ==2){
+            switch (info[0])
+            {
+                case "Keyboard":
+                    deviceIndex = 0;
+                    break;
+                case "Controller":
+                    deviceIndex = 1;
+                    break;
+                default:
+                    break;
+            }
+            switch (info[1])
+            {
+                case "Jump":
+                    action = p.Jump;
+                    actionIndex = 8;
+                    break;
+                case "Action":
+                    action = p.Action;
+                    actionIndex = 9;
+                    break;
+                case "Interact":
+                    action = p.Interact;
+                    actionIndex = 10;
+                    break;
+                case "Release":
+                    action = p.Release;
+                    actionIndex = 11;
+                    break;
+                default:
+                    break;
+            }
         }
 
-        if (!loading) AudioManager.instance.Play("MenuClick");
+        if (action == null || deviceIndex == -1 || actionIndex == -1) yield return null;
 
-        
+        if (!loading) AudioManager.instance.Play("MenuClick");    
 
         action.Disable();
         controlBarrier.SetActive(true);
@@ -321,6 +359,7 @@ public class PauseMenuManager : MonoBehaviour
         action.Enable();
 
         string path = action.bindings[0].effectivePath;
+        controlsPaths[deviceIndex,actionIndex] = path;
         path = path.Substring(path.LastIndexOf("/")+1);
         path = path.ToUpper();
         t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
@@ -376,6 +415,10 @@ public class PauseMenuManager : MonoBehaviour
         InteractIndicatorSetToggle();
         DogPPVolumeSetToggle();
         ShowHintSetToggle();
+
+        //Controls
+        controlsPaths = data.controlsInputPaths;
+        SetInputPath();
 
         loading = false;
     }
