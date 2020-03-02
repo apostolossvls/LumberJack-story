@@ -43,7 +43,7 @@ public class PauseMenuManager : MonoBehaviour
     public Toggle[] controlsTogglesKeyboard;
     public Toggle[] controlsTogglesGamepad;
     public GameObject controlBarrier;
-    public string[,] controlsPaths = new string[2,32];
+    public string[,,] controlsPaths = new string[2,32,4];
     static float myTimeScale;
     static bool onPause;
     static bool loading;
@@ -276,22 +276,67 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
-    public void SetInputPath(){
+    public void GetInputPath(){
+        InputMaster.PlayerActions p = InputManager.controls.Player;
+        int deviceIndex = 0;
+        while (deviceIndex < 2){
+            int actionIndex = 0;
+            while (actionIndex < controlsPaths.GetLength(1)){
+                InputAction action = null;
+                InputActionAsset asset = InputManager.controls.asset;
+                switch (asset.actionMaps[actionIndex].name)
+                {
+                    case "Jump":
+                        action = p.Jump;
+                        break;
+                    case "Action":
+                        action = p.Action;
+                        break;
+                    case "Interact":
+                        action = p.Interact;
+                        break;
+                    case "Release":
+                        action = p.Release;
+                        break;
+                    default:
+                        break;
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (action !=null){
+                        if (action.bindings[i] != null){
+                            controlsPaths[deviceIndex,actionIndex,i] = action.bindings[i].overridePath;
+                        }
+                    }
+                }
+                actionIndex++;
+            }
+            deviceIndex++;
+        }
+    }
+
+    public void SetInputPathDisplay(){
         for (int j = 0; j < 2; j++)
         {
             Toggle[] group;
             if (j==0) group = controlsTogglesKeyboard;
             else group = controlsTogglesGamepad;
+            int w = 0;
             for (int i = 0; i < controlsTogglesKeyboard.Length; i++)
             {
-                if (group[i] != null){
-                    string path = controlsPaths[j,i];
+
+                if (group[i+w] != null){
+                    string path = controlsPaths[j,i,w];
                     if (path!=null && path!="") {
                         path = path.Substring(path.LastIndexOf("/")+1);
                         path = path.ToUpper();
                         group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
                     }
                     else group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "";
+                }
+                w++;
+                if (w == controlsPaths.GetLength(1)){
+                    w=0;
                 }
             }
         }
@@ -355,6 +400,12 @@ public class PauseMenuManager : MonoBehaviour
                 case "Right":
                     bindingIndex = 3;
                     break;
+                case "Positive":
+                    bindingIndex = 0;
+                    break;
+                case "Negative":
+                    bindingIndex = 1;
+                    break;
                 case "1":
                     bindingIndex = 0;
                     break;
@@ -400,7 +451,7 @@ public class PauseMenuManager : MonoBehaviour
         }
 
         string path = bindings[deviceIndex][bindingIndex].effectivePath; //vector2
-        controlsPaths[deviceIndex,actionIndex] = path;
+        controlsPaths[deviceIndex, actionIndex,bindingIndex] = path;
         path = path.Substring(path.LastIndexOf("/")+1);
         path = path.ToUpper();
         t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
@@ -470,7 +521,7 @@ public class PauseMenuManager : MonoBehaviour
 
         //Controls
         controlsPaths = data.controlsInputPaths;
-        SetInputPath();
+        SetInputPathDisplay();
 
         loading = false;
     }

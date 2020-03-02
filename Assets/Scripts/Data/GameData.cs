@@ -25,7 +25,7 @@ public class GameData
     public bool gameplayShowDogVision;
 
     //Controls
-    public string[,] controlsInputPaths;
+    public string[,,] controlsInputPaths;
 
     public GameData(LevelDataManager lm, PauseMenuManager pm) {
         //level
