@@ -303,11 +303,12 @@ public class PauseMenuManager : MonoBehaviour
         InputAction action = null;
         int deviceIndex = -1;
         int actionIndex = -1;
+        int bindingIndex = -1;
         InputMaster.PlayerActions p = InputManager.controls.Player;
 
         string[] info = t.gameObject.name.Split('/');
 
-        if (info.Length ==2){
+        if (info.Length > 2){
             switch (info[0])
             {
                 case "Keyboard":
@@ -340,6 +341,30 @@ public class PauseMenuManager : MonoBehaviour
                 default:
                     break;
             }
+            switch (info[2])
+            {
+                case "Up":
+                    bindingIndex = 0;
+                    break;
+                case "Down":
+                    bindingIndex = 1;
+                    break;
+                case "Left":
+                    bindingIndex = 2;
+                    break;
+                case "Right":
+                    bindingIndex = 3;
+                    break;
+                case "1":
+                    bindingIndex = 0;
+                    break;
+                case "2":
+                    bindingIndex = 1;
+                    break;
+                default:
+                    bindingIndex = 1;
+                    break;
+            }
         }
 
         if (action == null || deviceIndex == -1 || actionIndex == -1) yield return null;
@@ -348,7 +373,10 @@ public class PauseMenuManager : MonoBehaviour
 
         action.Disable();
         controlBarrier.SetActive(true);
-        InputActionRebindingExtensions.RebindingOperation operation = action.PerformInteractiveRebinding().WithBindingGroup(deviceIndex==0? "Keyboard and Mouse" : "Gamepad");
+        InputActionRebindingExtensions.RebindingOperation operation = 
+            action.PerformInteractiveRebinding()
+            .WithBindingGroup(deviceIndex==0? "Keyboard and Mouse" : "Gamepad")
+            .WithTargetBinding(bindingIndex);
         operation.Start();
         while (!operation.completed){
             yield return null;
@@ -364,19 +392,19 @@ public class PauseMenuManager : MonoBehaviour
         for (int i = 0; i < action.bindings.Count; i++)
         {
             if (action.bindings[i].isComposite) continue;
-            //Debug.Log("groups: "+action.bindings[i].groups);
+            //Debug.Log("groups: "+action.bindings[i].groups); //vector2
             if (action.bindings[i].groups=="Keyboard and Mouse")
                 bindings[0].Add(action.bindings[i]);
             else if (action.bindings[i].groups=="Gamepad")
                 bindings[1].Add(action.bindings[i]);
         }
 
-        string path = bindings[deviceIndex][0].effectivePath;
+        string path = bindings[deviceIndex][bindingIndex].effectivePath; //vector2
         controlsPaths[deviceIndex,actionIndex] = path;
         path = path.Substring(path.LastIndexOf("/")+1);
         path = path.ToUpper();
         t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
-        Debug.Log("Action:" +action.name+" , "+bindings[deviceIndex][0].effectivePath);
+        Debug.Log("Action:" +action.name+" , "+bindings[deviceIndex][bindingIndex].effectivePath);
         /*
         for (int j = 0; j < bindings.Length; j++)
         {

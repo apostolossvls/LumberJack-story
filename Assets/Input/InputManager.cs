@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
     {
         if (InputManager.controls==null) controls = new InputMaster();
         //controls.Player.Any.performed += ctx => AnyKeyPressed(ctx.action.bindings[0]);
-        controls.Player.Interact.performed += ctx => PressInteract();
+        controls.Player.Interact.performed += ctx => PressInteract(ctx);
 
         /*
         InputSystem.onEvent +=
@@ -73,8 +73,10 @@ public class InputManager : MonoBehaviour
         b.overridePath = s;
     }   
 
-    void PressInteract(){
-        Debug.Log("Interact pressed");
+    void PressInteract(InputAction.CallbackContext context){
+        if (context.performed){
+            Debug.Log("Interact pressed");
+        }
     }
 
     KeyCode FetchKey()
