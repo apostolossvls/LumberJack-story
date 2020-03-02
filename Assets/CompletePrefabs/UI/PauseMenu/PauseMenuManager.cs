@@ -321,22 +321,22 @@ public class PauseMenuManager : MonoBehaviour
             Toggle[] group;
             if (j==0) group = controlsTogglesKeyboard;
             else group = controlsTogglesGamepad;
-            int w = 0;
-            for (int i = 0; i < controlsTogglesKeyboard.Length; i++)
+            int l = j==0? controlsTogglesKeyboard.Length : controlsTogglesGamepad.Length;
+            for (int i = 0; i < l; i=i+4)
             {
-
-                if (group[i+w] != null){
-                    string path = controlsPaths[j,i,w];
-                    if (path!=null && path!="") {
-                        path = path.Substring(path.LastIndexOf("/")+1);
-                        path = path.ToUpper();
-                        group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
+                    for (int w = 0; w < 4; w++)
+                    {
+                    if (group[i+w] != null){
+                        Debug.Log("j: "+j+" , i: "+i+" , w: "+w);
+                        string path = controlsPaths[j,i,w];
+                        Debug.Log("j: "+j+" , i: "+i+" , w: "+w);
+                        if (path!=null && path!="") {
+                            path = path.Substring(path.LastIndexOf("/")+1);
+                            path = path.ToUpper();
+                            group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
+                        }
+                        else group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "";
                     }
-                    else group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "";
-                }
-                w++;
-                if (w == controlsPaths.GetLength(1)){
-                    w=0;
                 }
             }
         }

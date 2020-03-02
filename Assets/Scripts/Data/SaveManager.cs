@@ -50,26 +50,42 @@ public class SaveManager : MonoBehaviour
     public void Save(){
         GameData data = new GameData(LevelDataManager.instance, PauseMenuManager.instance);
         SaveFile(data);
+        SaveJson(InputManager.controls.asset.ToJson());
+        InputManager.controls.asset.ToJson();
     }
 
     public void Load(){
         GameData data = LoadFile();
+        string inputs = LoadJson();
         
         if (data != null) {
-            SetValues(data);
+            SetValues(data, inputs);
         }
     }
 
-    public void SetValues(GameData data){
+    public void SetValues(GameData data, string inputs){
         //level
-        LevelDataManager.instance.SetLevelsAll(data);
+        if (LevelDataManager.instance) LevelDataManager.instance.SetLevelsAll(data);
         //pauseMenu
         if (PauseMenuManager.instance) PauseMenuManager.instance.SetAll(data);
+        if (InputManager.controls.asset != null && inputs !=null && inputs!="") InputManager.controls.asset.LoadFromJson(inputs);
     }
 
     void SaveFile(GameData data)
     {
         string destination = m_Path + "/save.dat";
+        FileStream file;
+
+        if(File.Exists(destination)) file = File.OpenWrite(destination);
+        else file = File.Create(destination);
+
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    void SaveJson(string data){
+        string destination = m_Path + "/input.dat";
         FileStream file;
 
         if(File.Exists(destination)) file = File.OpenWrite(destination);
@@ -88,12 +104,31 @@ public class SaveManager : MonoBehaviour
         if(File.Exists(destination)) file = File.OpenRead(destination);
         else
         {
-            Debug.LogWarning("File not found");
+            Debug.LogWarning("File not found (save.dat)");
             return null;
         }
 
         BinaryFormatter bf = new BinaryFormatter();
         GameData data = (GameData) bf.Deserialize(file);
+        file.Close();
+
+        return data;
+    }
+
+    string LoadJson()
+    {
+        string destination = m_Path + "/input.dat";
+        FileStream file;
+
+        if(File.Exists(destination)) file = File.OpenRead(destination);
+        else
+        {
+            Debug.LogWarning("File not found (input.dat)");
+            return null;
+        }
+
+        BinaryFormatter bf = new BinaryFormatter();
+        string data = (string) bf.Deserialize(file);
         file.Close();
 
         return data;

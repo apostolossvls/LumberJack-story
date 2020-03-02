@@ -73,6 +73,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Button"",
+                    ""id"": ""72eb9389-d591-4148-a49d-05c4850eb587"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -405,6 +413,39 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""Action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""fb06ced0-3d87-4925-bf03-7f1905a8fa4f"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0a85a8a8-7c75-47a3-a3d2-7f917b7809c0"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8b788cb2-7161-4a79-8870-d8b9ca8dc10d"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -448,6 +489,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Duck = m_Player.FindAction("Duck", throwIfNotFound: true);
         m_Player_Any1 = m_Player.FindAction("Any1", throwIfNotFound: true);
         m_Player_Action = m_Player.FindAction("Action", throwIfNotFound: true);
+        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -504,6 +546,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Duck;
     private readonly InputAction m_Player_Any1;
     private readonly InputAction m_Player_Action;
+    private readonly InputAction m_Player_Move;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -515,6 +558,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Duck => m_Wrapper.m_Player_Duck;
         public InputAction @Any1 => m_Wrapper.m_Player_Any1;
         public InputAction @Action => m_Wrapper.m_Player_Action;
+        public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -545,6 +589,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Action.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction;
                 @Action.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction;
                 @Action.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction;
+                @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -570,6 +617,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Action.started += instance.OnAction;
                 @Action.performed += instance.OnAction;
                 @Action.canceled += instance.OnAction;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
             }
         }
     }
@@ -601,5 +651,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnDuck(InputAction.CallbackContext context);
         void OnAny1(InputAction.CallbackContext context);
         void OnAction(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }
