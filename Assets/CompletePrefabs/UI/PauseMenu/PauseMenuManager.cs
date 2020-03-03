@@ -44,6 +44,7 @@ public class PauseMenuManager : MonoBehaviour
     public Toggle[] controlsTogglesGamepad;
     public GameObject controlBarrier;
     public string[,,] controlsPaths = new string[2,32,4];
+    public string[,,] bindingsID = new string[2,32,4];
     public InputBinding testbinding;
     static float myTimeScale;
     static bool onPause;
@@ -278,6 +279,7 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     public void GetInputPath(){
+        /*
         InputMaster.PlayerActions p = InputManager.controls.Player;
         int deviceIndex = 0;
         while (deviceIndex < 2){
@@ -313,6 +315,32 @@ public class PauseMenuManager : MonoBehaviour
                 actionIndex++;
             }
             deviceIndex++;
+        }
+
+        int counter = 0;
+        for (int i = 0; i + counter < InputManager.controls.Player.Get().bindings.Count; i++)
+        {
+            if (!InputManager.controls.Player.Get().bindings[i].isComposite){
+                counter++;
+            }
+            else {
+            }
+
+        }
+        */
+        for (int j = 0; j < bindingsID.GetLength(0); j++)
+        {
+            for (int i = 0; i < bindingsID.GetLength(1); i++)
+            {
+                for (int w = 0; w < bindingsID.GetLength(2); w++)
+                {
+                    Debug.Log(j+" "+i+" "+w);
+                    if (bindingsID[j,i,w]!=null){
+                        InputBinding bind = InputManager.controls.Player.Get().bindings[InputManager.controls.Player.Get().bindings.IndexOf(b => b.id.Equals(bindingsID[j,i,w]))];
+                        bind.overridePath = controlsPaths[j,i,w];
+                    }
+                }
+            }
         }
     }
 
@@ -477,9 +505,10 @@ public class PauseMenuManager : MonoBehaviour
                 bindings[1].Add(action.bindings[i]);
         }
 
-        string path = bindings[deviceIndex][bindingIndex].effectivePath; //vector2
+        string path = bindings[deviceIndex][bindingIndex].overridePath; //vector2
         Debug.Log("deviceIndex: "+deviceIndex+ " actionIndex: "+actionIndex+ " bindingIndex: "+bindingIndex);
         controlsPaths[deviceIndex, actionIndex,bindingIndex] = path;
+        bindingsID[deviceIndex, actionIndex,bindingIndex] = bindings[deviceIndex][bindingIndex].id.ToString();
 
         path = path.Substring(path.LastIndexOf("/")+1);
         path = path.ToUpper();
@@ -504,6 +533,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void ExitToMainMenu(int index){
         SaveManager.instance.Save();
+        Time.timeScale = myTimeScale;
         LevelSettings.LoadSceneIndex(index);
         Debug.Log("Exit");
     }
@@ -551,6 +581,9 @@ public class PauseMenuManager : MonoBehaviour
 
         //Controls
         controlsPaths = data.controlsInputPaths;
+        bindingsID = new string[2,32,4];
+        bindingsID = data.controlsInputID;
+        GetInputPath();
         SetInputPathDisplay();
 
         loading = false;
