@@ -316,7 +316,7 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     public void SetInputPathDisplay(){
-        for (int j = 0; j < 2; j++)
+        /*for (int j = 0; j < 2; j++)
         {
             Toggle[] group;
             if (j==0) group = controlsTogglesKeyboard;
@@ -339,7 +339,7 @@ public class PauseMenuManager : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
     }
     public void SetInputPathToggle(Toggle t){
         StartCoroutine(SetInputPathToggleIEnumerator(t));
