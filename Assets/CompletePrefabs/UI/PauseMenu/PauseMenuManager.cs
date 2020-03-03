@@ -44,6 +44,7 @@ public class PauseMenuManager : MonoBehaviour
     public Toggle[] controlsTogglesGamepad;
     public GameObject controlBarrier;
     public string[,,] controlsPaths = new string[2,32,4];
+    public InputBinding testbinding;
     static float myTimeScale;
     static bool onPause;
     static bool loading;
@@ -316,30 +317,56 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     public void SetInputPathDisplay(){
-        /*for (int j = 0; j < 2; j++)
+        controlsPaths = new string[2,32,4];
+        int bindingsCount = InputManager.controls.Player.Get().bindings.Count;
+        for (int j = 0; j < 2; j++)
         {
             Toggle[] group;
             if (j==0) group = controlsTogglesKeyboard;
             else group = controlsTogglesGamepad;
             int l = j==0? controlsTogglesKeyboard.Length : controlsTogglesGamepad.Length;
-            for (int i = 0; i < l; i=i+4)
+
+            for (int i = 0; i < l; i++)
             {
-                    for (int w = 0; w < 4; w++)
-                    {
-                    if (group[i+w] != null){
-                        Debug.Log("j: "+j+" , i: "+i+" , w: "+w);
-                        string path = controlsPaths[j,i,w];
-                        Debug.Log("j: "+j+" , i: "+i+" , w: "+w);
-                        if (path!=null && path!="") {
-                            path = path.Substring(path.LastIndexOf("/")+1);
-                            path = path.ToUpper();
-                            group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
-                        }
-                        else group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "";
+                if (group[i]){
+                    string[] split = group[i].name.Split('/');
+                    string s = controlsPaths[j, i, int.Parse(split[split.Length-1])-1];
+                    if (!string.IsNullOrEmpty(s)){
+                        s = s.Substring(s.LastIndexOf("/")+1);
+                        s = s.ToUpper();
                     }
+                    group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = s;
+                    /*
+                    //Debug.Log("bindings ("+j+") : "+InputManager.controls.Player.Get().bindings[j]);
+                    string target = group[i].gameObject.name;
+                    string[] t = target.Split('/');
+                    target =  null;
+                    for (int w = 0; w < bindingsCount; w++)
+                    {
+                        string s = InputManager.controls.Player.Get().bindings[w].ToString();
+                        if (s.Contains(t[0]) && s.Contains(t[1])){
+                            string display = InputManager.controls.Player.Get().bindings[i].ToDisplayString();
+                            string[] d = display.Split(' ');
+                            display = d[d.Length-1];
+                            group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = display;
+                            break;
+                        }
+                    }
+                    /*
+                    int result = InputManager.controls.Player.Get().bindings.IndexOf(b => b.ToString().Contains(t[0]) && b.ToString().Contains(t[1]));
+                    if (result<0){
+                        Debug.LogWarning("result < 0: "+i);
+                    }
+                    else {
+                        string display = InputManager.controls.Player.Get().bindings[i].ToDisplayString();
+                        string[] d = display.Split(' ');
+                        display = d[d.Length-1];
+                        group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = display;
+                    }
+                    */
                 }
             }
-        }*/
+        }
     }
     public void SetInputPathToggle(Toggle t){
         StartCoroutine(SetInputPathToggleIEnumerator(t));
@@ -451,10 +478,13 @@ public class PauseMenuManager : MonoBehaviour
         }
 
         string path = bindings[deviceIndex][bindingIndex].effectivePath; //vector2
+        Debug.Log("deviceIndex: "+deviceIndex+ " actionIndex: "+actionIndex+ " bindingIndex: "+bindingIndex);
         controlsPaths[deviceIndex, actionIndex,bindingIndex] = path;
+
         path = path.Substring(path.LastIndexOf("/")+1);
         path = path.ToUpper();
         t.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path;
+
         Debug.Log("Action:" +action.name+" , "+bindings[deviceIndex][bindingIndex].effectivePath);
         /*
         for (int j = 0; j < bindings.Length; j++)

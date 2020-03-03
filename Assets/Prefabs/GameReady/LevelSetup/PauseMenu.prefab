@@ -591,7 +591,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 5161735914046691830}
     m_SelectOnDown: {fileID: 8692528198962845037}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 6988559383163911634}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4395,6 +4395,15 @@ MonoBehaviour:
   - {fileID: 5003719659536590854}
   - {fileID: 4328308682810515310}
   controlBarrier: {fileID: 490695148449131024}
+  testbinding:
+    m_Name: 
+    m_Id: 
+    m_Path: 
+    m_Interactions: 
+    m_Processors: 
+    m_Groups: 
+    m_Action: 
+    m_Flags: 0
   draggingSelectable: 0
 --- !u!1 &2218633195067820243
 GameObject:
@@ -4452,7 +4461,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 5430132435038162893}
     m_SelectOnDown: {fileID: 5003719659536590854}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 7005437184695549398}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -5591,6 +5600,17 @@ MonoBehaviour:
       - m_Target: {fileID: 2195348012441491190}
         m_MethodName: ControlPage
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5161735914046691830}
+        m_MethodName: Select
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9545,6 +9565,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5161735914046691830}
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3218844907922462616
 GameObject:
   m_ObjectHideFlags: 0
@@ -12029,7 +12060,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1891788205975477459}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.44149998
+  m_Size: 0.4415
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12937,6 +12968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383854165723960941}
   - component: {fileID: 5161735914046691830}
+  - component: {fileID: 8554312263619675008}
   m_Layer: 5
   m_Name: Keyboard/Jump/1
   m_TagString: Untagged
@@ -12983,7 +13015,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 3061359407113160346}
     m_SelectOnDown: {fileID: 6164000124116000046}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 5021323251805201841}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -13024,6 +13056,34 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &8554312263619675008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823962095374852902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc11d99b1a6682f4cbc4aba1fcd9ac5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Action: {fileID: 0}
+  m_BindingId: 
+  m_DisplayStringOptions: 0
+  m_ActionLabel: {fileID: 0}
+  m_BindingText: {fileID: 0}
+  m_RebindOverlay: {fileID: 0}
+  m_RebindText: {fileID: 0}
+  m_UpdateBindingUIEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_RebindStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_RebindStopEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3825491348425817781
 GameObject:
   m_ObjectHideFlags: 0
@@ -14086,7 +14146,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 243874868962823525}
     m_SelectOnDown: {fileID: 6517684502310486728}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 508935467426279199}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -20770,7 +20830,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 6517684502310486728}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 4328308682810515310}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -21022,7 +21082,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 3061359407113160346}
     m_SelectOnDown: {fileID: 5430132435038162893}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 280730202977103607}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -21588,7 +21648,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 6164000124116000046}
     m_SelectOnDown: {fileID: 1961330266444440781}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 4071433235851753844}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -23185,6 +23245,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 243874868962823525}
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8281529868553466404
 GameObject:
   m_ObjectHideFlags: 0
@@ -24159,7 +24230,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 8692528198962845037}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 3218844907914061312}
-    m_SelectOnRight: {fileID: 7709089342542910330}
+    m_SelectOnRight: {fileID: 8587153755806695206}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
