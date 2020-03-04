@@ -25,8 +25,8 @@ public class GameData
     public bool gameplayShowDogVision;
 
     //Controls
-    public string[,,] controlsInputPaths = new string[2,32,4];
-    public string[,,] controlsInputID = new string[2,32,4];
+    public List<string> controlsInputPaths;
+    public List<string>  controlsInputID;
 
     public GameData(LevelDataManager lm, PauseMenuManager pm) {
         //level
@@ -46,6 +46,6 @@ public class GameData
         gameplayShowDogVision = pm.showDogVision;
         //controls
         controlsInputPaths = pm.controlsPaths;
-        controlsInputID = pm.bindingsID;
+        controlsInputID = pm.controlsID;
     }
 }

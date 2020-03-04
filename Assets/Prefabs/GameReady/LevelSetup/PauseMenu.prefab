@@ -4395,6 +4395,8 @@ MonoBehaviour:
   - {fileID: 5003719659536590854}
   - {fileID: 4328308682810515310}
   controlBarrier: {fileID: 490695148449131024}
+  controlsPaths: []
+  controlsID: []
   testbinding:
     m_Name: 
     m_Id: 
