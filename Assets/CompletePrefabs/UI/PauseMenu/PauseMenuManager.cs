@@ -351,7 +351,7 @@ public class PauseMenuManager : MonoBehaviour
                     string s1 = group[i].gameObject.name;
                     string[] s2 = s1.Split('/');
                     int index = InputManager.controls.Player.Get().bindings.IndexOf(
-                        b => b.ToString().Contains(s2[0]) && b.ToString().Contains(s2[1]) && s2.Length>2? b.ToString().Contains(s2[2]) : true);
+                        b => b.action.Equals(s2[0]) && b.ToString().Contains(s2[1]) && s2.Length>2? b.path.Equals(s2[2]) : true);
                     if (index>=0) {
                         InputBinding bind = InputManager.controls.Player.Get().bindings[index];
                         string display = bind.ToDisplayString();

@@ -155,6 +155,7 @@ public class SaveManager : MonoBehaviour
         string destination = m_Path + "/inputsMaps.inputactions";
         if(File.Exists(destination)){
             InputActionMap.FromJson(File.ReadAllText(destination));
+            /*
             for (int i = 0; i < InputManager.controls.controlSchemes.Count; i++)
             {
                 Debug.Log("InputManager.controls.controlSchemes: "+InputManager.controls.controlSchemes.ToString());
@@ -163,6 +164,7 @@ public class SaveManager : MonoBehaviour
                     Debug.Log("bindings ("+j+") : "+InputManager.controls.Player.Get().bindings[j]);
                 }
             }
+            */
         }
         else
         {
