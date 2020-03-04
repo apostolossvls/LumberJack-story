@@ -331,6 +331,7 @@ public class PauseMenuManager : MonoBehaviour
         for (int i = 0; i < controlsID.Count; i++)
         {
             InputBinding bind = InputManager.controls.Player.Get().bindings[InputManager.controls.Player.Get().bindings.IndexOf(b => b.id.ToString().Equals(controlsID[i]))];
+            bind.overridePath = controlsPaths[i];
             Debug.Log("binding name: "+bind);
         }
     }
@@ -353,7 +354,11 @@ public class PauseMenuManager : MonoBehaviour
                         b => b.ToString().Contains(s2[0]) && b.ToString().Contains(s2[1]) && s2.Length>2? b.ToString().Contains(s2[2]) : true);
                     if (index>=0) {
                         InputBinding bind = InputManager.controls.Player.Get().bindings[index];
-                        Debug.Log("display bind: "+bind);
+                        string display = bind.ToDisplayString();
+                        string[] d = display.Split(' ');
+                        display = d[d.Length-1];
+                        group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = display;
+                        Debug.Log("display bind: "+bind+" /display: "+bind.ToDisplayString());
                     }
                 }
             }
@@ -534,14 +539,14 @@ public class PauseMenuManager : MonoBehaviour
                 break;
             }
         }
-        /*
+        
         if (!found) {
             Debug.Log("id not found, path:"+path);
             controlsID.Add(bID);
             controlsPaths.Add(path.ToString());
             //controlsPaths.Insert(0, path.ToString());
         }
-        */
+        
         //controlsPaths[deviceIndex, actionIndex,bindingIndex] = path;
         //bindingsID[deviceIndex, actionIndex,bindingIndex] = bindings[deviceIndex][bindingIndex].id.ToString();
 
@@ -615,24 +620,28 @@ public class PauseMenuManager : MonoBehaviour
         ShowHintSetToggle();
 
         //Controls
+        controlsID = new List<string>();
+        controlsPaths = new List<string>();
+        
         if (data.controlsInputPaths.Count>0)
             controlsPaths = data.controlsInputPaths;
         else controlsPaths = new List<string>();
         if (data.controlsInputID.Count>0)
             controlsID = data.controlsInputID;
         else controlsID = new List<string>();
-        /*
+        
+        
         Debug.Log("---list1---");
         for (int i = 0; i < controlsID.Count; i++)
         {
             Debug.Log(controlsPaths[i]);
             Debug.Log(controlsID[i]);
         }
-        */
+        
         //controlsPaths = data.controlsInputPaths.Count>0? data.controlsInputPaths : new List<string>(){};
         //controlsID = data.controlsInputID.Count>0? data.controlsInputID : new List<string>(){};
         GetInputPath();
-        //SetInputPathDisplay();
+        SetInputPathDisplay();
 
         loading = false;
     }
