@@ -5050,6 +5050,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3869669898170011854, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: action
+      value: 
+      objectReference: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7,
+        type: 3}
     - target: {fileID: 3945086244523619769, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
       propertyPath: m_textInfo.characterCount

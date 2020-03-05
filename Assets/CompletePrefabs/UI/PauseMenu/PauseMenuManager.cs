@@ -328,15 +328,22 @@ public class PauseMenuManager : MonoBehaviour
 
         }
         */
+        System.Guid[] a = new System.Guid[controlsID.Count];
+        for (int i = 0; i < a.Length; i++)
+        {
+            a[i] = System.Guid.Parse(controlsID[i]);
+        }
         for (int i = 0; i < controlsID.Count; i++)
         {
-            InputBinding bind = InputManager.controls.Player.Get().bindings[InputManager.controls.Player.Get().bindings.IndexOf(b => b.id.ToString().Equals(controlsID[i]))];
+            //InputManager.controls.Player.Get().FindAction(a[i]);
+            InputBinding bind = InputManager.controls.Player.Get().bindings[InputManager.controls.Player.Get().bindings.IndexOf(b => b.id.Equals(a[i]))];
             bind.overridePath = controlsPaths[i];
             Debug.Log("binding name: "+bind);
+            SetInputPathDisplay(bind);
         }
     }
 
-    public void SetInputPathDisplay(){
+    public void SetInputPathDisplay(InputBinding bind){
         
         for (int j = 0; j < 2; j++)
         {
@@ -348,6 +355,15 @@ public class PauseMenuManager : MonoBehaviour
             for (int i = 0; i < l; i++)
             {
                 if (group[i]){
+                    InputButton inputButton = group[i].GetComponent<InputButton>();
+                    if (inputButton){
+                        if (inputButton.id.Equals(bind.id)){
+                            inputButton.path = bind.overridePath;
+                            inputButton.RefreshDisplay();
+                            return;
+                        }
+                    }
+                    /*
                     string s1 = group[i].gameObject.name;
                     string[] s2 = s1.Split('/');
                     int index = InputManager.controls.Player.Get().bindings.IndexOf(
@@ -360,6 +376,7 @@ public class PauseMenuManager : MonoBehaviour
                         group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = display;
                         Debug.Log("display bind: "+bind+" /display: "+bind.ToDisplayString());
                     }
+                    */
                 }
             }
         }
@@ -420,7 +437,10 @@ public class PauseMenuManager : MonoBehaviour
         StartCoroutine(SetInputPathToggleIEnumerator(t));
     }
     IEnumerator SetInputPathToggleIEnumerator(Toggle t){
-        InputAction action = null;
+        InputButton inputButton = t.GetComponent<InputButton>();
+        if (!inputButton) yield return null;
+
+        InputAction action = inputButton.action;
         int deviceIndex = -1;
         int actionIndex = -1;
         int bindingIndex = -1;
@@ -502,16 +522,40 @@ public class PauseMenuManager : MonoBehaviour
         InputActionRebindingExtensions.RebindingOperation operation = 
             action.PerformInteractiveRebinding()
             .WithBindingGroup(deviceIndex==0? "Keyboard and Mouse" : "Gamepad")
-            .WithTargetBinding(bindingIndex);
+            .WithTargetBinding(inputButton.index);
         operation.Start();
         while (!operation.completed){
             yield return null;
         }
+        string bID = operation.action.bindings[inputButton.index].id.ToString();
+        string path = operation.action.bindings[inputButton.index].overridePath;
+
+        bool found = false;
+        for (int i = 0; i < controlsID.Count; i++)
+        {
+            if (controlsID[i] == bID){
+                controlsPaths[i] = operation.action.bindings[inputButton.index].overridePath;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            Debug.Log("id not found, path:"+path);
+            controlsID.Add(bID);
+            controlsPaths.Add(path);
+        }
+
+        inputButton.path = operation.action.bindings[inputButton.index].overridePath;
+        inputButton.RefreshDisplay();
         operation.Dispose();
         controlBarrier.SetActive(false);
         t.Select();
         action.Enable();
 
+        //test
+        
+        
+        /*
         List<InputBinding>[] bindings = new List<InputBinding>[2];
         bindings[0] = new List<InputBinding>{};
         bindings[1] = new List<InputBinding>{};
@@ -546,6 +590,7 @@ public class PauseMenuManager : MonoBehaviour
             controlsPaths.Add(path.ToString());
             //controlsPaths.Insert(0, path.ToString());
         }
+        
         
         //controlsPaths[deviceIndex, actionIndex,bindingIndex] = path;
         //bindingsID[deviceIndex, actionIndex,bindingIndex] = bindings[deviceIndex][bindingIndex].id.ToString();
@@ -620,15 +665,16 @@ public class PauseMenuManager : MonoBehaviour
         ShowHintSetToggle();
 
         //Controls
-        controlsID = new List<string>();
-        controlsPaths = new List<string>();
+        controlsID = new List<string>(){};
+        controlsPaths = new List<string>(){};
         
-        if (data.controlsInputPaths.Count>0)
+        
+        if (data.controlsInputPaths !=null)
             controlsPaths = data.controlsInputPaths;
-        else controlsPaths = new List<string>();
-        if (data.controlsInputID.Count>0)
+        else controlsPaths = new List<string>(){};
+        if (data.controlsInputID != null)
             controlsID = data.controlsInputID;
-        else controlsID = new List<string>();
+        else controlsID = new List<string>(){};
         
         
         Debug.Log("---list1---");
@@ -641,7 +687,7 @@ public class PauseMenuManager : MonoBehaviour
         //controlsPaths = data.controlsInputPaths.Count>0? data.controlsInputPaths : new List<string>(){};
         //controlsID = data.controlsInputID.Count>0? data.controlsInputID : new List<string>(){};
         GetInputPath();
-        SetInputPathDisplay();
+        //SetInputPathDisplay();
 
         loading = false;
     }

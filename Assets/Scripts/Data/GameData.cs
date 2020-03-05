@@ -25,8 +25,8 @@ public class GameData
     public bool gameplayShowDogVision;
 
     //Controls
-    public List<string> controlsInputPaths;
-    public List<string>  controlsInputID;
+    public List<string> controlsInputPaths = new List<string>(){};
+    public List<string>  controlsInputID = new List<string>(){};
 
     public GameData(LevelDataManager lm, PauseMenuManager pm) {
         //level

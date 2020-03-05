@@ -12970,6 +12970,8 @@ GameObject:
   m_Component:
   - component: {fileID: 383854165723960941}
   - component: {fileID: 5161735914046691830}
+  - component: {fileID: 8970575155312272486}
+  - component: {fileID: 3869669898170011854}
   m_Layer: 5
   m_Name: Keyboard/Jump/<Keyboard>/space
   m_TagString: Untagged
@@ -13057,6 +13059,50 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &8970575155312272486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823962095374852902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc11d99b1a6682f4cbc4aba1fcd9ac5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  m_BindingId: 
+  m_DisplayStringOptions: 0
+  m_ActionLabel: {fileID: 0}
+  m_BindingText: {fileID: 0}
+  m_RebindOverlay: {fileID: 0}
+  m_RebindText: {fileID: 0}
+  m_UpdateBindingUIEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_RebindStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_RebindStopEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3869669898170011854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3823962095374852902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  index: 0
+  path: 
 --- !u!1 &3825491348425817781
 GameObject:
   m_ObjectHideFlags: 0

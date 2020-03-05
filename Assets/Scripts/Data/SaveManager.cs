@@ -53,7 +53,8 @@ public class SaveManager : MonoBehaviour
         SaveFile(data);
         //SaveJson(InputManager.controls.asset.ToJson(), "/inputs.inputactions");
         string map = InputActionMap.ToJson(InputManager.controls.asset.actionMaps);
-        SaveJson(map, "/inputsMaps.inputactions");
+        //SaveJson(map, "/inputsMaps.inputactions");
+        /*
         for (int i = 0; i < InputManager.controls.controlSchemes.Count; i++)
         {
             Debug.Log("InputManager.controls.controlSchemes: "+InputManager.controls.controlSchemes.ToString());
@@ -62,6 +63,7 @@ public class SaveManager : MonoBehaviour
                 Debug.Log("bindings ("+j+") : "+InputManager.controls.Player.Get().bindings[j]);
             }
         }
+        */
         //InputManager.controls.asset.ToJson();
     }
 
