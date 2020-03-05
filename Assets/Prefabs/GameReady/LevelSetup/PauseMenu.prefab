@@ -545,6 +545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8340612127198887490}
   - component: {fileID: 6164000124116000046}
+  - component: {fileID: 8625335202401906334}
   m_Layer: 5
   m_Name: Keyboard/Action/1
   m_TagString: Untagged
@@ -632,6 +633,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &8625335202401906334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444466378705445274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 0
+  path: 
+  stringID: 
 --- !u!1 &490695148449131024
 GameObject:
   m_ObjectHideFlags: 0
@@ -3304,6 +3322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1482368453953302005}
   - component: {fileID: 508935467426279199}
+  - component: {fileID: 5727339925720604718}
   m_Layer: 5
   m_Name: Controller/Action/2
   m_TagString: Untagged
@@ -3347,9 +3366,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 5430132435038162893}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnUp: {fileID: 280730202977103607}
+    m_SelectOnDown: {fileID: 7005437184695549398}
+    m_SelectOnLeft: {fileID: 5430132435038162893}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -3391,6 +3410,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &5727339925720604718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845153275545349612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 3
+  path: 
+  stringID: 
 --- !u!1 &1872529503118417988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3858,6 +3894,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7736429384087611471}
   - component: {fileID: 280730202977103607}
+  - component: {fileID: 7258103992752061814}
   m_Layer: 5
   m_Name: Controller/Jump/2
   m_TagString: Untagged
@@ -3901,9 +3938,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 5430132435038162893}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnUp: {fileID: 1333004701262749889}
+    m_SelectOnDown: {fileID: 508935467426279199}
+    m_SelectOnLeft: {fileID: 243874868962823525}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -3945,6 +3982,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &7258103992752061814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013563745845134494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 3
+  path: 
+  stringID: 
 --- !u!1 &2062282375399994098
 GameObject:
   m_ObjectHideFlags: 0
@@ -4417,6 +4471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6483498687685184825}
   - component: {fileID: 6517684502310486728}
+  - component: {fileID: 1613637246222577450}
   m_Layer: 5
   m_Name: Controller/Interact/1
   m_TagString: Untagged
@@ -4504,6 +4559,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1613637246222577450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2218633195067820243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 2
+  path: 
+  stringID: 
 --- !u!1 &2221632504262615557
 GameObject:
   m_ObjectHideFlags: 0
@@ -6257,6 +6329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2865946700586473195}
   - component: {fileID: 4071433235851753844}
+  - component: {fileID: 5066434550052130593}
   m_Layer: 5
   m_Name: Keyboard/Interact/2
   m_TagString: Untagged
@@ -6300,9 +6373,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 6164000124116000046}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnUp: {fileID: 6988559383163911634}
+    m_SelectOnDown: {fileID: 8587153755806695206}
+    m_SelectOnLeft: {fileID: 8692528198962845037}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -6344,6 +6417,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &5066434550052130593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881391890110294136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 1
+  path: 
+  stringID: 
 --- !u!1 &2935913450035589294
 GameObject:
   m_ObjectHideFlags: 0
@@ -12032,7 +12122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 1
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -12970,7 +13060,6 @@ GameObject:
   m_Component:
   - component: {fileID: 383854165723960941}
   - component: {fileID: 5161735914046691830}
-  - component: {fileID: 8970575155312272486}
   - component: {fileID: 3869669898170011854}
   m_Layer: 5
   m_Name: Keyboard/Jump/<Keyboard>/space
@@ -13059,34 +13148,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
---- !u!114 &8970575155312272486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3823962095374852902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc11d99b1a6682f4cbc4aba1fcd9ac5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  m_BindingId: 
-  m_DisplayStringOptions: 0
-  m_ActionLabel: {fileID: 0}
-  m_BindingText: {fileID: 0}
-  m_RebindOverlay: {fileID: 0}
-  m_RebindText: {fileID: 0}
-  m_UpdateBindingUIEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_RebindStartEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_RebindStopEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &3869669898170011854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13101,8 +13162,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  index: 0
+  bindingIndex: 0
   path: 
+  stringID: 
 --- !u!1 &3825491348425817781
 GameObject:
   m_ObjectHideFlags: 0
@@ -13531,6 +13593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7427599372825629244}
   - component: {fileID: 8587153755806695206}
+  - component: {fileID: 8097920951214939946}
   m_Layer: 5
   m_Name: Keyboard/Release/2
   m_TagString: Untagged
@@ -13574,9 +13637,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 6164000124116000046}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnUp: {fileID: 4071433235851753844}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1961330266444440781}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -13618,6 +13681,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &8097920951214939946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4003951363953948062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 1
+  path: 
+  stringID: 
 --- !u!1 &4091223815900734684
 GameObject:
   m_ObjectHideFlags: 0
@@ -14119,6 +14199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8880461563854619515}
   - component: {fileID: 5430132435038162893}
+  - component: {fileID: 1131026623151016351}
   m_Layer: 5
   m_Name: Controller/Action/1
   m_TagString: Untagged
@@ -14206,6 +14287,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1131026623151016351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4261935506713083334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 2
+  path: 
+  stringID: 
 --- !u!1 &4310273277548813018
 GameObject:
   m_ObjectHideFlags: 0
@@ -18330,6 +18428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1404717130124339645}
   - component: {fileID: 6988559383163911634}
+  - component: {fileID: 58680418919749383}
   m_Layer: 5
   m_Name: Keyboard/Action/2
   m_TagString: Untagged
@@ -18373,9 +18472,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 6164000124116000046}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnUp: {fileID: 5021323251805201841}
+    m_SelectOnDown: {fileID: 4071433235851753844}
+    m_SelectOnLeft: {fileID: 6164000124116000046}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -18417,6 +18516,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &58680418919749383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6144990566970958914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 1
+  path: 
+  stringID: 
 --- !u!1 &6163505006578876759
 GameObject:
   m_ObjectHideFlags: 0
@@ -20412,6 +20528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3607736898082950349}
   - component: {fileID: 5021323251805201841}
+  - component: {fileID: 1831710031673646347}
   m_Layer: 5
   m_Name: Keyboard/Jump/<Keyboard>/upArrow
   m_TagString: Untagged
@@ -20456,8 +20573,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 6164000124116000046}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnDown: {fileID: 6988559383163911634}
+    m_SelectOnLeft: {fileID: 5161735914046691830}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -20499,6 +20616,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1831710031673646347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937548554723551617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 1
+  path: 
+  stringID: 
 --- !u!1 &6967857072440121574
 GameObject:
   m_ObjectHideFlags: 0
@@ -20803,6 +20937,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8929247026792028725}
   - component: {fileID: 5003719659536590854}
+  - component: {fileID: 3426672012749539573}
   m_Layer: 5
   m_Name: Controller/Release/1
   m_TagString: Untagged
@@ -20890,6 +21025,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &3426672012749539573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7090368140940968542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 2
+  path: 
+  stringID: 
 --- !u!1 &7104767539554616418
 GameObject:
   m_ObjectHideFlags: 0
@@ -21055,6 +21207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5123727450429855668}
   - component: {fileID: 243874868962823525}
+  - component: {fileID: 8092222899946331479}
   m_Layer: 5
   m_Name: Controller/Jump/1
   m_TagString: Untagged
@@ -21098,7 +21251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
+    m_SelectOnUp: {fileID: 1333004701262749889}
     m_SelectOnDown: {fileID: 5430132435038162893}
     m_SelectOnLeft: {fileID: 3218844907914061312}
     m_SelectOnRight: {fileID: 280730202977103607}
@@ -21142,6 +21295,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &8092222899946331479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7123067522032112739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 2
+  path: 
+  stringID: 
 --- !u!1 &7142503492142348564
 GameObject:
   m_ObjectHideFlags: 0
@@ -21621,6 +21791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8832057856004648381}
   - component: {fileID: 8692528198962845037}
+  - component: {fileID: 7247908825217175396}
   m_Layer: 5
   m_Name: Keyboard/Interact/1
   m_TagString: Untagged
@@ -21708,6 +21879,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &7247908825217175396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7484744150727271642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 0
+  path: 
+  stringID: 
 --- !u!1 &7563255415071774365
 GameObject:
   m_ObjectHideFlags: 0
@@ -21754,6 +21942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7112525458097376049}
   - component: {fileID: 7005437184695549398}
+  - component: {fileID: 898195325697249007}
   m_Layer: 5
   m_Name: Controller/Interact/2
   m_TagString: Untagged
@@ -21797,9 +21986,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 5430132435038162893}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnUp: {fileID: 508935467426279199}
+    m_SelectOnDown: {fileID: 4328308682810515310}
+    m_SelectOnLeft: {fileID: 6517684502310486728}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -21841,6 +22030,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &898195325697249007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664097134226720020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 3
+  path: 
+  stringID: 
 --- !u!1 &7792217014311994622
 GameObject:
   m_ObjectHideFlags: 0
@@ -24203,6 +24409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 22948788709387065}
   - component: {fileID: 1961330266444440781}
+  - component: {fileID: 3751095094147117887}
   m_Layer: 5
   m_Name: Keyboard/Release/1
   m_TagString: Untagged
@@ -24290,6 +24497,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &3751095094147117887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640841239007353143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Keyboard
+  action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 0
+  path: 
+  stringID: 
 --- !u!1 &8672039480073320001
 GameObject:
   m_ObjectHideFlags: 0
@@ -25266,6 +25490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5565315354594799432}
   - component: {fileID: 4328308682810515310}
+  - component: {fileID: 3159828262103720167}
   m_Layer: 5
   m_Name: Controller/Release/2
   m_TagString: Untagged
@@ -25309,9 +25534,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 3061359407113160346}
-    m_SelectOnDown: {fileID: 5430132435038162893}
-    m_SelectOnLeft: {fileID: 3218844907914061312}
+    m_SelectOnUp: {fileID: 7005437184695549398}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 5003719659536590854}
     m_SelectOnRight: {fileID: 7709089342542910330}
   m_Transition: 1
   m_Colors:
@@ -25353,6 +25578,23 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &3159828262103720167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9217980392721020353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e89fae23e88f5a4886d4a006e034bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  device: Controller
+  action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
+  bindingIndex: 3
+  path: 
+  stringID: 
 --- !u!1 &9219106261341397458
 GameObject:
   m_ObjectHideFlags: 0

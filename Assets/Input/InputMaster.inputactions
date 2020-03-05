@@ -402,6 +402,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "198fcf74-41ff-4e27-80c4-e845e0479656",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
                     "id": "fb06ced0-3d87-4925-bf03-7f1905a8fa4f",
                     "path": "1DAxis",

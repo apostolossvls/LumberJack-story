@@ -359,9 +359,8 @@ public class PauseMenuManager : MonoBehaviour
                     if (inputButton){
                         if (inputButton.id.Equals(bind.id)){
                             inputButton.path = bind.overridePath;
-                            inputButton.RefreshDisplay();
-                            return;
                         }
+                        inputButton.RefreshDisplay();
                     }
                     /*
                     string s1 = group[i].gameObject.name;
@@ -522,19 +521,19 @@ public class PauseMenuManager : MonoBehaviour
         InputActionRebindingExtensions.RebindingOperation operation = 
             action.PerformInteractiveRebinding()
             .WithBindingGroup(deviceIndex==0? "Keyboard and Mouse" : "Gamepad")
-            .WithTargetBinding(inputButton.index);
+            .WithTargetBinding(inputButton.bindingIndex);
         operation.Start();
         while (!operation.completed){
             yield return null;
         }
-        string bID = operation.action.bindings[inputButton.index].id.ToString();
-        string path = operation.action.bindings[inputButton.index].overridePath;
+        string bID = operation.action.bindings[inputButton.bindingIndex].id.ToString();
+        string path = operation.action.bindings[inputButton.bindingIndex].overridePath;
 
         bool found = false;
         for (int i = 0; i < controlsID.Count; i++)
         {
             if (controlsID[i] == bID){
-                controlsPaths[i] = operation.action.bindings[inputButton.index].overridePath;
+                controlsPaths[i] = operation.action.bindings[inputButton.bindingIndex].overridePath;
                 found = true;
                 break;
             }
@@ -545,7 +544,7 @@ public class PauseMenuManager : MonoBehaviour
             controlsPaths.Add(path);
         }
 
-        inputButton.path = operation.action.bindings[inputButton.index].overridePath;
+        inputButton.path = operation.action.bindings[inputButton.bindingIndex].overridePath;
         inputButton.RefreshDisplay();
         operation.Dispose();
         controlBarrier.SetActive(false);

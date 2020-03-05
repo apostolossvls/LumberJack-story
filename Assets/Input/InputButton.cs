@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class InputButton : MonoBehaviour
 {
     public string device;
     public InputActionReference action;
-    public int index;
+    public int bindingIndex;
     public string path;
     [SerializeField]
     public System.Guid id;
@@ -106,14 +107,20 @@ public class InputButton : MonoBehaviour
             
         }
         */
-        InputBinding b = action.ToInputAction().bindings[index];
+        //InputBinding b;
+        if (action.ToInputAction().bindings.Count >= bindingIndex){
+            //InputBinding b = action.ToInputAction().bindings[bindingIndex];
 
-        path = action.ToInputAction().bindings[index].effectivePath;
-        id = action.ToInputAction().bindings[index].id;
-        stringID = id.ToString();
+            path = action.ToInputAction().bindings[bindingIndex].effectivePath;
+            id = action.ToInputAction().bindings[bindingIndex].id;
+            stringID = id.ToString();
+        }
     }
 
     public void RefreshDisplay(){
+        string p = path!=null && path!=""? path.Substring(path.LastIndexOf("/")+1).ToUpperInvariant() : "";
         transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path.Substring(path.LastIndexOf("/")+1).ToUpperInvariant();
+
+        GetComponent<Toggle>().interactable = id.ToString()!="" && id!=null;
     }
 }
