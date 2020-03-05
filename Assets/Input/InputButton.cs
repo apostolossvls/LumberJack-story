@@ -9,18 +9,18 @@ public class InputButton : MonoBehaviour
 {
     public string device;
     public InputActionReference action;
-    public int bindingIndex;
+    public int index;
     public string path;
     [SerializeField]
     public System.Guid id;
     public string stringID;
 
-    void Start(){
+    void Awake(){
         //InputAction action = null;
         int deviceIndex = -1;
         int actionIndex = -1;
         int bindingIndex = -1;
-        InputMaster.PlayerActions p = InputManager.controls.Player;
+        //InputMaster.PlayerActions p = InputManager.controls.Player;
 
         string[] info = gameObject.name.Split('/');
         switch (device)
@@ -107,14 +107,12 @@ public class InputButton : MonoBehaviour
             
         }
         */
-        //InputBinding b;
-        if (action.ToInputAction().bindings.Count >= bindingIndex){
+        Debug.Log("action.ToInputAction().bindings: "+ action.ToInputAction().bindings.Count);
             //InputBinding b = action.ToInputAction().bindings[bindingIndex];
-
-            path = action.ToInputAction().bindings[bindingIndex].effectivePath;
-            id = action.ToInputAction().bindings[bindingIndex].id;
+            path = action.ToInputAction().bindings[index].effectivePath;
+            id = action.ToInputAction().bindings[index].id;
             stringID = id.ToString();
-        }
+        
     }
 
     public void RefreshDisplay(){

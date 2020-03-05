@@ -4613,7 +4613,7 @@ PrefabInstance:
     - target: {fileID: 3187233081779236916, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3196921776021006405, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
@@ -5770,6 +5770,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 8625335202401906334, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: action
+      value: 
+      objectReference: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7,
+        type: 3}
     - target: {fileID: 8630116847665635908, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
       propertyPath: m_textInfo.characterCount

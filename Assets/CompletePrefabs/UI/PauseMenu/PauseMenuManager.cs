@@ -521,19 +521,19 @@ public class PauseMenuManager : MonoBehaviour
         InputActionRebindingExtensions.RebindingOperation operation = 
             action.PerformInteractiveRebinding()
             .WithBindingGroup(deviceIndex==0? "Keyboard and Mouse" : "Gamepad")
-            .WithTargetBinding(inputButton.bindingIndex);
+            .WithTargetBinding(inputButton.index);
         operation.Start();
         while (!operation.completed){
             yield return null;
         }
-        string bID = operation.action.bindings[inputButton.bindingIndex].id.ToString();
-        string path = operation.action.bindings[inputButton.bindingIndex].overridePath;
+        string bID = operation.action.bindings[inputButton.index].id.ToString();
+        string path = operation.action.bindings[inputButton.index].overridePath;
 
         bool found = false;
         for (int i = 0; i < controlsID.Count; i++)
         {
             if (controlsID[i] == bID){
-                controlsPaths[i] = operation.action.bindings[inputButton.bindingIndex].overridePath;
+                controlsPaths[i] = operation.action.bindings[inputButton.index].overridePath;
                 found = true;
                 break;
             }
@@ -544,7 +544,7 @@ public class PauseMenuManager : MonoBehaviour
             controlsPaths.Add(path);
         }
 
-        inputButton.path = operation.action.bindings[inputButton.bindingIndex].overridePath;
+        inputButton.path = operation.action.bindings[inputButton.index].overridePath;
         inputButton.RefreshDisplay();
         operation.Dispose();
         controlBarrier.SetActive(false);

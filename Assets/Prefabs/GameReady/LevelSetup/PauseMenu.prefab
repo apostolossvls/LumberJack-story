@@ -647,7 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 0
+  index: 0
   path: 
   stringID: 
 --- !u!1 &490695148449131024
@@ -3424,7 +3424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 3
+  index: 3
   path: 
   stringID: 
 --- !u!1 &1872529503118417988
@@ -3996,7 +3996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 3
+  index: 3
   path: 
   stringID: 
 --- !u!1 &2062282375399994098
@@ -4573,7 +4573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 2
+  index: 2
   path: 
   stringID: 
 --- !u!1 &2221632504262615557
@@ -6431,7 +6431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 1
+  index: 1
   path: 
   stringID: 
 --- !u!1 &2935913450035589294
@@ -13162,7 +13162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 0
+  index: 0
   path: 
   stringID: 
 --- !u!1 &3825491348425817781
@@ -13695,7 +13695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 1
+  index: 1
   path: 
   stringID: 
 --- !u!1 &4091223815900734684
@@ -14301,7 +14301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 2
+  index: 2
   path: 
   stringID: 
 --- !u!1 &4310273277548813018
@@ -18530,7 +18530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: -3573783237719583065, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 1
+  index: 1
   path: 
   stringID: 
 --- !u!1 &6163505006578876759
@@ -20630,7 +20630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 1
+  index: 1
   path: 
   stringID: 
 --- !u!1 &6967857072440121574
@@ -21039,7 +21039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 2
+  index: 2
   path: 
   stringID: 
 --- !u!1 &7104767539554616418
@@ -21309,7 +21309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: 335763634227698153, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 2
+  index: 2
   path: 
   stringID: 
 --- !u!1 &7142503492142348564
@@ -21893,7 +21893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 0
+  index: 0
   path: 
   stringID: 
 --- !u!1 &7563255415071774365
@@ -22044,7 +22044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: -5548793354506133487, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 3
+  index: 3
   path: 
   stringID: 
 --- !u!1 &7792217014311994622
@@ -24511,7 +24511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Keyboard
   action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 0
+  index: 0
   path: 
   stringID: 
 --- !u!1 &8672039480073320001
@@ -25592,7 +25592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   device: Controller
   action: {fileID: 5658374504460733041, guid: 44e43bea6c6d85f4caf881ce9e5e35c7, type: 3}
-  bindingIndex: 3
+  index: 3
   path: 
   stringID: 
 --- !u!1 &9219106261341397458
