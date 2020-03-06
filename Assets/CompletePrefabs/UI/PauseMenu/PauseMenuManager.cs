@@ -152,8 +152,12 @@ public class PauseMenuManager : MonoBehaviour
 
     public void SetResolution (int resIndex)
     {
-        Resolution res = resolutions[resolutionIndex];
-        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        resolutionIndex = resIndex;
+        if (resolutionIndex>=0 && resolutions!=null)
+        {
+            Resolution res = resolutions[resolutionIndex];
+            Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        }
     }
     void RefreshResolutionDropDown()
     {
@@ -188,6 +192,7 @@ public class PauseMenuManager : MonoBehaviour
         graphicsToggles[0].isOn = isFullscreen;
         Screen.fullScreen = isFullscreen;
     }
+
     void ShowFPS (){
         if (FPStext) FPStext.SetActive(isShowFPS);
     }
@@ -733,7 +738,11 @@ public class PauseMenuManager : MonoBehaviour
 
         //Quality
         qualityIndex = data.qualityIndex;
+        resolutionIndex = data.qualityResolutionIndex;
+        isFullscreen = data.qualityIsFullscreen;
         isShowFPS = data.qualityShowFPS;
+        FullcreenCheck();
+        SetResolution(resolutionIndex);
         ChangeQuality();
         ChangeQualityDropDown();
         ShowFPS();

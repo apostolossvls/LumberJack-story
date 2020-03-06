@@ -17,6 +17,8 @@ public class GameData
 
     //quality
     public int qualityIndex;
+    public int qualityResolutionIndex;
+    public bool qualityIsFullscreen;
     public bool qualityShowFPS;
 
     //Gameplay
@@ -39,6 +41,8 @@ public class GameData
         audioVolumes = pm.Volumes;
         //quality
         qualityIndex = pm.qualityIndex;
+        qualityResolutionIndex = pm.resolutionIndex;
+        qualityIsFullscreen = pm.isFullscreen;
         qualityShowFPS = pm.isShowFPS;
         //gameplay
         gameplayShowInteractIndicator = pm.showInteractIndicator;
