@@ -107,18 +107,40 @@ public class InputButton : MonoBehaviour
             
         }
         */
-        Debug.Log("action.ToInputAction().bindings: "+ action.ToInputAction().bindings.Count);
+        //Debug.Log("action.ToInputAction().bindings: "+ action.ToInputAction().bindings.Count);
+        /*
+        if (action.ToInputAction().bindings.Count > index){
             //InputBinding b = action.ToInputAction().bindings[bindingIndex];
-            path = action.ToInputAction().bindings[index].effectivePath;
+            path = action.ToInputAction().bindings[index].overridePath;
             id = action.ToInputAction().bindings[index].id;
             stringID = id.ToString();
-        
+        }
+        */
+    }
+
+    void OnEnable(){
+        if (action.ToInputAction().bindings.Count > index){
+            //InputBinding b = action.ToInputAction().bindings[bindingIndex];
+            path = action.ToInputAction().bindings[index].overridePath;
+            id = action.ToInputAction().bindings[index].id;
+            stringID = id.ToString();
+        }
+        InputBinding[] bi = InputManager.controls.Player.Get().bindings.ToArray();
+        for (int j = 0; j < bi.Length; j++)
+        {
+            if (bi[j].id.Equals(id))
+            {
+                path = bi[j].overridePath;
+                break;
+            }
+        }
+        RefreshDisplay();
     }
 
     public void RefreshDisplay(){
-        string p = path!=null && path!=""? path.Substring(path.LastIndexOf("/")+1).ToUpperInvariant() : "";
-        transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = path.Substring(path.LastIndexOf("/")+1).ToUpperInvariant();
+        string p = path!=null && path!=""? path.Substring(path.LastIndexOf("/")+1).ToUpperInvariant() : " ";
+        transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = p;
 
-        GetComponent<Toggle>().interactable = id.ToString()!="" && id!=null;
+        //GetComponent<Toggle>().interactable = path!="" && path!=null;
     }
 }

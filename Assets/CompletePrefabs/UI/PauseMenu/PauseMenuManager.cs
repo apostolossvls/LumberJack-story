@@ -337,14 +337,49 @@ public class PauseMenuManager : MonoBehaviour
         {
             //InputManager.controls.Player.Get().FindAction(a[i]);
             InputBinding bind = InputManager.controls.Player.Get().bindings[InputManager.controls.Player.Get().bindings.IndexOf(b => b.id.Equals(a[i]))];
+            InputBinding[] bi = InputManager.controls.Player.Get().bindings.ToArray();
+            for (int j = 0; j < bi.Length; j++)
+            {
+                if (bi[j].id.Equals(a[i]))
+                {
+                    bi[j].overridePath = controlsPaths[i];
+                    break;
+                }
+            }
             bind.overridePath = controlsPaths[i];
-            Debug.Log("binding name: "+bind);
-            SetInputPathDisplay(bind);
+            Debug.Log("binding name: "+bind+" , overridePath: "+bind.overridePath +" , cPath: "+controlsPaths[i]);
+        }
+        for (int j = 0; j < 2; j++)
+        {
+            Toggle[] group;
+            if (j==0) group = controlsTogglesKeyboard;
+            else group = controlsTogglesGamepad;
+            int l = j==0? controlsTogglesKeyboard.Length : controlsTogglesGamepad.Length;
+
+            for (int z = 0; z < l; z++)
+            {
+                if (group[z]){
+                    InputButton inputButton = group[z].GetComponent<InputButton>();
+                    if (inputButton){
+                        
+                        if (inputButton.id!=null){
+                            int bindIndex =  InputManager.controls.Player.Get().bindings.IndexOf(b => b.id.Equals(inputButton.id));
+                            if (bindIndex==null) continue;
+                            if (bindIndex<0) continue;
+                            InputBinding bind = InputManager.controls.Player.Get().bindings[bindIndex];
+                            if (bind!=null){
+                                inputButton.path = bind.overridePath;
+                            }
+                        }
+                        //inputButton.RefreshDisplay();
+                    }
+                }
+            }
         }
     }
 
-    public void SetInputPathDisplay(InputBinding bind){
-        
+    public void SetInputPathDisplay(){
+        /*
         for (int j = 0; j < 2; j++)
         {
             Toggle[] group;
@@ -357,6 +392,14 @@ public class PauseMenuManager : MonoBehaviour
                 if (group[i]){
                     InputButton inputButton = group[i].GetComponent<InputButton>();
                     if (inputButton){
+                        bool found = false;
+                        for (int z = 0; z < controlsID.Count; z++)
+                        {
+                            //InputManager.controls.Player.Get().FindAction(a[i]);
+                            InputBinding bind = InputManager.controls.Player.Get().bindings[InputManager.controls.Player.Get().bindings.IndexOf(b => b.id.Equals(a[i]))];
+                            bind.overridePath = controlsPaths[i];
+                            Debug.Log("binding name: "+bind);
+                        }
                         if (inputButton.id.Equals(bind.id)){
                             inputButton.path = bind.overridePath;
                         }
@@ -375,7 +418,7 @@ public class PauseMenuManager : MonoBehaviour
                         group[i].transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = display;
                         Debug.Log("display bind: "+bind+" /display: "+bind.ToDisplayString());
                     }
-                    */
+                    
                 }
             }
         }
@@ -521,7 +564,8 @@ public class PauseMenuManager : MonoBehaviour
         InputActionRebindingExtensions.RebindingOperation operation = 
             action.PerformInteractiveRebinding()
             .WithBindingGroup(deviceIndex==0? "Keyboard and Mouse" : "Gamepad")
-            .WithTargetBinding(inputButton.index);
+            .WithTargetBinding(inputButton.index)
+            .WithControlsExcluding("Mouse");
         operation.Start();
         while (!operation.completed){
             yield return null;

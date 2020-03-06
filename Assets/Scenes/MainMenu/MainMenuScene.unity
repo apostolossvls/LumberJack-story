@@ -4190,6 +4190,16 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 280730202977103607, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 508935467426279199, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 772797813378252695, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -4289,6 +4299,11 @@ PrefabInstance:
         type: 3}
       propertyPath: bindingIndex
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1333004701262749889, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1333219779494906376, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
@@ -4579,6 +4594,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3061359407113160346, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3141424208578810057, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
@@ -5145,6 +5165,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4328308682810515310, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4415876320627763091, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -5588,6 +5613,11 @@ PrefabInstance:
     - target: {fileID: 6987243242513863340, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7005437184695549398, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
+        type: 3}
+      propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7052531570350141992, guid: 881ea0aebf718fe4483a6c8c6b8bde9f,
