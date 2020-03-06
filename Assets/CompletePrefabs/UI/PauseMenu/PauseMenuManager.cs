@@ -21,6 +21,9 @@ public class PauseMenuManager : MonoBehaviour
     public Slider[] graphicsSliders;
     public TMP_Dropdown[] graphicsdropdowns;
     public int qualityIndex;
+    public int resolutionIndex;
+    Resolution[] resolutions;
+    public bool isFullscreen;
     public GameObject FPStext;
     public bool isShowFPS;
     //audio
@@ -88,14 +91,18 @@ public class PauseMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         SaveManager.instance.Load();
         instance.menuParent.gameObject.SetActive(true);
+        instance.FullcreenCheck();
         instance.ResetButtonAndPlanes();
+        instance.RefreshResolutionDropDown();
         if (instance.FirstSelected) instance.FirstSelected.Select();
         if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
     public void MainMenuSetup(){
         SaveManager.instance.Load();
+        instance.FullcreenCheck();
         instance.ResetButtonAndPlanes();
+        instance.RefreshResolutionDropDown();
         if (instance.FirstSelected) instance.FirstSelected.Select();
     }
     
@@ -128,7 +135,7 @@ public class PauseMenuManager : MonoBehaviour
         if (!loading) AudioManager.instance.Play("MenuClick");
     }
 
-    //Quality
+    //Graphics
     void ChangeQuality(){
         QualitySettings.SetQualityLevel(QualitySettings.names.Length-1 - qualityIndex, true);
         //Debug.Log(QualitySettings.GetQualityLevel().ToString());
@@ -142,7 +149,45 @@ public class PauseMenuManager : MonoBehaviour
     void ChangeQualityDropDown(){
         graphicsdropdowns[0].value = qualityIndex;
     }
-    
+
+    public void SetResolution (int resIndex)
+    {
+        Resolution res = resolutions[resolutionIndex];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+    }
+    void RefreshResolutionDropDown()
+    {
+        resolutions = Screen.resolutions;
+
+        graphicsdropdowns[1].ClearOptions();
+
+        resolutionIndex = 0;
+        List<string> options = new List<string>();
+        for (int i = 0; i < resolutions.Length; i++){
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
+            {
+                resolutionIndex = i;
+            }
+        }
+
+        graphicsdropdowns[1].AddOptions(options);
+        graphicsdropdowns[1].value = resolutionIndex;
+        graphicsdropdowns[1].RefreshShownValue();
+    }
+
+    public void SetFullcreen (bool full)
+    {
+        isFullscreen = full;
+        Screen.fullScreen = isFullscreen;
+    }
+    public void FullcreenCheck()
+    {
+        graphicsToggles[0].isOn = isFullscreen;
+        Screen.fullScreen = isFullscreen;
+    }
     void ShowFPS (){
         if (FPStext) FPStext.SetActive(isShowFPS);
     }
@@ -152,9 +197,9 @@ public class PauseMenuManager : MonoBehaviour
         if (!loading) AudioManager.instance.Play("MenuClick");
     }
     void ShowFPSToggle (){
-        graphicsToggles[0].isOn = isShowFPS;
+        graphicsToggles[1].isOn = isShowFPS;
     }
-    //end Quality
+    //end Graphics
 
     //Audio
     public void SetVolume (Slider s){

@@ -25,6 +25,7 @@ public class MainMenuManager : MonoBehaviour
     void Start(){
         pointer = 0;
         firstSelectables[0].Select();
+        PauseMenuManager.instance.FullcreenCheck();
     }
 
     public void GoToPanel(int index){
