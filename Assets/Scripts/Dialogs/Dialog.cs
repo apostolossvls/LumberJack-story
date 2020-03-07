@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Dialog : MonoBehaviour
 {
+    public int languageIndex;
     public Component[] bubbles;
     int bubbleIndex;
 

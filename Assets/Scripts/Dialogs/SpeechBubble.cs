@@ -9,7 +9,7 @@ public class SpeechBubble : MonoBehaviour
     [HideInInspector]
     public Dialog dialog;
     [TextArea(15,20)]
-    public string message;
+    public string[] message;
     public TextMeshPro textMeshPro;
     public Text textUI;
     public Image bubbleImage;
@@ -30,13 +30,14 @@ public class SpeechBubble : MonoBehaviour
     }
 
     IEnumerator ShowText(){
+        int languageIndex = dialog.languageIndex;
         if (followParent) {
             transform.parent = followParent;
             transform.localPosition = Vector3.zero + parentOffset;
         }
         if (speed==0){
-            if (textMeshPro.isActiveAndEnabled) textMeshPro.text = message;
-            else if (textUI.isActiveAndEnabled) textUI.text = message;
+            if (textMeshPro.isActiveAndEnabled) textMeshPro.text = message[languageIndex];
+            else if (textUI.isActiveAndEnabled) textUI.text = message[languageIndex];
             else yield return null;
         }
         else {
@@ -44,12 +45,12 @@ public class SpeechBubble : MonoBehaviour
             else if (textUI.isActiveAndEnabled) textUI.text = "";
             else yield return null;;
             charIndex = 0;
-            while (charIndex < message.Length){
+            while (charIndex < message[languageIndex].Length){
                 if (textMeshPro.isActiveAndEnabled) {
-                    textMeshPro.text += message[charIndex];
+                    textMeshPro.text += message[languageIndex][charIndex];
                 }
                 else if (textUI.isActiveAndEnabled) {
-                    textUI.text += message[charIndex];
+                    textUI.text += message[languageIndex][charIndex];
                 }
                 charIndex++;
                 yield return new WaitForSeconds(0.05f/speed);

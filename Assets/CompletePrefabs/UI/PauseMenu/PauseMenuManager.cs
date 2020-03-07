@@ -39,6 +39,7 @@ public class PauseMenuManager : MonoBehaviour
     public bool showInteractIndicator;
     public bool showDogVision;
     public bool showHintIndicator;
+    public int languageIndex;
     //controls
     [Header("Controls")]
     public GameObject[] controlsPages;
