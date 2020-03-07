@@ -46,10 +46,17 @@ MonoBehaviour:
   levelDatas:
   - buildName: Sample Scene
     buildIndex: 1
-    cleared: 1
+    cleared: 0
+    humanDeaths: 
+    dogDeaths: 
   - buildName: Test Level 1
     buildIndex: 2
     cleared: 0
+    humanDeaths: 
+    dogDeaths: 
   - buildName: Test Level 1
     buildIndex: 3
-    cleared: 1
+    cleared: 0
+    humanDeaths: 
+    dogDeaths: 
+  levelIndex: 0
