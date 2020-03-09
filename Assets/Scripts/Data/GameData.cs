@@ -21,6 +21,7 @@ public class GameData
     public bool qualityIsFullscreen;
     public bool qualityShowFPS;
     public int qualityAntiAliasingIndex;
+    public int qualityVSyncIndex;
 
     //Gameplay
     public bool gameplayShowInteractIndicator;
@@ -47,6 +48,7 @@ public class GameData
         qualityIsFullscreen = pm.isFullscreen;
         qualityShowFPS = pm.isShowFPS;
         qualityAntiAliasingIndex = pm.antiAliasingIndex;
+        qualityVSyncIndex = pm.vSyncIndex;
         //gameplay
         gameplayShowInteractIndicator = pm.showInteractIndicator;
         gameplayShowHintIndicator = pm.showHintIndicator;
