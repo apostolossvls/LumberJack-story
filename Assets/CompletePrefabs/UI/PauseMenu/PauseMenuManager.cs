@@ -36,6 +36,7 @@ public class PauseMenuManager : MonoBehaviour
     //gameplay
     [Header("Gameplay")]
     public Toggle[] gameplayToggles;
+    public TMP_Dropdown[] gameplayDropdowns;
     public bool showInteractIndicator;
     public bool showDogVision;
     public bool showHintIndicator;
@@ -95,6 +96,7 @@ public class PauseMenuManager : MonoBehaviour
         instance.FullcreenCheck();
         instance.ResetButtonAndPlanes();
         instance.RefreshResolutionDropDown();
+        instance.RefreshLanguageDisplay();
         if (instance.FirstSelected) instance.FirstSelected.Select();
         if (!loading) AudioManager.instance.Play("MenuClick");
     }
@@ -104,6 +106,7 @@ public class PauseMenuManager : MonoBehaviour
         instance.FullcreenCheck();
         instance.ResetButtonAndPlanes();
         instance.RefreshResolutionDropDown();
+        instance.RefreshLanguageDisplay();
         if (instance.FirstSelected) instance.FirstSelected.Select();
     }
     
@@ -317,6 +320,34 @@ public class PauseMenuManager : MonoBehaviour
     }
     void ShowHintSetToggle(){
         gameplayToggles[2].isOn = showHintIndicator;
+    }
+
+    void RefreshLanguageDisplay()
+    {
+        gameplayDropdowns[0].value = languageIndex;
+        gameplayDropdowns[0].RefreshShownValue();
+    }
+    public void SetLanguageValue(int index)
+    {
+        if (languageIndex != index)
+        {
+            languageIndex = index;
+            SetLanguageTexts();
+        }
+    }
+    public void SetLanguageTexts()
+    {
+        GameObject[] all = SceneManager.GetActiveScene().GetRootGameObjects();
+        for (int j = 0; j < all.Length; j++)
+        {
+            foreach (LanguageText lanText in all[j].GetComponentsInChildren<LanguageText>(true))
+            {
+                if (lanText)
+                {
+                    lanText.Setup();
+                }
+            }
+        }
     }
     //end Gameplay
 
@@ -753,6 +784,7 @@ public class PauseMenuManager : MonoBehaviour
         showInteractIndicator = data.gameplayShowInteractIndicator;
         showHintIndicator = data.gameplayShowHintIndicator;
         showDogVision = data.gameplayShowDogVision;
+        languageIndex = data.gameplaylanguageIndex;
         if (!onMainMenu){
             InteractIndicator();
             DogPPVolume();
@@ -761,6 +793,8 @@ public class PauseMenuManager : MonoBehaviour
         InteractIndicatorSetToggle();
         DogPPVolumeSetToggle();
         ShowHintSetToggle();
+        SetLanguageTexts();
+        RefreshLanguageDisplay();
 
         //Controls
         controlsID = new List<string>(){};

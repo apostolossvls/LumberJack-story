@@ -25,6 +25,7 @@ public class GameData
     public bool gameplayShowInteractIndicator;
     public bool gameplayShowHintIndicator;
     public bool gameplayShowDogVision;
+    public int gameplaylanguageIndex;
 
     //Controls
     public List<string> controlsInputPaths = new List<string>(){};
@@ -51,5 +52,6 @@ public class GameData
         //controls
         controlsInputPaths = pm.controlsPaths;
         controlsInputID = pm.controlsID;
+        gameplaylanguageIndex = pm.languageIndex;
     }
 }
