@@ -26,6 +26,7 @@ public class PauseMenuManager : MonoBehaviour
     public bool isFullscreen;
     public GameObject FPStext;
     public bool isShowFPS;
+    public int antiAliasingIndex;
     //audio
     [Header("Audio")]
     public AudioMixer audioMixer;
@@ -207,6 +208,23 @@ public class PauseMenuManager : MonoBehaviour
     }
     void ShowFPSToggle (){
         graphicsToggles[1].isOn = isShowFPS;
+    }
+    void RefreshAntiAliasingDisplay()
+    {
+        graphicsdropdowns[2].value = antiAliasingIndex;
+        graphicsdropdowns[2].RefreshShownValue();
+    }
+    public void SetAntiAliasingValue(int index)
+    {
+        if (antiAliasingIndex != index)
+        {
+            antiAliasingIndex = index;
+            SetAntiAliasing();
+        }
+    }
+    void SetAntiAliasing()
+    {
+        QualitySettings.antiAliasing = antiAliasingIndex;
     }
     //end Graphics
 
@@ -773,12 +791,15 @@ public class PauseMenuManager : MonoBehaviour
         resolutionIndex = data.qualityResolutionIndex;
         isFullscreen = data.qualityIsFullscreen;
         isShowFPS = data.qualityShowFPS;
+        antiAliasingIndex = data.qualityAntiAliasingIndex;
         FullcreenCheck();
         SetResolution(resolutionIndex);
         ChangeQuality();
         ChangeQualityDropDown();
         ShowFPS();
         ShowFPSToggle();
+        RefreshAntiAliasingDisplay();
+        SetAntiAliasing();
 
         //Gameplay
         showInteractIndicator = data.gameplayShowInteractIndicator;

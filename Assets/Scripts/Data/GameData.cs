@@ -20,6 +20,7 @@ public class GameData
     public int qualityResolutionIndex;
     public bool qualityIsFullscreen;
     public bool qualityShowFPS;
+    public int qualityAntiAliasingIndex;
 
     //Gameplay
     public bool gameplayShowInteractIndicator;
@@ -45,6 +46,7 @@ public class GameData
         qualityResolutionIndex = pm.resolutionIndex;
         qualityIsFullscreen = pm.isFullscreen;
         qualityShowFPS = pm.isShowFPS;
+        qualityAntiAliasingIndex = pm.antiAliasingIndex;
         //gameplay
         gameplayShowInteractIndicator = pm.showInteractIndicator;
         gameplayShowHintIndicator = pm.showHintIndicator;
