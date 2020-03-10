@@ -53,8 +53,10 @@ public class NavMeshMovement : MonoBehaviour
 
     IEnumerator CheckGround(){
         while (!IsGrounded()) {
+            agent.updatePosition = false;
             yield return null;
         }
+        agent.updatePosition = true;
         agent.enabled = true;
         StartCoroutine("DoStart");
         yield return null;
@@ -216,8 +218,7 @@ public class NavMeshMovement : MonoBehaviour
     }
 
     bool IsGrounded() {
-        if (GetComponent<Rigidbody>().velocity.y==0) return true;
-        else return Physics.Raycast(transform.position, -Vector3.up, col.bounds.extents.y + 0.2f);
+        return Physics.Raycast(transform.position, -Vector3.up, col.bounds.extents.y + 0.2f);
     }
 
     /*
