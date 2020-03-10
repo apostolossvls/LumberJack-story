@@ -18,6 +18,11 @@ public class FallOnTouch : MonoBehaviour
         if (rig){
             rig.isKinematic = false;
             rig.useGravity = true;
+            NavMeshMovement[] nav = GetComponentsInChildren<NavMeshMovement>();
+            foreach (NavMeshMovement n in nav)
+            {
+                n.enabled = false;
+            }
         }
     }
 

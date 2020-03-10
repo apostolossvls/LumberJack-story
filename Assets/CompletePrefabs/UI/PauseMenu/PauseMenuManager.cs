@@ -862,7 +862,7 @@ public class PauseMenuManager : MonoBehaviour
         
         //controlsPaths = data.controlsInputPaths.Count>0? data.controlsInputPaths : new List<string>(){};
         //controlsID = data.controlsInputID.Count>0? data.controlsInputID : new List<string>(){};
-        GetInputPath();
+        //GetInputPath();
         //SetInputPathDisplay();
 
         loading = false;

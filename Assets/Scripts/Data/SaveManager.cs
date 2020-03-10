@@ -52,7 +52,7 @@ public class SaveManager : MonoBehaviour
         GameData data = new GameData(LevelDataManager.instance, PauseMenuManager.instance);
         SaveFile(data);
         //SaveJson(InputManager.controls.asset.ToJson(), "/inputs.inputactions");
-        string map = InputActionMap.ToJson(InputManager.controls.asset.actionMaps);
+        //string map = InputActionMap.ToJson(InputManager.controls.asset.actionMaps);
         //SaveJson(map, "/inputsMaps.inputactions");
         /*
         for (int i = 0; i < InputManager.controls.controlSchemes.Count; i++)
@@ -80,7 +80,7 @@ public class SaveManager : MonoBehaviour
         //level
         if (LevelDataManager.instance) LevelDataManager.instance.SetLevelsAll(data);
         //pauseMenu
-        if (InputManager.controls.asset != null) LoadJson();
+        //if (InputManager.controls.asset != null) LoadJson();
         if (PauseMenuManager.instance) PauseMenuManager.instance.SetAll(data);
     }
 
