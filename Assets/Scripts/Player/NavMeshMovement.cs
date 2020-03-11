@@ -53,10 +53,10 @@ public class NavMeshMovement : MonoBehaviour
 
     IEnumerator CheckGround(){
         while (!IsGrounded()) {
-            agent.updatePosition = false;
+            //agent.updatePosition = false;
             yield return null;
         }
-        agent.updatePosition = true;
+        //agent.updatePosition = true;
         agent.enabled = true;
         StartCoroutine("DoStart");
         yield return null;
