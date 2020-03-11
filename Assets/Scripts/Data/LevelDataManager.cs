@@ -65,6 +65,16 @@ public class LevelDataManager : MonoBehaviour
         return matrix;
     }
 
+    public List<float>[] GetLevelsClearTimes()
+    {
+        List<float>[] matrix = new List<float>[levelDatas.Length];
+        for (int i = 0; i < levelDatas.Length; i++)
+        {
+            matrix[i] = levelDatas[i].clearTime;
+        }
+        return matrix;
+    }
+
     //  SET
     public void SetLevelsAll(GameData data){
         if (data!=null){
@@ -74,7 +84,8 @@ public class LevelDataManager : MonoBehaviour
                 list.Add(new LevelData(data.levelIndexes[i], 
                 data.levelCleared[i], 
                 data.levelHumanDeaths[i],
-                data.levelDogDeaths[i]
+                data.levelDogDeaths[i],
+                data.levelClearTimes[i]
                 ));
                 //levelDatas[i].buildIndex = indexes[i];
                 //levelDatas[i].cleared = clears[i]; 
@@ -85,12 +96,15 @@ public class LevelDataManager : MonoBehaviour
     }
 
     public void SetLevelInfo(LevelSettings l){
-        LevelWithBuildIndex(levelIndex).humanDeaths.Add(l.HumanDeaths);
-        LevelWithBuildIndex(levelIndex).dogDeaths.Add(l.DogDeaths);
+        LevelData level = LevelWithBuildIndex(levelIndex);
+        level.humanDeaths.Add(l.HumanDeaths);
+        level.dogDeaths.Add(l.DogDeaths);
     }
 
     public void LevelCompleted(){
-        LevelWithBuildIndex(levelIndex).cleared = true;
+        LevelData level = LevelWithBuildIndex(levelIndex);
+        level.cleared = true;
+        level.clearTime.Add(Time.timeSinceLevelLoad);
     }
 
     public LevelData LevelWithBuildIndex (int buildIndex){
