@@ -78,7 +78,7 @@ public class LevelDataManager : MonoBehaviour
     //  SET
     public void SetLevelsAll(GameData data){
         if (data!=null){
-            List<LevelData> list = new List<LevelData>{};
+            List<LevelData> list = new List<LevelData>();
             for (int i = 0; i < data.levelIndexes.Length; i++)
             {
                 list.Add(new LevelData(data.levelIndexes[i], 
@@ -90,7 +90,7 @@ public class LevelDataManager : MonoBehaviour
                 //levelDatas[i].buildIndex = indexes[i];
                 //levelDatas[i].cleared = clears[i]; 
             }
-            levelDatas = list.ToArray();
+            if (list != null) levelDatas = list.ToArray();
             //Debug.Log("Length: "+levelDatas.Length)
         }
     }

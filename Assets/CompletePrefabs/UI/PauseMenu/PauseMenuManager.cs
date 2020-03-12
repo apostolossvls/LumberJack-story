@@ -196,7 +196,10 @@ public class PauseMenuManager : MonoBehaviour
     public void FullcreenCheck()
     {
         graphicsToggles[0].isOn = isFullscreen;
-        Screen.fullScreen = isFullscreen;
+        if (Screen.fullScreen != isFullscreen)
+        {
+            Screen.fullScreen = isFullscreen;
+        }
     }
 
     void ShowFPS (){

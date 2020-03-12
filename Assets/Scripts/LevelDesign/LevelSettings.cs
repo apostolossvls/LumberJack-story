@@ -61,12 +61,18 @@ public class LevelSettings : MonoBehaviour
     private static IEnumerator LoadSceneIndexCoroutine(int index, bool resetCheckpoint=true){
         if (!loadingScene){
             loadingScene=true;
+
+            ControlManager cm = GameObject.FindObjectOfType<ControlManager>();
+            if (cm) cm.PlayersActive(false);
+
             if (index != SceneManager.GetActiveScene().buildIndex){
                 LevelDataManager.instance.SetLevelInfo(LevelSettings.instance);
                 instance.HumanDeaths = 0;
                 instance.DogDeaths = 0;
             }
+
             SaveManager.instance.Save();
+
             AsyncOperation async = SceneManager.LoadSceneAsync(index);
             while (!async.isDone){
                 //do loop on loading

@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Move(Vector2 direction){
-        Debug.Log("Player new move: "+ direction);
+        //Debug.Log("Player new move: "+ direction);
     }
 
     void Update(){
@@ -58,11 +58,24 @@ public class PlayerMovement : MonoBehaviour
 
         //if hit wall on x, dont move on x
         if (Mathf.Abs(movement.x)>0){
-            RaycastHit[] hit = Physics.RaycastAll(transform.position, new Vector3(movement.x, 0, 0), col.bounds.extents.x);
+            //float mX = movement.x * moveSpeed * movementControl;
+            // movement * moveSpeed * movementControl * Time.fixedDeltaTime
+            RaycastHit[] hit = Physics.RaycastAll(transform.position, new Vector3(movement.x, 0, 0), col.bounds.extents.x+0.1f);
             foreach (RaycastHit h in hit)
             {
-                if (h.transform.gameObject.isStatic)
+                Rigidbody r = h.transform.GetComponentInChildren<Rigidbody>();
+                if (!r) {
+                    Collider c = h.transform.GetComponentInChildren<Collider>();
+                    if (c)
+                        if (c.isTrigger) continue;
                     movement.x = 0;
+                }
+                else
+                {
+                    if (r.gameObject == gameObject) continue;
+                    if (r.isKinematic)
+                        movement.x = 0;
+                }
             }
         }
 
